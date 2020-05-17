@@ -17,10 +17,10 @@ public class Chessboard
         ActorWorld chessBoard = new ChessboardData( new BoundedGrid<Actor>( 8, 8 ) );
 
         chessBoard.setMessage( "Chess" );
-        chessBoard.add(new Location(0,1),new Knight());
-        chessBoard.add(new Location(7,1), new Knight());
-        chessBoard.add(new Location(7,6), new Knight());
-        chessBoard.add(new Location(0,6), new Knight());
+        chessBoard.add(new Location(0,1),new Knight(true));
+        chessBoard.add(new Location(7,1), new Knight(false));
+        chessBoard.add(new Location(7,6), new Knight(false));
+        chessBoard.add(new Location(0,6), new Knight(true));
         chessBoard.show();
     }
 }

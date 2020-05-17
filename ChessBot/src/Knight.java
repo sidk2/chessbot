@@ -20,6 +20,7 @@ public class Knight extends Critter implements Piece
 {
     public final int MAX_MOVES = 8;
     private final int VALUE = 30;
+    private boolean white;
 
     // keep track of the number of times this knight has moved
     private int moveNum = 1;
@@ -35,18 +36,23 @@ public class Knight extends Critter implements Piece
 
     /**
      * Constructs a KnightCritter with a random bright (>127) color
+     * @param color true if white, 
      */
-    public Knight()
+    public Knight(boolean color)
     {
         int randomRed = (int)( Math.random() * 128 ) + 128;
         int randomGreen = (int)( Math.random() * 128 ) + 128;
         int randomBlue = (int)( Math.random() * 128 ) + 128;
         setColor( new Color( randomRed, randomGreen, randomBlue ) );
+        white = color;
     }
 
     public int getValue()
     {
-    	return VALUE;
+    	if(white)
+    		return VALUE;
+    	else
+    		return VALUE*-1;
     }
     /**
      * Assembles a list of valid moves. Checks each possible move
@@ -129,16 +135,7 @@ public class Knight extends Critter implements Piece
             moveTo( loc );
 
             TextCell moveNumCell = new TextCell( moveNum, getColor() );
-            if ( loc != oldLoc )
-            {
-                if ( moveNum == 1 )
-                    moveNumCell.setColor(Color.GREEN);
-            }
-            else
-            {
-                moveNumCell.setColor(Color.RED);
-            }
-
+            
             moveNumCell.putSelfInGrid( getGrid(), oldLoc );
 
             moveNum++;
@@ -154,4 +151,9 @@ public class Knight extends Critter implements Piece
     {
         return moveNum;
     }
+
+	@Override
+	public boolean isWhite() {
+		return white;
+	}
 }
