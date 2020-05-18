@@ -1,159 +1,84 @@
-import info.gridworld.actor.Actor;
-import info.gridworld.actor.Critter;
-import info.gridworld.grid.Location;
-
 import java.util.ArrayList;
-import java.awt.Color;
 
-/**
- * A <code>KnightCritter</code> is an actor that moves through its world in the
- * same fashion as a knight moves on a chess board. <br />
- * 
- * @author George Peck
- * @version 11/02/2014
- * @author Period: 1-7
- * @author Assignment: KnightCritterTour
- * 
- * @author Sources: na
- */
-public class Knight extends Critter implements Piece
+public class Knight implements Piece
 {
-    public final int MAX_MOVES = 8;
-    private final int VALUE = 30;
-    private boolean white;
 
-    // keep track of the number of times this knight has moved
-    private int moveNum = 1;
-
-    /*
-     * The array horizontal contains the horizontal movement necessary
-     * to move to a new location. These values will ultimately be added
-     * to a column location. Likewise the array vertical will be used
-     * to make vertical moves, which will adjust the row location.
-     */
-    private int[] horizMoveOffset = {  1,  2, 2, 1, -1, -2, -2, -1 };
-    private int[] vertMoveOffset  = { -2, -1, 1, 2,  2,  1, -1, -2 };
-
-    /**
-     * Constructs a KnightCritter with a random bright (>127) color
-     * @param color true if white, 
-     */
-    public Knight(boolean color)
-    {
-        int randomRed = (int)( Math.random() * 128 ) + 128;
-        int randomGreen = (int)( Math.random() * 128 ) + 128;
-        int randomBlue = (int)( Math.random() * 128 ) + 128;
-        setColor( new Color( randomRed, randomGreen, randomBlue ) );
-        white = color;
+    private Location loc;
+    private boolean color;
+    
+    public Knight(int xPos, int yPos, boolean color) {
+        loc = new Location(xPos, yPos);
+        this.color = color;
     }
-
-    public int getValue()
+    
+    @Override
+    public ArrayList<Board> findMoves( Board b, int index )
     {
-    	if(white)
-    		return VALUE;
-    	else
-    		return VALUE*-1;
-    }
-    /**
-     * Assembles a list of valid moves. Checks each possible move
-     * location and adds it to the list if it is valid (in the grid)
-     * and empty.
-     * 
-     * The possible moves are categorized as follows:
-     * 
-     * move 1: +1 to the right, -2 up, a negative move to go up in the grid
-     * move 2: +2 to the right, -1 up
-     * move 3: +2 to the right, +1 down
-     * move 4: +1 to the right, +2 down
-     * move 5: -1 to the left, +2 down
-     * move 6: -2 to the left, +1 down
-     * move 7: -2 to the left, -1 up
-     * move 8: -1 to the left, -2 up
-     * 
-     * @param loc  location of base for possible moves
-     * 
-     * @return ArrayList of locations corresponding to valid
-     *         "knight-like" moves from loc
-     */
-    public ArrayList<Location> getPossibleMoves( Location loc )
-    {
-        ArrayList<Location> list = new ArrayList<Location>( MAX_MOVES );
-
-        for ( int move = 0; move < MAX_MOVES; move++ )
-        {
-          int newRow = loc.getRow() + vertMoveOffset[move];
-          int newCol = loc.getCol() + horizMoveOffset[move];
-          
-          Location newLoc = new Location(newRow, newCol);
-          if(getGrid().isValid( newLoc ) && getGrid().get( newLoc ) == null)
-            list.add(new Location(newRow, newCol));
+        //ADD TAKING
+        ArrayList<Piece> pieces = b.getBoard();
+        ArrayList<Piece> temp = pieces;
+        temp.remove( index );
+        ArrayList<Board> ans = new ArrayList<>();
+        
+        int[] dx = {-1, 1, 2, 2, 1, -1, -2, -2};
+        int[] dy = {2, 2, 1, -1, -2, -2, -1, 1};
+        
+        int curX = pieces.get( index ).getLoc().getXPos();
+        int curY = pieces.get( index ).getLoc().getYPos();
+        
+        for(int i = 0; i < 8; i++) {
+            if(curX + dx[i] >= 0 && curX + dx[i] < 8 && curY + dy[i] >= 0 && curY + dy[i] < 8 && b.check( new Location(curX + dx[i], curY + dy[i]) ) == true) {
+                ArrayList<Piece> nextPos = temp;
+                nextPos.add( new Knight(curX + dx[i], curY + dy[i], pieces.get( index ).getColor()) );
+                ans.add( new Board(nextPos) );
+            }
         }
-
-        return list;
+        return ans;
     }
 
-    /**
-     * Gets a list of possible locations for the next move. These
-     * locations must be valid in the grid of this critter. Implemented
-     * to return the empty neighboring locations. <br />
-     * Postcondition: The state of all actors is unchanged.
-     * 
-     * @return a list of possible locations for the next move
-     */
-    public ArrayList<Location> getMoveLocations()
+    @Override
+    public Location getLoc()
     {
-        return getPossibleMoves( getLocation() );
+        return loc;
     }
 
-    /**
-     * Moves this KnightCritter to the given location <code>loc</code>,
-     * or removes this critter from its grid if <code>loc</code> is
-     * <code>null</code>.
-     * 
-     * A TextCell actor is constructed with the current move number
-     * and added to the old location thus marking the grid locations as
-     * they are visited. The color of the TextCell is chosen as
-     * follows: green for first cell, red for the last cell, and the
-     * color as this KnightCritter for all other cells<br />
-     * 
-     * Postcondition: (1) <code>getLocation() == loc</code>.
-     * (2) The state of all actors other than those at the old and
-     * new locations is unchanged.
-     * 
-     * @param loc  the location to move to
-     */
-    public void move( Location loc )
+    @Override
+    public boolean isInCheck( Board b, int index )
     {
-        if ( loc == null )
-        {
-            removeSelfFromGrid();
+        ArrayList<Piece> pieces = b.getBoard();
+        
+        int[] dx = {-1, 1, 2, 2, 1, -1, -2, -2};
+        int[] dy = {2, 2, 1, -1, -2, -2, -1, 1};
+        
+        int curX = pieces.get( index ).getLoc().getXPos();
+        int curY = pieces.get( index ).getLoc().getYPos();
+        
+        int blackKX = 0, blackKY = 0, whiteKX = 0, whiteKY = 0;
+        for(Piece i : pieces) {
+            if(i instanceof King && i.getColor() == false) {
+                blackKX = i.getLoc().getXPos();
+                blackKY = i.getLoc().getYPos();
+            }
+            if(i instanceof King && i.getColor() == true) {
+                whiteKX = i.getLoc().getXPos();
+                whiteKY = i.getLoc().getYPos();
+            }
         }
-        else
-        {
-            Location oldLoc = getLocation();
-
-            moveTo( loc );
-
-            TextCell moveNumCell = new TextCell( moveNum, getColor() );
-            
-            moveNumCell.putSelfInGrid( getGrid(), oldLoc );
-
-            moveNum++;
+        
+        for(int i = 0; i < 8; i++) {
+            int nextX = curX + dx[i];
+            int nextY = curY + dy[i];
+            if((nextX == blackKX && nextY == blackKY && pieces.get( index ).getColor() == true)||(nextX == whiteKX && nextY == whiteKY == pieces.get( index ).getColor() == false)) {
+                 return true;
+            }   
         }
+        return false;
     }
 
-    /**
-     * Returns the current move number
-     * 
-     * @return the current move number
-     */
-    public int getMoveNum()
+    @Override
+    public boolean getColor()
     {
-        return moveNum;
+        return color;
     }
 
-	@Override
-	public boolean isWhite() {
-		return white;
-	}
 }
