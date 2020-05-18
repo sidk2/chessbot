@@ -5,7 +5,7 @@ public class Board
     private ArrayList<Piece> board;
     private Boolean[][] isOccupied;
     
-    public Board() {
+    public Board(boolean full) {
         board = new ArrayList<>();
         isOccupied = new Boolean[8][8];
         for(int i = 0; i < 8; i++) {
@@ -55,7 +55,16 @@ public class Board
     public ArrayList<Piece> getBoard(){
         return board;
     }
-    
+    public int getValue()
+    {
+    	int val = 0;
+		ArrayList<Piece> p = getBoard();
+		for(Piece piece: p)
+		{
+			val+=piece.getValue();
+		}
+		return val;
+    }
     public Boolean[][] getOccupied(){
         return isOccupied;
     }

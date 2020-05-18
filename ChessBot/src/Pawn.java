@@ -4,6 +4,7 @@ public class Pawn implements Piece
 {
     private Location loc;
     private Boolean color;
+    private final int VALUE = 10;
     public Pawn( int xPos, int yPos, Boolean color )
     {
         loc = new Location(xPos, yPos);
@@ -136,6 +137,10 @@ public class Pawn implements Piece
     {
         return color;
     }
+
+	public int getValue() {
+		return VALUE;
+	}
 
 
     

@@ -5,12 +5,14 @@ public class Queen implements Piece
     
     private Location loc;
     private boolean color;
-    
+    private final int VALUE = 90;
     public Queen(int xPos, int yPos, boolean color) {
         loc = new Location(xPos, yPos);
         this.color = color;
     }
-    
+	public int getValue() {
+		return VALUE;
+	}
     @Override
     public ArrayList<Board> findMoves( Board b, int index )
     {
