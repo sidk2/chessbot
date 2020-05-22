@@ -123,34 +123,64 @@ public class Board
 		}
 		return best;
 	}
+	public Board updateBoard(Piece p1, Piece p2) {
+        ArrayList<Piece> pieces = this.getBoard();
+        int idx = 0;
+        for(int i = 0; i < pieces.size(); i++) {
+            if(pieces.get( i ).getLoc().getXPos() == p1.getLoc().getXPos() && pieces.get( i ).getLoc().getYPos() == p1.getLoc().getYPos()) {
+                idx = i;
+            }
+        }
+        pieces.remove( idx );
+        pieces.add( p2 );
+        return new Board(pieces);
+    }
     public void printBoard() {
         char[][] board = new char[8][8];
         for(int i = 0; i < 8; i++) {
             for(int j = 0; j < 8; j++) {
-                board[i][j] = 'E';
+                board[i][j] = ' ';
             }
         }
         ArrayList<Piece> pieces = getBoard();
         //System.out.println(pieces == null);
         for(Piece i : pieces) {
             
-            if(i instanceof Pawn) {
+            if(i instanceof Pawn && i.getColor()) {
                 board[i.getLoc().getXPos()][i.getLoc().getYPos()] = 'P';
             }
-            if(i instanceof Knight) {
+            else if(i instanceof Pawn && !i.getColor()) {
+                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = 'p';
+            }
+            if(i instanceof Knight && i.getColor()) {
                 board[i.getLoc().getXPos()][i.getLoc().getYPos()] = 'N';
             }
-            if(i instanceof Bishop) {
+            else if(i instanceof Knight && !i.getColor()) {
+                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = 'n';
+            }
+            if(i instanceof Bishop && i.getColor()) {
                 board[i.getLoc().getXPos()][i.getLoc().getYPos()] = 'B';
             }
-            if(i instanceof Rook) {
-                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = 'R';
+            else if(i instanceof Bishop && !i.getColor()) {
+                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = 'b';
             }
-            if(i instanceof Queen) {
+            if(i instanceof Queen && i.getColor()) {
                 board[i.getLoc().getXPos()][i.getLoc().getYPos()] = 'Q';
             }
-            if(i instanceof King) {
+            else if(i instanceof Queen && !i.getColor()) {
+                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = 'q';
+            }
+            if(i instanceof Rook && i.getColor()) {
+                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = 'R';
+            }
+            else if(i instanceof Rook && !i.getColor()) {
+                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = 'r';
+            }
+            if(i instanceof King && i.getColor()) {
                 board[i.getLoc().getXPos()][i.getLoc().getYPos()] = 'K';
+            }
+            else if(i instanceof King && !i.getColor()) {
+                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = 'k';
             }
 //            if(i.getColor() == true) {
 //                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = 'W';
