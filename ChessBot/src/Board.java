@@ -78,9 +78,10 @@ public class Board
     public ArrayList<Board> getPossibleMoves( boolean color) {
         for(int i = 0; i < this.getBoard().size(); i++) {
             if(this.getBoard().get( i ).getColor() == color) {
-                if(this.getBoard().get( i ).isInCheck( this, i )) {
-                    return null;
-                }
+//                if(this.getBoard().get( i ).isInCheck( this, i )) {
+//                	System.out.println("HI");
+//                    return null;
+//                }
             }
         }
         
@@ -106,7 +107,7 @@ public class Board
 	public Board getBestBoard(boolean color)
 	{
 		Board best = null;
-		for (Board board:(new AllMoves(this)).findAllMoves(this, color))
+		for (Board board:getPossibleMoves(color))
 		{
 			if(best == null)
 			{
