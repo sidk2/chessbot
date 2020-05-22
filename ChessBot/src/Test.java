@@ -124,6 +124,6 @@ public class Test
 ////        System.out.println(board.get( 0 ).getColor());
 //        //b.printBoard( b );
         AI ai = new AI(b);
-        ai.minimax(b, 2, true).printBoard();
+        ai.minimax(b, 4, true).printBoard();
     }
 }

@@ -32,8 +32,8 @@ public class AI {
 		{
 			for(int i = 0; i < board.getPossibleMoves(color).size(); i++)
 			{
-				Board one = minimax(board.getPossibleMoves(color).get(i+1), depth - 1, color);
-				Board two = minimax(board.getPossibleMoves(color).get(i), depth - 1, color);
+				Board one = minimax(board.getPossibleMoves(color).get(i+1), depth - 1, !color);
+				Board two = minimax(board.getPossibleMoves(color).get(i), depth - 1, !color);
 				if(Math.max(one.getValue(), two.getValue()) == one.getValue())
 					return one;
 				else
