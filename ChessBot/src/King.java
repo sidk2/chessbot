@@ -4,12 +4,18 @@ public class King implements Piece
 {
     private Location loc;
     private boolean color;
-    
+    public final int VALUE =900;
     public King(int xPos, int yPos, boolean color) {
         loc = new Location(xPos, yPos);
         this.color = color;
     }
-    
+    public int getValue()
+    {
+    	if(color)
+    		return VALUE;
+    	else
+    		return -1*VALUE;
+    }
     
     @Override
     public ArrayList<Board> findMoves( Board b, int index )

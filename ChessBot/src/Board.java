@@ -4,8 +4,8 @@ public class Board
 {
     private ArrayList<Piece> board;
     private Boolean[][] isOccupied;
-    
-    public Board() {
+    private int value;
+    public Board(boolean full) {
         board = new ArrayList<>();
         isOccupied = new Boolean[8][8];
         for(int i = 0; i < 8; i++) {
@@ -37,6 +37,7 @@ public class Board
         board.add( new Bishop(5, 7, false));
         board.add( new Knight(6, 7, false) );
         board.add( new Rook(7, 7, false) );
+
     }
     
     public Board(ArrayList<Piece> board) {
@@ -55,7 +56,16 @@ public class Board
     public ArrayList<Piece> getBoard(){
         return board;
     }
-    
+    public int getValue()
+    {
+    	int val = 0;
+		ArrayList<Piece> p = getBoard();
+		for(Piece piece: p)
+		{
+			val+=piece.getValue();
+		}
+		return val;
+    }
     public Boolean[][] getOccupied(){
         return isOccupied;
     }
@@ -65,15 +75,61 @@ public class Board
         int y = loc.getYPos();
         return !isOccupied[x][y];
     }
-    
-    public void printBoard(Board b) {
-        Character[][] board = new Character[8][8];
-        for(int i = 0; i < 8; i++) {
-            for(int j = 0; j < 8; j++) {
-                board[i][j] = ' ';
+    public ArrayList<Board> getPossibleMoves( boolean color) {
+        for(int i = 0; i < this.getBoard().size(); i++) {
+            if(this.getBoard().get( i ).getColor() == color) {
+                if(this.getBoard().get( i ).isInCheck( this, i )) {
+                    return null;
+                }
             }
         }
-        ArrayList<Piece> pieces = b.getBoard();
+        
+        ArrayList<Board> allNextMoves = new ArrayList<>();
+        
+        for(int i = 0; i < this.getBoard().size(); i++) {
+            //System.out.println(b.getBoard().size());
+            if(this.getBoard().get( i ).getColor() == color) {
+                ArrayList<Board> temp = this.getBoard().get( i ).findMoves( this, i );
+                    
+                if(temp == null) {
+                    continue;
+                }
+
+                for(Board board : temp) {
+                    allNextMoves.add( board );
+                }
+                
+            }
+        }
+        return allNextMoves;
+    }
+	public Board getBestBoard(boolean color)
+	{
+		Board best = null;
+		for (Board board:(new AllMoves(this)).findAllMoves(this, color))
+		{
+			if(best == null)
+			{
+				best = board;
+			}
+			else
+			{
+				if (best.getValue()<board.getValue())
+				{
+					best = board;
+				}
+			}
+		}
+		return best;
+	}
+    public void printBoard() {
+        char[][] board = new char[8][8];
+        for(int i = 0; i < 8; i++) {
+            for(int j = 0; j < 8; j++) {
+                board[i][j] = 'E';
+            }
+        }
+        ArrayList<Piece> pieces = getBoard();
         //System.out.println(pieces == null);
         for(Piece i : pieces) {
             
@@ -110,111 +166,5 @@ public class Board
             }
             System.out.println();
         }
-    }
-    public int getEval(Board b) {
-        ArrayList<Piece> pieces = b.getBoard();
-        int counter = 0;
-        for(Piece i : pieces) {
-            if(i instanceof Pawn) {
-                if(i.getColor() == true) {
-                    counter += 1;
-                }
-                else {
-                    counter -= 1;
-                }
-            }
-            if(i instanceof Bishop) {
-                if(i.getColor() == true) {
-                    counter += 3;
-                }
-                else {
-                    counter -= 3;
-                }
-            }
-            if(i instanceof Knight) {
-                if(i.getColor() == true) {
-                    counter += 3;
-                }
-                else {
-                    counter -= 3;
-                }
-            }
-            if(i instanceof Rook) {
-                if(i.getColor() == true) {
-                    counter += 5;
-                }
-                else {
-                    counter -= 5;
-                }
-            }
-            if(i instanceof Queen) {
-                if(i.getColor() == true) {
-                    counter += 9;
-                }
-                else {
-                    counter -= 9;
-                }
-            }
-        }
-        return counter;
-    }
-    public ArrayList<Board> findAllMoves(Board b, boolean color) {
-        
-        for(int i = 0; i < b.getBoard().size(); i++) {
-            if(b.getBoard().get( i ).getColor() == color) {
-                if(b.getBoard().get( i ).isInCheck( b, i )) {
-                    return null;
-                }
-            }
-        }
-        
-        
-        
-        ArrayList<Board> allNextMoves = new ArrayList<>();
-        ArrayList<Board> finalSet = new ArrayList<>();
-        for(int i = 0; i < b.getBoard().size(); i++) {
-            //System.out.println(b.getBoard().size());
-            if(b.getBoard().get( i ).getColor() == color) {
-                ArrayList<Board> temp = b.getBoard().get( i ).findMoves( b, i );
-                    
-                if(temp == null) {
-                    continue;
-                }
-
-                for(Board board : temp) {
-                    allNextMoves.add( board );
-                }
-                
-                //System.out.println(b.getBoard().size());
-            }
-        }
-        /*
-        for(Board i : allNextMoves) {
-            boolean bad = false;
-            for(int j = 0; j < i.getBoard().size(); j++) {
-                if(i.getBoard().get(j).getColor() != color && i.getBoard().get( j ).isInCheck( i, j ) == true) {
-                    bad = true;
-                    return null;
-                }
-            }
-            if(!bad) {
-                finalSet.add( i );
-            }
-        }
-        */
-        return allNextMoves;
-    }
-    
-    public Board updateBoard(Board b, Piece p1, Piece p2) {
-        ArrayList<Piece> pieces = b.getBoard();
-        int idx = 0;
-        for(int i = 0; i < pieces.size(); i++) {
-            if(pieces.get( i ).getLoc().getXPos() == p1.getLoc().getXPos() && pieces.get( i ).getLoc().getYPos() == p1.getLoc().getYPos()) {
-                idx = i;
-            }
-        }
-        pieces.remove( idx );
-        pieces.add( p2 );
-        return new Board(pieces);
     }
 }

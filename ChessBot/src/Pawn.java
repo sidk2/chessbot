@@ -4,12 +4,19 @@ public class Pawn implements Piece
 {
     private Location loc;
     private Boolean color;
+    public final int VALUE =10;
     public Pawn( int xPos, int yPos, Boolean color )
     {
         loc = new Location(xPos, yPos);
         this.color = color;
     }
-    
+    public int getValue()
+    {
+    	if(color)
+    		return VALUE;
+    	else
+    		return -1*VALUE;
+    }
     @Override
     public ArrayList<Board> findMoves(Board b, int index) {
         ArrayList<Piece> pieces = b.getBoard(); //the ArrayList in b

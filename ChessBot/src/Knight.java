@@ -5,10 +5,17 @@ public class Knight implements Piece
 
     private Location loc;
     private boolean color;
-    
+    public final int VALUE =30;
     public Knight(int xPos, int yPos, boolean color) {
         loc = new Location(xPos, yPos);
         this.color = color;
+    }
+    public int getValue()
+    {
+    	if(color)
+    		return VALUE;
+    	else
+    		return -1*VALUE;
     }
     
     @Override

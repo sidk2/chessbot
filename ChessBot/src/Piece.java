@@ -5,6 +5,7 @@ interface Piece {
     boolean isInCheck(Board b, int index);
     Location getLoc();
     boolean getColor();
+	int getValue();
 }
 
 /*
