@@ -24,8 +24,8 @@ public class AI {
 				Board one = minimax(board.getPossibleMoves(color).get(i+1), depth - 1, !color);
 				Board two = minimax(board.getPossibleMoves(color).get(i), depth - 1, !color);
 				if(one.getValue()> two.getValue())
-					return one;
-				else return two;
+					return board.getPossibleMoves(color).get(i+1);
+				else return board.getPossibleMoves(color).get(i);
 			}
 		}
 		else
@@ -35,9 +35,9 @@ public class AI {
 				Board one = minimax(board.getPossibleMoves(color).get(i+1), depth - 1, !color);
 				Board two = minimax(board.getPossibleMoves(color).get(i), depth - 1, !color);
 				if(Math.max(one.getValue(), two.getValue()) == one.getValue())
-					return one;
+					return board.getPossibleMoves(color).get(i+1);
 				else
-					return two;
+					return board.getPossibleMoves(color).get(i);
 			}
 		}
 		return board;
