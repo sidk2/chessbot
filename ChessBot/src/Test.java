@@ -4,6 +4,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+//This is the test program
 public class Test {
 	public static void main(String[] args) {
 		ArrayList<Piece> board = new ArrayList<>();
