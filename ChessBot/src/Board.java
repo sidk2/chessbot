@@ -1,211 +1,236 @@
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.Graphics;
+import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.Point;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 
-public class Board
-{
-    private ArrayList<Piece> board;
-    private Boolean[][] isOccupied;
-    private int value;
-    public Board() {
-        board = new ArrayList<>();
-        isOccupied = new Boolean[8][8];
-        for(int i = 0; i < 8; i++) {
-            isOccupied[i][0] = true;
-            isOccupied[i][1] = true;
-            isOccupied[i][6] = true;
-            isOccupied[i][7] = true;
-        }
-        
-        for(int i = 0; i < 8; i++) {
-            board.add( new Pawn(i, 1, true) );
-            board.add( new Pawn(i, 6, false) );
-        }
-        
-        board.add( new Rook(0, 0, true) );
-        board.add( new Knight(1, 0, true) );
-        board.add( new Bishop(2, 0, true));
-        board.add( new Queen(3, 0, true) );
-        board.add( new King(4, 0, true) );
-        board.add( new Bishop(5, 0, true));
-        board.add( new Knight(6, 0, true) );
-        board.add( new Rook(7, 0, true) );
-        
-        board.add( new Rook(0, 7, false) );
-        board.add( new Knight(1, 7, false) );
-        board.add( new Bishop(2, 7, false));
-        board.add( new Queen(3, 7, false) );
-        board.add( new King(4, 7, false) );
-        board.add( new Bishop(5, 7, false));
-        board.add( new Knight(6, 7, false) );
-        board.add( new Rook(7, 7, false) );
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
+public class Board extends JPanel implements MouseListener, MouseMotionListener {
+
+	public Tile[][] board;
+	
+	private boolean turn;
+    private Piece currPiece;
+    private int currX;
+    private int currY;
+    
+    public ArrayList<Piece> Whites;
+    public ArrayList<Piece> Blacks;
+    public ArrayList<Tile> movable;
+    
+    private CMD cmd;
+    
+    public Display display;
+    
+    public Board() throws IOException {
+    	 board = new Tile[8][8];
+    	 turn = true;
+         Whites = new ArrayList<Piece>();
+         Blacks = new ArrayList<Piece>();
+         
+         setLayout(new GridLayout(8, 8, 0, 0));
+
+         this.addMouseListener(this);
+         this.addMouseMotionListener(this);
+         
+         for (int row = 0; row < 8; row++) {
+             for (int file = 0; file < 8; file++) {
+                 board[row][file] = new Tile(this, file, row);
+                 this.add(board[row][file]);
+             }
+         }
+         
+         
+         //initialize all pieces
+         
+
+         board[7][4].put(new King(1, board[7][4], "wking.png"));
+         board[0][4].put(new King(0, board[0][4], "bking.png"));
+         
+         board[7][3].put(new Queen(1, board[7][3], "wqueen.png"));
+         board[0][3].put(new Queen(0, board[0][3], "bqueen.png"));
+
+         board[7][0].put(new Rook(0, board[7][0], "wrook.png"));
+         board[7][7].put(new Rook(0, board[7][7], "wrook.png"));
+         board[0][0].put(new Rook(1, board[0][0], "brook.png"));
+         board[0][7].put(new Rook(1, board[0][7], "brook.png"));
+
+         board[0][2].put(new Bishop(0, board[0][2], "bbishop.png"));
+         board[0][5].put(new Bishop(0, board[0][5], "bbishop.png"));
+         board[7][2].put(new Bishop(1, board[7][2], "wbishop.png"));
+         board[7][5].put(new Bishop(1, board[7][5], "wbishop.png"));
+
+         board[7][1].put(new Knight(0, board[7][1], "wknight.png"));
+         board[7][6].put(new Knight(0, board[7][6], "wknight.png"));
+         board[0][1].put(new Knight(1, board[0][1], "bknight.png"));
+         board[0][6].put(new Knight(1, board[0][6], "bknight.png"));
+        
+         for (int x = 0; x < 8; x++) {
+             board[6][x].put(new Pawn(1, board[6][x], "wpawn.png"));
+             board[1][x].put(new Pawn(0, board[1][x], "bpawn.png"));
+         }
+         
+         for(int y = 0; y < 2; y++) {
+             for (int x = 0; x < 8; x++) {
+                 Blacks.add(board[y][x].getPiece());
+                 Whites.add(board[7-y][x].getPiece());
+             }
+         }
+         
     }
     
-    public Board(ArrayList<Piece> board) {
-        this.board = board;
-        isOccupied = new Boolean[8][8];
-        for(int i = 0; i < 8; i++) {
-            for(int j = 0; j < 8; j++) {
-                isOccupied[i][j] = false;
+    public void setCurrPiece(Piece p) {
+        currPiece = p;
+    }
+    
+    public Piece getCurrPiece() {
+        return currPiece;
+    }
+    
+    public boolean getTurn() {
+        return turn;
+    }
+    
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
+        for (int x = 0; x < 8; x++) {
+            for (int y = 0; y < 8; y++) {
+                Tile t = board[y][x];
+                t.paintComponent(g);
+//                setCurrPiece(t.getPiece());                
             }
         }
-        for(int i = 0; i < board.size(); i++) {
-            isOccupied[board.get( i ).getLoc().getXPos()][board.get( i ).getLoc().getYPos()] = true;
-        }
-    }
-    
-    public ArrayList<Piece> getBoard(){
-        return board;
-    }
-    public int getValue()
-    {
-    	int val = 0;
-		ArrayList<Piece> p = getBoard();
-		for(Piece piece: p)
-		{
-			val+=piece.getValue();
-		}
-		return val;
-    }
-    public Boolean[][] getOccupied(){
-        return isOccupied;
-    }
-    
-    public Boolean check(Location loc) {
-        int x = loc.getXPos();
-        int y = loc.getYPos();
-        return !isOccupied[x][y];
-    }
-    public ArrayList<Board> getPossibleMoves( boolean color) {
-//        for(int i = 0; i < b.getBoard().size(); i++) {
-//            if(b.getBoard().get( i ).getColor() == color) {
-//                if(b.getBoard().get( i ).isInCheck( b, i )) {
-//                	b.printBoard();
-//                    return null;
-//                }
+        
+//        if (currPiece != null) {
+//            if ((currPiece.getCol() == 1 && turn)
+//                    || (currPiece.getCol() == 0 && !turn)) {
+//                Image i = currPiece.getImg();
+//                g.drawImage(i, currX, currY, null);
 //            }
 //        }
         
-        ArrayList<Board> allNextMoves = new ArrayList<>();
-        
-        for(int i = 0; i < this.getBoard().size(); i++) {
-            //System.out.println(b.getBoard().size());
-            if(this.getBoard().get( i ).getColor() == color) {
-                ArrayList<Board> temp = this.getBoard().get( i ).findMoves( this, i );
-                    
-                if(temp == null) {
-                    continue;
-                }
-                
-                for(Board board : temp) {
-                    boolean bad = false;
-                    for(int j = 0; j < board.getBoard().size(); j++) {
-                        if(board.getBoard().get(j).getColor() != color && board.getBoard().get( j ).isInCheck( board, j ) == true) {
-                            bad = true;
-                            break;
-                        }
-                    }
-                    if(bad) {
-                        continue;
-                    }
-                    allNextMoves.add( board );
-                }
-                
-            }
-        }
-        return allNextMoves;
     }
-	public Board getBestBoard(Board b, boolean color)
-	{
-		Board best = null;
-		for (Board board:getPossibleMoves(color))
-		{
-			if(best == null)
-			{
-				best = board;
-			}
-			else
-			{
-				if (best.getValue()<board.getValue())
-				{
-					best = board;
-				}
-			}
-		}
-		return best;
+    
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		
+//        currX = e.getX() - 24;
+//        currY = e.getY() - 24;
+//
+//        repaint();
 	}
-	public Board updateBoard(Piece p1, Piece p2) {
-        ArrayList<Piece> pieces = this.getBoard();
-        int idx = 0;
-        for(int i = 0; i < pieces.size(); i++) {
-            if(pieces.get( i ).getLoc().getXPos() == p1.getLoc().getXPos() && pieces.get( i ).getLoc().getYPos() == p1.getLoc().getYPos()) {
-                idx = i;
-            }
-        }
-        pieces.remove( idx );
-        pieces.add( p2 );
-        return new Board(pieces);
-    }
-    public void printBoard() {
-        char[][] board = new char[8][8];
-        for(int i = 0; i < 8; i++) {
-            for(int j = 0; j < 8; j++) {
-                board[i][j] = ' ';
-            }
-        }
-        ArrayList<Piece> pieces = getBoard();
-        //System.out.println(pieces == null);
-        for(Piece i : pieces) {
-            
-            if(i instanceof Pawn && i.getColor()) {
-                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = 'P';
-            }
-            else if(i instanceof Pawn && !i.getColor()) {
-                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = 'p';
-            }
-            if(i instanceof Knight && i.getColor()) {
-                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = 'N';
-            }
-            else if(i instanceof Knight && !i.getColor()) {
-                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = 'n';
-            }
-            if(i instanceof Bishop && i.getColor()) {
-                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = 'B';
-            }
-            else if(i instanceof Bishop && !i.getColor()) {
-                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = 'b';
-            }
-            if(i instanceof Queen && i.getColor()) {
-                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = 'Q';
-            }
-            else if(i instanceof Queen && !i.getColor()) {
-                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = 'q';
-            }
-            if(i instanceof Rook && i.getColor()) {
-                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = 'R';
-            }
-            else if(i instanceof Rook && !i.getColor()) {
-                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = 'r';
-            }
-            if(i instanceof King && i.getColor()) {
-                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = 'K';
-            }
-            else if(i instanceof King && !i.getColor()) {
-                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = 'k';
-            }
-//            if(i.getColor() == true) {
-//                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = 'W';
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
+//		Tile sq = (Tile) this.getComponentAt(new Point(e.getX(), e.getY()));
+//
+//        if (currPiece != null) {
+//            if (currPiece.getCol() == 0 && turn)
+//                return;
+//            if (currPiece.getCol() == 1 && !turn)
+//                return;
+//
+//            ArrayList<Tile> possMoves = currPiece.getPossibleMoves(this);
+//
+//            if (possMoves.contains(sq)) {
+//                sq.setDisplay(true);
+//                currPiece.move(sq);
+//
+////                if (cmd.blackCheckMated()) {
+////                    currPiece = null;
+////                    repaint();
+////                    this.removeMouseListener(this);
+////                    this.removeMouseMotionListener(this);
+////                    g.checkmateOccurred(0);
+////                } else if (cmd.whiteCheckMated()) {
+////                    currPiece = null;
+////                    repaint();
+////                    this.removeMouseListener(this);
+////                    this.removeMouseMotionListener(this);
+////                    g.checkmateOccurred(1);
+////                } else {
+//                    currPiece = null;
+//                    turn = !turn;
+//                    repaint();
+////                    movable = cmd.getAllowableTiles(turn);
+////                }
+//
+//            } else {
+//                currPiece.getPos().setDisplay(true);
+//                currPiece = null;
 //            }
-//            else {
-//                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = 'B';
-//            }
-            
-            //board[i.getLoc().getXPos()][i.getLoc().getYPos()] = "(" + i.getLoc().getXPos() + " , " + i.getLoc().getYPos() + ")";
-        }
-        for(int i = 0; i < 8; i++) {
-            for(int j = 0; j < 8; j++) {
-                System.out.print(board[i][j] + " ");
-            }
-            System.out.println();
-        }
-    }
+//        }
+//
+        repaint();
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		currX = e.getX();
+		currY = e.getY();
+
+		Tile t = (Tile) this.getComponentAt(new Point(e.getX(), e.getY()));
+		System.out.println(t.getXNum() + " " + t.getYNum());
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+//		currX = e.getX();
+//        currY = e.getY();
+//
+//        Tile t = (Tile) this.getComponentAt(new Point(e.getX(), e.getY()));
+//
+//        if (t.isOccupied()) {
+//            currPiece = t.getPiece();
+//            if (currPiece.getCol() == 0 && turn)
+//                return;
+//            if (currPiece.getCol() == 1 && !turn)
+//                return;
+//            t.setDisplay(false);
+//        }
+//        repaint();
+//		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	 public static void main(String[] args) throws IOException {
+        JFrame w = new JFrame( "ChessBoard" );
+        w.setBounds( 100, 100, 900, 925 );
+        w.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
+        Board panel = new Board();
+        panel.setBackground( Color.WHITE );
+        Container c = w.getContentPane();
+        c.add( panel );
+        w.setResizable( true );
+        w.setVisible( true );
+	 }
+	
 }

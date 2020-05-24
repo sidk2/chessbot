@@ -1,261 +1,183 @@
+import java.io.IOException;
 import java.util.ArrayList;
 
-public class Rook implements Piece
+public class Rook extends Piece 
 {
-    private Location loc;
-    private boolean color;
-    public final int VALUE =50;
-    public Rook(int xPos, int yPos, boolean color) {
-        loc = new Location(xPos, yPos);
-        this.color = color;
-    }
-    public int getValue()
-    {
-    	if(color)
-    		return VALUE;
-    	else
-    		return -1*VALUE;
-    }
-    @Override
-    public ArrayList<Board> findMoves( Board b, int index )
-    {
-        //ADD TAKING
-        ArrayList<Piece> pieces = b.getBoard();
-        ArrayList<Piece> temp = new ArrayList<>();
-        for(Piece i : pieces) {
-            temp.add( i );
-        }
-        ArrayList<Board> ans = new ArrayList<>();
-        temp.remove(index);
-        
-        int curX = pieces.get( index ).getLoc().getXPos();
-        int curY = pieces.get( index ).getLoc().getYPos();
-        
-        int tempX = curX;
-        int tempY = curY;
-        
-        while(tempX - 1 >= 0) {
-            tempX--;
-            if(b.check( new Location(tempX, tempY) ) == true) {
-                ArrayList<Piece> nextPos = new ArrayList<>();
-                for(Piece i : temp) {
-                    nextPos.add( i );
-                }
-                nextPos.add( new Rook(tempX, tempY, pieces.get( index ).getColor()) );
-                ans.add( new Board(nextPos) );
-            }
-            else {
-                if(b.check( new Location(tempX, tempY) ) == false) {
-                    for(int i = 0; i < pieces.size(); i++) {
-                        if(pieces.get( i ).getLoc().getXPos() == tempX && pieces.get( i ).getLoc().getYPos() == tempY && pieces.get( i ).getColor() != pieces.get( index ).getColor()) {
-                            ArrayList<Piece> nextPos = new ArrayList<>();
-                            for(Piece r : temp) {
-                                if(r.equals( pieces.get( i ) )) {
-                                    continue;
-                                }
-                                nextPos.add( r );     
-                            }
-                            nextPos.add( new Rook(tempX, tempY, pieces.get( index ).getColor()) );
-                            ans.add( new Board(nextPos) );
-                        }
-                    }
-                    break;
-                }
-            }
-        }
-        
-        tempX = curX;
-        tempY = curY;
-        
-        while(tempX + 1 < 8) {
-            tempX++;
-            if(b.check( new Location(tempX, tempY) ) == true) {
-                ArrayList<Piece> nextPos = new ArrayList<>();
-                for(Piece i : temp) {
-                    nextPos.add( i );
-                }
-                nextPos.add( new Rook(tempX, tempY, pieces.get( index ).getColor()) );
-                ans.add( new Board(nextPos) );
-            }
-            else {
-                if(b.check( new Location(tempX, tempY) ) == false) {
-                    for(int i = 0; i < pieces.size(); i++) {
-                        if(pieces.get( i ).getLoc().getXPos() == tempX && pieces.get( i ).getLoc().getYPos() == tempY && pieces.get( i ).getColor() != pieces.get( index ).getColor()) {
-                            ArrayList<Piece> nextPos = new ArrayList<>();
-                            for(Piece r : temp) {
-                                if(r.equals( pieces.get( i ) )) {
-                                    continue;
-                                }
-                                nextPos.add( r );     
-                            }
-                            nextPos.add( new Rook(tempX, tempY, pieces.get( index ).getColor()) );
-                            ans.add( new Board(nextPos) );
-                        }
-                    }
-                    break;
-                }
-            }
-        }
-        
-        tempX = curX;
-        tempY = curY;
-        
-        while(tempY - 1 >= 0) {
-            tempY--;
-            if(b.check( new Location(tempX, tempY) ) == true) {
-                ArrayList<Piece> nextPos = new ArrayList<>();
-                for(Piece i : temp) {
-                    nextPos.add( i );
-                }
-                nextPos.add( new Rook(tempX, tempY, pieces.get( index ).getColor()) );
-                ans.add( new Board(nextPos) );
-            }
-            else {
-                if(b.check( new Location(tempX, tempY) ) == false) {
-                    for(int i = 0; i < pieces.size(); i++) {
-                        if(pieces.get( i ).getLoc().getXPos() == tempX && pieces.get( i ).getLoc().getYPos() == tempY && pieces.get( i ).getColor() != pieces.get( index ).getColor()) {
-                            ArrayList<Piece> nextPos = new ArrayList<>();
-                            for(Piece r : temp) {
-                                if(r.equals( pieces.get( i ) )) {
-                                    continue;
-                                }
-                                nextPos.add( r );     
-                            }
-                            nextPos.add( new Rook(tempX, tempY, pieces.get( index ).getColor()) );
-                            ans.add( new Board(nextPos) );
-                        }
-                    }
-                    break;
-                }
-            }
-        }
-        tempX = curX;
-        tempY = curY;
-        
-        while(tempY + 1 < 8) {
-            tempY++;
-            if(b.check( new Location(tempX, tempY) ) == true) {
-                ArrayList<Piece> nextPos = new ArrayList<>();
-                for(Piece i : temp) {
-                    nextPos.add( i );
-                }
-                nextPos.add( new Rook(tempX, tempY, pieces.get( index ).getColor()) );
-                ans.add( new Board(nextPos) );
-            }
-            else {
-                if(b.check( new Location(tempX, tempY) ) == false) {
-                    for(int i = 0; i < pieces.size(); i++) {
-                        if(pieces.get( i ).getLoc().getXPos() == tempX && pieces.get( i ).getLoc().getYPos() == tempY && pieces.get( i ).getColor() != pieces.get( index ).getColor()) {
-                            ArrayList<Piece> nextPos = new ArrayList<>();
-                            for(Piece r : temp) {
-                                if(r.equals( pieces.get( i ) )) {
-                                    continue;
-                                }
-                                nextPos.add( r );     
-                            }
-                            nextPos.add( new Rook(tempX, tempY, pieces.get( index ).getColor()) );
-                            ans.add( new Board(nextPos) );
-                        }
-                    }
-                    break;
-                }
-            }
-        }
-        
-        return ans;
-    }
 
-    @Override
-    public Location getLoc()
-    {
-        return loc;
-    }
+	public Rook(int color, Tile pos, String file_Img) throws IOException {
+		super(color, pos, file_Img);
+		// TODO Auto-generated constructor stub
+	}
 
-    @Override
-    public boolean isInCheck( Board b, int index )
-    {
-        ArrayList<Piece> pieces = b.getBoard();
-        
-        int curX = pieces.get( index ).getLoc().getXPos();
-        int curY = pieces.get( index ).getLoc().getYPos();
-        
-        int blackKX = 0, blackKY = 0, whiteKX = 0, whiteKY = 0;
-        
-        for(Piece i : pieces) {
-            if(i instanceof King) {
-                if(i.getColor() == true) {
-                    whiteKX = i.getLoc().getXPos();
-                    whiteKY = i.getLoc().getYPos();
-                }
-                else {
-                    blackKX = i.getLoc().getXPos();
-                    blackKY = i.getLoc().getYPos();
-                }
-            }
-        }
-        
-        //System.out.println(blackKX + " " + blackKY);
-        
-        int tempX = curX;
-        int tempY = curY;
-        
-        while(tempX - 1 >= 0) {
-            tempX = tempX - 1;
-            if((tempX == blackKX && tempY == blackKY && pieces.get( index ).getColor() == true) || (tempX == whiteKX && tempY == whiteKY && pieces.get( index ).getColor() == false)) {
-                return true;
-            }
-            else if(b.check( new Location(tempX, tempY) ) == false) {
-                break;
-            }
-        }
-        
-        tempX = curX;
-        tempY = curY;
-        
-        while(tempX + 1 < 8) {
-            tempX = tempX + 1;
-            if((tempX == blackKX && tempY == blackKY && pieces.get( index ).getColor() == true) || (tempX == whiteKX && tempY == whiteKY && pieces.get( index ).getColor() == false)) {
-                return true;
-            }
-            else if(b.check( new Location(tempX, tempY) ) == false) {
-                break;
-            }
-        }
-        
-        tempX = curX;
-        tempY = curY;
-        
-        while(tempY + 1 < 8) {
-            tempY = tempY + 1;
-            //System.out.println(tempY);
-            if((tempX == blackKX && tempY == blackKY && pieces.get( index ).getColor() == true) || (tempX == whiteKX && tempY == whiteKY && pieces.get( index ).getColor() == false)) {
-                return true;
-            }
-            else if(b.check( new Location(tempX, tempY) ) == false) {
-                break;
-            }
-        }
-        
-        tempX = curX;
-        tempY = curY;
-        
-        while(tempY - 1 >= 0) {
-            tempY = tempY - 1;
-            if((tempX == blackKX && tempY == blackKY && pieces.get( index ).getColor() == true) || (tempX == whiteKX && tempY == whiteKY && pieces.get( index ).getColor() == false)) {
-                return true;
-            }
-            else if(b.check( new Location(tempX, tempY) ) == false) {
-                break;
-            }
-        }
-        
-        return false;
-    }
-
-    @Override
-    public boolean getColor()
-    {
-        return color;
-    }
-
+	@Override
+	public ArrayList<Tile> getPossibleMoves(Board b) 
+	{
+//		ArrayList<Tile> possibles = new ArrayList<Tile>();
+//		
+//		int col = getCol();
+//		int xPos = getPos().getXNum();
+//		int yPos = getPos().getYNum();
+//		
+//		Tile[][] currBoard = b.board;
+//		
+//		//all moves up
+//		int xTemp = xPos;
+//		int yTemp = yPos;
+//		int notBlockedUp;
+//		yTemp++;
+//		if((xTemp >= 0 && xTemp < 8) && (yTemp >= 0 && yTemp < 8)) 
+//		{
+//			if(!currBoard[yTemp][xTemp].isOccupied()) 
+//			{
+//				notBlockedUp = 2;
+//			} else if(currBoard[yTemp][xTemp].getColor() != this.getCol()) {
+//				notBlockedUp = 1;
+//			}
+//			else
+//			{
+//				notBlockedUp = 0;
+//			}
+//		}
+//		else
+//		{
+//			notBlockedUp = 0;
+//		}
+//		while(yTemp < 8 && notBlockedUp > 0)
+//		{
+//			possibles.add(currBoard[yTemp][xTemp]);
+//			yTemp++;
+//			if(notBlockedUp == 1) 
+//			{
+//				notBlockedUp = 0;
+//			}
+//			else if (currBoard[yTemp][xTemp].isOccupied()) { 
+//				if(currBoard[yTemp][xTemp].getColor() != this.getCol()) {
+//					notBlockedUp = 1;
+//				} else {
+//					notBlockedUp = 0;
+//				}
+//			}
+//		}
+//		
+//		//moves down
+//		xTemp = xPos;
+//		yTemp = yPos;
+//		int notBlockedDown;
+//		yTemp--;
+//		if((xTemp >= 0 && xTemp < 8) && (yTemp >= 0 && yTemp < 8)) 
+//		{
+//			if(!currBoard[yTemp][xTemp].isOccupied()) 
+//			{
+//				notBlockedDown = 2;
+//			} else if(currBoard[yTemp][xTemp].getColor() != this.getCol()) {
+//				notBlockedDown = 1;
+//			}
+//			else
+//			{
+//				notBlockedDown = 0;
+//			}
+//		}
+//		else
+//		{
+//			notBlockedDown = 0;
+//		}
+//		while(yTemp >= 0 && notBlockedDown > 0)
+//		{
+//			possibles.add(currBoard[yTemp][xTemp]);
+//			yTemp--;
+//			if(notBlockedDown == 1) 
+//			{
+//				notBlockedDown = 0;
+//			}
+//			else if (currBoard[yTemp][xTemp].isOccupied()) { 
+//				if(currBoard[yTemp][xTemp].getColor() != this.getCol()) {
+//					notBlockedDown = 1;
+//				} else {
+//					notBlockedDown = 0;
+//				}
+//			}
+//		}
+//		//moves left
+//		xTemp = xPos;
+//		yTemp = yPos;
+//		int notBlockedLeft;
+//		xTemp--;
+//		if((xTemp >= 0 && xTemp < 8) && (yTemp >= 0 && yTemp < 8)) 
+//		{
+//			if(!currBoard[yTemp][xTemp].isOccupied()) 
+//			{
+//				notBlockedLeft = 2;
+//			} else if(currBoard[yTemp][xTemp].getColor() != this.getCol()) {
+//				notBlockedLeft = 1;
+//			}
+//			else
+//			{
+//				notBlockedLeft = 0;
+//			}
+//		}
+//		else
+//		{
+//			notBlockedLeft = 0;
+//		}
+//		while(xTemp >= 0 && notBlockedLeft > 0)
+//		{
+//			possibles.add(currBoard[yTemp][xTemp]);
+//			xTemp--;
+//			if(notBlockedLeft == 1) 
+//			{
+//				notBlockedLeft = 0;
+//			}
+//			else if (currBoard[yTemp][xTemp].isOccupied()) { 
+//				if(currBoard[yTemp][xTemp].getColor() != this.getCol()) {
+//					notBlockedLeft = 1;
+//				} else {
+//					notBlockedLeft = 0;
+//				}
+//			}
+//		}
+//		//moves right
+//		xTemp = xPos;
+//		yTemp = yPos;
+//		int notBlockedRight;
+//		xTemp++;
+//		if((xTemp >= 0 && xTemp < 8) && (yTemp >= 0 && yTemp < 8)) 
+//		{
+//			if(!currBoard[yTemp][xTemp].isOccupied()) 
+//			{
+//				notBlockedRight = 2;
+//			} else if(currBoard[yTemp][xTemp].getColor() != this.getCol()) {
+//				notBlockedRight = 1;
+//			}
+//			else
+//			{
+//				notBlockedRight = 0;
+//			}
+//		}
+//		else
+//		{
+//			notBlockedRight = 0;
+//		}
+//		while(xTemp >= 0 && notBlockedRight > 0)
+//		{
+//			possibles.add(currBoard[yTemp][xTemp]);
+//			xTemp++;
+//			if(notBlockedRight == 1) 
+//			{
+//				notBlockedRight = 0;
+//			}
+//			else if (currBoard[yTemp][xTemp].isOccupied()) { 
+//				if(currBoard[yTemp][xTemp].getColor() != this.getCol()) {
+//					notBlockedRight = 1;
+//				} else {
+//					notBlockedRight = 0;
+//				}
+//			}
+//		}
+//		
+		ArrayList<Tile> cols = super.getCols(b);
+		return cols;
+	}
+	
+	
+	
 }

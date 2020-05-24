@@ -1,116 +1,80 @@
+import java.io.IOException;
 import java.util.ArrayList;
 
-public class Knight implements Piece
-{
+public class Knight extends Piece{
 
-    private Location loc;
-    private boolean color;
-    public final int VALUE =30;
-    public Knight(int xPos, int yPos, boolean color) {
-        loc = new Location(xPos, yPos);
-        this.color = color;
-    }
-    public int getValue()
-    {
-    	if(color)
-    		return VALUE;
-    	else
-    		return -1*VALUE;
-    }
-    
-    @Override
-    public ArrayList<Board> findMoves( Board b, int index )
-    {
-        //ADD TAKING
-        ArrayList<Piece> pieces = b.getBoard();
-        ArrayList<Piece> temp = new ArrayList<>();
-        for(Piece i : pieces) {
-            temp.add( i );
-        }
-        temp.remove( index );
-        ArrayList<Board> ans = new ArrayList<>();
-        
-        int[] dx = {-1, 1, 2, 2, 1, -1, -2, -2};
-        int[] dy = {2, 2, 1, -1, -2, -2, -1, 1};
-        
-        int curX = pieces.get( index ).getLoc().getXPos();
-        int curY = pieces.get( index ).getLoc().getYPos();
-        //System.out.println(curX + " " + curY);
-        for(int i = 0; i < 8; i++) {
-            //System.out.println((curX + dx[i]) + " " + (curY + dy[i]));
-            if(curX + dx[i] >= 0 && curX + dx[i] < 8 && curY + dy[i] >= 0 && curY + dy[i] < 8 && b.check( new Location(curX + dx[i], curY + dy[i]) ) == true) {
-                ArrayList<Piece> nextPos = new ArrayList<>();
-                for(Piece r : temp) {
-                    nextPos.add( r );
-                }
-                nextPos.add( new Knight(curX + dx[i], curY + dy[i], pieces.get( index ).getColor()) );
-                ans.add( new Board(nextPos) );
-            }
-            if(curX + dx[i] >= 0 && curX + dx[i] < 8 && curY + dy[i] >= 0 && curY + dy[i] < 8 && b.check(new Location(curX + dx[i], curY + dy[i])) == false){
-                for(int r = 0; r < pieces.size(); r++) {
-                    if(pieces.get( r ).getLoc().getXPos() == curX + dx[i] && pieces.get( r ).getLoc().getYPos() == curY + dy[i] && pieces.get( r ).getColor() != pieces.get( index ).getColor()) {
-                        ArrayList<Piece> nextPos = new ArrayList<>();
-                        for(Piece q : temp) {
-                            if(q.equals( pieces.get( r ) )) {
-                                continue;
-                            }
-                            nextPos.add( q );     
-                        }
-                        nextPos.add( new Knight(curX + dx[i], curY + dy[i], pieces.get( r ).getColor()) );
-                        ans.add( new Board(nextPos) );
-                        break;
-                    }
-                }
-            }
-        }
-        return ans;
-    }
+	public Knight(int color, Tile pos, String file_Img) throws IOException {
+		super(color, pos, file_Img);
+		// TODO Auto-generated constructor stub
+	}
 
-    @Override
-    public Location getLoc()
-    {
-        return loc;
-    }
-
-    @Override
-    public boolean isInCheck( Board b, int index )
-    {
-        ArrayList<Piece> pieces = b.getBoard();
-        
-        int[] dx = {-1, 1, 2, 2, 1, -1, -2, -2};
-        int[] dy = {2, 2, 1, -1, -2, -2, -1, 1};
-        
-        int curX = pieces.get( index ).getLoc().getXPos();
-        int curY = pieces.get( index ).getLoc().getYPos();
-        
-        int blackKX = 0, blackKY = 0, whiteKX = 0, whiteKY = 0;
-        for(Piece i : pieces) {
-            if(i instanceof King && i.getColor() == false) {
-                blackKX = i.getLoc().getXPos();
-                blackKY = i.getLoc().getYPos();
-            }
-            if(i instanceof King && i.getColor() == true) {
-                whiteKX = i.getLoc().getXPos();
-                whiteKY = i.getLoc().getYPos();
-            }
-        }
-        //System.out.println(blackKX  + " " + blackKY);
-        for(int i = 0; i < 8; i++) {
-            int nextX = curX + dx[i];
-            int nextY = curY + dy[i];
-            //System.out.println(nextX + " " + nextY);
-            if(((nextX == blackKX) && (nextY == blackKY) && (pieces.get( index ).getColor() == true))||((nextX == whiteKX) && (nextY == whiteKY) && pieces.get( index ).getColor() == false)) {
-                //System.out.println(nextY + " " + blackKY);
-                 return true;
-            }   
-        }
-        return false;
-    }
-
-    @Override
-    public boolean getColor()
-    {
-        return color;
-    }
+	@Override
+	public ArrayList<Tile> getPossibleMoves(Board b) {
+		ArrayList<Tile> possibles = new ArrayList<Tile>();
+		int col = getCol();
+		int xPos = getPos().getXNum();
+		int yPos = getPos().getYNum();
+		
+		Tile[][] currBoard = b.board;
+		
+		if(yPos+2 < 8 && xPos + 1 < 8) {
+			if(!currBoard[yPos+2][xPos+1].isOccupied() || (currBoard[yPos+2][xPos+1].getColor() != col))
+			{
+				possibles.add(currBoard[yPos+2][xPos+1]);
+			}
+		}
+		
+		if(yPos+2 < 8 && xPos - 1 > 0) {
+			if(!currBoard[yPos+2][xPos-1].isOccupied() || (currBoard[yPos+2][xPos-1].getColor() != col))
+			{
+				possibles.add(currBoard[yPos+2][xPos-1]);
+			}
+		}
+		
+		if(yPos-2 > 0 && xPos + 1 < 8) {
+			if(!currBoard[yPos-2][xPos+1].isOccupied() || (currBoard[yPos-2][xPos+1].getColor() != col))
+			{
+				possibles.add(currBoard[yPos-2][xPos+1]);
+			}
+		}
+		
+		if(yPos-2 > 0 && xPos - 1 > 0) {
+			if(!currBoard[yPos-2][xPos-1].isOccupied() || (currBoard[yPos-2][xPos-1].getColor() != col))
+			{
+				possibles.add(currBoard[yPos-2][xPos-1]);
+			}
+		}
+		
+		if(yPos+1 < 8 && xPos + 2 < 8) {
+			if(!currBoard[yPos+1][xPos+2].isOccupied() || (currBoard[yPos+1][xPos+2].getColor() != col))
+			{
+				possibles.add(currBoard[yPos+1][xPos+2]);
+			}
+		}
+		
+		if(yPos-1 > 0 && xPos +2 < 8) {
+			if(!currBoard[yPos-1][xPos+2].isOccupied() || (currBoard[yPos-1][xPos+2].getColor() != col))
+			{
+				possibles.add(currBoard[yPos-1][xPos+2]);
+			}
+		}
+		
+		if(yPos + 1 < 8 && xPos -2 > 0) {
+			if(!currBoard[yPos+1][xPos-2].isOccupied() || (currBoard[yPos+1][xPos-2].getColor() != col))
+			{
+				possibles.add(currBoard[yPos+1][xPos-2]);
+			}
+		}
+		
+		if(yPos-1 > 0 && xPos -2 > 0) {
+			if(!currBoard[yPos-1][xPos-2].isOccupied() || (currBoard[yPos-1][xPos-2].getColor() != col))
+			{
+				possibles.add(currBoard[yPos-1][xPos-2]);
+			}
+		}
+		
+		return possibles;
+		
+	}
 
 }
