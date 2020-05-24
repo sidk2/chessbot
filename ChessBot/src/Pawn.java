@@ -10,6 +10,10 @@ public class Pawn implements Piece
         loc = new Location(xPos, yPos);
         this.color = color;
     }
+    public boolean equals(Piece other)
+    {
+    	return other.getLoc().equals(getLoc()) && other.getClass().getCanonicalName().equals(this.getClass().getCanonicalName());
+    }
     public int getValue()
     {
     	if(color)

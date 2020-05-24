@@ -6,6 +6,7 @@ interface Piece {
     Location getLoc();
     boolean getColor();
 	int getValue();
+	boolean equals(Piece other);
 }
 
 /*

@@ -1,11 +1,14 @@
 import java.io.BufferedReader;
+
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.LinkedList;
 
 //This is the test program
 public class Test {
+	static LinkedList<Board> takebacks = new LinkedList<Board>();
+	
 	public static void main(String[] args) {
 		ArrayList<Piece> board = new ArrayList<>();
 		Pawn p = new Pawn(4, 1, true);
@@ -44,61 +47,321 @@ public class Test {
 			board.add(new Pawn(i, 1, true));
 			board.add(new Pawn(i, 6, false));
 		}
-
+		int level = 4;
+		while(true) {
+		BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
+		String str = null;
+		try {
+			System.out.println("Pick a level from 1 - 4");
+			str = r.readLine();
+			level = Integer.parseInt(str);
+			break;
+		} catch (IOException e) {
+			continue;
+		}
+		}
 		Board b = new Board(board);
+		takebacks.add(b);
 		AI ai = new AI(b);
-		for (int i = 0; i < 10; i++) {
+		while (true) {
 
-			b = ai.minimax(b, 4, true);
-			b.printBoard();
+			b = ai.minimax(b, level, true);
+			takebacks.add(b);
+			ArrayList<Piece> save = new ArrayList<Piece>();
+			for (Piece piece : b.getBoard())
+			{
+				if(piece instanceof Knight)
+				{
+					save.add(new Knight(piece.getLoc().getXPos(),piece.getLoc().getYPos(), piece.getColor()));
+					
+				}
+				else if(piece instanceof Pawn)
+				{
+					save.add(new Pawn(piece.getLoc().getXPos(),piece.getLoc().getYPos(), piece.getColor()));
+				}
+				else if(piece instanceof King)
+				{
+					save.add(new King(piece.getLoc().getXPos(),piece.getLoc().getYPos(), piece.getColor()));
+				}
+				else if(piece instanceof Bishop)
+				{
+					save.add(new Bishop(piece.getLoc().getXPos(),piece.getLoc().getYPos(), piece.getColor()));
+				}
+				else if(piece instanceof Rook)
+				{
+					save.add(new Rook(piece.getLoc().getXPos(),piece.getLoc().getYPos(), piece.getColor()));
+				}
+				else if(piece instanceof Queen)
+				{
+					save.add(new Queen(piece.getLoc().getXPos(),piece.getLoc().getYPos(), piece.getColor()));
+				}
+			}
 
 			while (true) {
 				try {
+					b.printBoard();
 					System.out.print(
 							"Please type in your next move in the format:'Piece' at 'current row' 'current col' to 'new row' 'new column'"
 									+ "\n");
+
+					Board saved = new Board(save);
+					
 					BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+					String string = null;
 					String[] s = null;
 					try {
-						s = reader.readLine().split("\\s+");
+						 string = reader.readLine();
+						
+						s = string.split("\\s+");
 					} catch (IOException e) {
 						continue;
 					}
+					if(string.contains("takeback"))
+					{
+						b = takebacks.get(takebacks.size()-3);
+						break;
+					}
 					if (s[0].contains("Knight")) {
-						b = b.updateBoard(new Knight(Integer.parseInt(s[2]), Integer.parseInt(s[3]), false),
-								new Knight(Integer.parseInt(s[5]), Integer.parseInt(s[6]), false));
-						b.printBoard();
-						break;
+						if (b.getPiece(new Location(Integer.parseInt(s[2]), Integer.parseInt(s[3]))) == null) {
+							System.out.println("There is no Knight there! Please try again.");
+						} else if (!b.getPiece(new Location(Integer.parseInt(s[2]), Integer.parseInt(s[3]))).getClass()
+								.getCanonicalName().contentEquals("Knight")) {
+							System.out.println("There is no Knight there! Please try again.");
+							// System.out.println(b.getPiece(new
+							// Location(Integer.parseInt(s[2]),Integer.parseInt(s[3]))).getClass().getCanonicalName());
+
+						} else if (b.getPiece(new Location(Integer.parseInt(s[2]), Integer.parseInt(s[3])))
+								.getColor()) {
+							System.out.println("That's not your Knight! Please try again.");
+						} else {
+							Knight n = (Knight) b
+									.getPiece(new Location(Integer.parseInt(s[2]), Integer.parseInt(s[3])));
+							boolean valid = false;
+							for (Board b1 : n.findMoves(b, b.getBoard().indexOf(n))) {
+
+								Board b2 = b;
+								b2 = b2.updateBoard(n,
+										new Knight(Integer.parseInt(s[5]), Integer.parseInt(s[6]), false));
+
+								if (b1.equals(b2)) {
+									valid = true;
+
+									break;
+
+								}
+
+							}
+							if (valid) {
+								b = b.updateBoard(new Knight(Integer.parseInt(s[2]), Integer.parseInt(s[3]), false),
+										new Knight(Integer.parseInt(s[5]), Integer.parseInt(s[6]), false));
+								b.printBoard();
+								break;
+							} else {
+								System.out.println("Invalid move! Please try again.");
+								b = new Board(save);
+							}
+						}
 					} else if (s[0].contains("Pawn")) {
-						b = b.updateBoard(new Pawn(Integer.parseInt(s[2]), Integer.parseInt(s[3]), false),
-								new Pawn(Integer.parseInt(s[5]), Integer.parseInt(s[6]), false));
-						b.printBoard();
-						break;
+						if (b.getPiece(new Location(Integer.parseInt(s[2]), Integer.parseInt(s[3]))) == null) {
+							System.out.println("There is no Pawn there! Please try again.");
+						} else if (!b.getPiece(new Location(Integer.parseInt(s[2]), Integer.parseInt(s[3]))).getClass()
+								.getCanonicalName().contentEquals("Pawn")) {
+							System.out.println("There is no Pawn there! Please try again.");
+							// System.out.println(b.getPiece(new
+							// Location(Integer.parseInt(s[2]),Integer.parseInt(s[3]))).getClass().getCanonicalName());
+
+						} else if (b.getPiece(new Location(Integer.parseInt(s[2]), Integer.parseInt(s[3])))
+								.getColor()) {
+							System.out.println("That's not your Pawn! Please try again.");
+						} else {
+							Pawn n = (Pawn) b.getPiece(new Location(Integer.parseInt(s[2]), Integer.parseInt(s[3])));
+							boolean valid = false;
+							for (Board b1 : n.findMoves(b, b.getBoard().indexOf(n))) {
+								Board b2 = b;
+								b2 = b2.updateBoard(n, new Pawn(Integer.parseInt(s[5]), Integer.parseInt(s[6]), false));
+								
+								if (b1.equals(b2)) {
+									
+									valid = true;
+								}
+								else {
+									
+								}
+
+							}
+							if (valid) {
+								b = b.updateBoard(new Pawn(Integer.parseInt(s[2]), Integer.parseInt(s[3]), false),
+										new Pawn(Integer.parseInt(s[5]), Integer.parseInt(s[6]), false));
+								b.printBoard();
+								break;
+							} 
+							else 
+							{
+								System.out.println("Invalid move! Please try again.");
+								b = new Board(save);
+							}
+						}
 					} else if (s[0].contains("Rook")) {
-						b = b.updateBoard(new Rook(Integer.parseInt(s[2]), Integer.parseInt(s[3]), false),
-								new Rook(Integer.parseInt(s[5]), Integer.parseInt(s[6]), false));
-						b.printBoard();
-						break;
+						if (b.getPiece(new Location(Integer.parseInt(s[2]), Integer.parseInt(s[3]))) == null) {
+							System.out.println("There is no Rook there! Please try again.");
+						} else if (!b.getPiece(new Location(Integer.parseInt(s[2]), Integer.parseInt(s[3]))).getClass()
+								.getCanonicalName().contentEquals("Rook")) {
+							System.out.println("There is no Rook there! Please try again.");
+							// System.out.println(b.getPiece(new
+							// Location(Integer.parseInt(s[2]),Integer.parseInt(s[3]))).getClass().getCanonicalName());
+
+						} else if (b.getPiece(new Location(Integer.parseInt(s[2]), Integer.parseInt(s[3])))
+								.getColor()) {
+							System.out.println("That's not your Rook! Please try again.");
+						} else {
+							Rook n = (Rook) b.getPiece(new Location(Integer.parseInt(s[2]), Integer.parseInt(s[3])));
+							boolean valid = false;
+							for (Board b1 : n.findMoves(b, b.getBoard().indexOf(n))) {
+
+								Board b2 = b;
+								b2 = b2.updateBoard(n, new Rook(Integer.parseInt(s[5]), Integer.parseInt(s[6]), false));
+
+								if (b1.equals(b2)) {
+									valid = true;
+
+									break;
+
+								}
+
+							}
+							if (valid) {
+								b = b.updateBoard(new Rook(Integer.parseInt(s[2]), Integer.parseInt(s[3]), false),
+										new Rook(Integer.parseInt(s[5]), Integer.parseInt(s[6]), false));
+								b.printBoard();
+								break;
+							} else {
+								System.out.println("Invalid move! Please try again.");
+								b = new Board(save);
+								}
+						}
 					} else if (s[0].contains("Queen")) {
-						b = b.updateBoard(new Queen(Integer.parseInt(s[2]), Integer.parseInt(s[3]), false),
-								new Queen(Integer.parseInt(s[5]), Integer.parseInt(s[6]), false));
-						b.printBoard();
-						break;
+						if (b.getPiece(new Location(Integer.parseInt(s[2]), Integer.parseInt(s[3]))) == null) {
+							System.out.println("There is no Queen there! Please try again.");
+						} else if (!b.getPiece(new Location(Integer.parseInt(s[2]), Integer.parseInt(s[3]))).getClass()
+								.getCanonicalName().contentEquals("Queen")) {
+							System.out.println("There is no Queen there! Please try again.");
+							// System.out.println(b.getPiece(new
+							// Location(Integer.parseInt(s[2]),Integer.parseInt(s[3]))).getClass().getCanonicalName());
+
+						} else if (b.getPiece(new Location(Integer.parseInt(s[2]), Integer.parseInt(s[3])))
+								.getColor()) {
+							System.out.println("That's not your Queen! Please try again.");
+						} else {
+							Queen n = (Queen) b.getPiece(new Location(Integer.parseInt(s[2]), Integer.parseInt(s[3])));
+							boolean valid = false;
+							for (Board b1 : n.findMoves(b, b.getBoard().indexOf(n))) {
+
+								Board b2 = b;
+								b2 = b2.updateBoard(n,
+										new Queen(Integer.parseInt(s[5]), Integer.parseInt(s[6]), false));
+
+								if (b1.equals(b2)) {
+									valid = true;
+
+									break;
+
+								}
+
+							}
+							if (valid) {
+								b = b.updateBoard(new Queen(Integer.parseInt(s[2]), Integer.parseInt(s[3]), false),
+										new Queen(Integer.parseInt(s[5]), Integer.parseInt(s[6]), false));
+								b.printBoard();
+								break;
+							} else {
+								System.out.println("Invalid move! Please try again.");
+								b = new Board(save);
+								}
+						}
 					} else if (s[0].contains("Bishop")) {
-						b = b.updateBoard(new Bishop(Integer.parseInt(s[2]), Integer.parseInt(s[3]), false),
-								new Bishop(Integer.parseInt(s[5]), Integer.parseInt(s[6]), false));
-						b.printBoard();
-						break;
+						if (b.getPiece(new Location(Integer.parseInt(s[2]), Integer.parseInt(s[3]))) == null) {
+							System.out.println("There is no Bishop there! Please try again.");
+						} else if (!b.getPiece(new Location(Integer.parseInt(s[2]), Integer.parseInt(s[3]))).getClass()
+								.getCanonicalName().contentEquals("Bishop")) {
+							System.out.println("There is no Bishop there! Please try again.");
+							// System.out.println(b.getPiece(new
+							// Location(Integer.parseInt(s[2]),Integer.parseInt(s[3]))).getClass().getCanonicalName());
+
+						} else if (b.getPiece(new Location(Integer.parseInt(s[2]), Integer.parseInt(s[3])))
+								.getColor()) {
+							System.out.println("That's not your Bishop! Please try again.");
+						} else {
+							Bishop n = (Bishop) b
+									.getPiece(new Location(Integer.parseInt(s[2]), Integer.parseInt(s[3])));
+							boolean valid = false;
+							for (Board b1 : n.findMoves(b, b.getBoard().indexOf(n))) {
+
+								Board b2 = b;
+								b2 = b2.updateBoard(n,
+										new Bishop(Integer.parseInt(s[5]), Integer.parseInt(s[6]), false));
+
+								if (b1.equals(b2)) {
+									valid = true;
+
+									break;
+
+								}
+
+							}
+							if (valid) {
+								b = b.updateBoard(new Bishop(Integer.parseInt(s[2]), Integer.parseInt(s[3]), false),
+										new Bishop(Integer.parseInt(s[5]), Integer.parseInt(s[6]), false));
+								b.printBoard();
+								break;
+							} else {
+								System.out.println("Invalid move! Please try again.");
+								b = new Board(save);
+							}
+						}
 					} else if (s[0].contains("King")) {
-						b = b.updateBoard(new King(Integer.parseInt(s[2]), Integer.parseInt(s[3]), false),
-								new King(Integer.parseInt(s[5]), Integer.parseInt(s[6]), false));
-						b.printBoard();
-						break;
+						if (b.getPiece(new Location(Integer.parseInt(s[2]), Integer.parseInt(s[3]))) == null) {
+							System.out.println("There is no King there! Please try again.");
+						} else if (!b.getPiece(new Location(Integer.parseInt(s[2]), Integer.parseInt(s[3]))).getClass()
+								.getCanonicalName().contentEquals("King")) {
+							System.out.println("There is no King there! Please try again.");
+							// System.out.println(b.getPiece(new
+							// Location(Integer.parseInt(s[2]),Integer.parseInt(s[3]))).getClass().getCanonicalName());
+
+						} else if (b.getPiece(new Location(Integer.parseInt(s[2]), Integer.parseInt(s[3])))
+								.getColor()) {
+							System.out.println("That's not your King! Please try again.");
+						} else {
+							King n = (King) b.getPiece(new Location(Integer.parseInt(s[2]), Integer.parseInt(s[3])));
+							boolean valid = false;
+							for (Board b1 : n.findMoves(b, b.getBoard().indexOf(n))) {
+
+								Board b2 = b;
+								b2 = b2.updateBoard(n, new King(Integer.parseInt(s[5]), Integer.parseInt(s[6]), false));
+
+								if (b1.equals(b2)) {
+									valid = true;
+
+									break;
+
+								}
+
+							}
+							if (valid) {
+								b = b.updateBoard(new King(Integer.parseInt(s[2]), Integer.parseInt(s[3]), false),
+										new King(Integer.parseInt(s[5]), Integer.parseInt(s[6]), false));
+								b.printBoard();
+								break;
+							} else {
+								System.out.println("Invalid move! Please try again.");
+								b = new Board(save);
+							}
+						}
 					}
 				} catch (NumberFormatException e) {
 					System.out.println("Wrong format! Try Again!");
 				}
 			}
+
 			System.out.println("White's move!");
 
 		}
