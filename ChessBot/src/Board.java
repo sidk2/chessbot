@@ -5,7 +5,7 @@ public class Board
     private ArrayList<Piece> board;
     private Boolean[][] isOccupied;
     private int value;
-    public Board(boolean full) {
+    public Board() {
         board = new ArrayList<>();
         isOccupied = new Boolean[8][8];
         for(int i = 0; i < 8; i++) {
@@ -76,14 +76,14 @@ public class Board
         return !isOccupied[x][y];
     }
     public ArrayList<Board> getPossibleMoves( boolean color) {
-        for(int i = 0; i < this.getBoard().size(); i++) {
-            if(this.getBoard().get( i ).getColor() == color) {
-//                if(this.getBoard().get( i ).isInCheck( this, i )) {
-//                	System.out.println("HI");
+//        for(int i = 0; i < b.getBoard().size(); i++) {
+//            if(b.getBoard().get( i ).getColor() == color) {
+//                if(b.getBoard().get( i ).isInCheck( b, i )) {
+//                	b.printBoard();
 //                    return null;
 //                }
-            }
-        }
+//            }
+//        }
         
         ArrayList<Board> allNextMoves = new ArrayList<>();
         
@@ -95,8 +95,18 @@ public class Board
                 if(temp == null) {
                     continue;
                 }
-
+                
                 for(Board board : temp) {
+                    boolean bad = false;
+                    for(int j = 0; j < board.getBoard().size(); j++) {
+                        if(board.getBoard().get(j).getColor() != color && board.getBoard().get( j ).isInCheck( board, j ) == true) {
+                            bad = true;
+                            break;
+                        }
+                    }
+                    if(bad) {
+                        continue;
+                    }
                     allNextMoves.add( board );
                 }
                 
@@ -104,7 +114,7 @@ public class Board
         }
         return allNextMoves;
     }
-	public Board getBestBoard(boolean color)
+	public Board getBestBoard(Board b, boolean color)
 	{
 		Board best = null;
 		for (Board board:getPossibleMoves(color))
