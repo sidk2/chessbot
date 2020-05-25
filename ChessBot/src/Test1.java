@@ -5,17 +5,18 @@ public class Test1
     public static void main(String[] args) {
         Board b = new Board(true);
         ArrayList<Piece> board = new ArrayList<>();
+        board.add(new King(4, 3, true));
         Pawn p = new Pawn(4, 1, true);
-        Pawn p1 = new Pawn(5, 6, false);
-        Knight n2 = new Knight(7, 5, false);
+        Pawn p1 = new Pawn(5, 4, false);
+        Knight n2 = new Knight(6, 7, false);
         board.add(n2);
         board.add(p);// index is 0
         board.add(p1);
         board.add(new Rook(0, 0, true));
         board.add(new Knight(1, 0, true));
         board.add(new Bishop(2, 0, true));
-        board.add(new Queen(6, 3, true));
-        board.add(new King(4, 0, true));
+        board.add(new Queen(3, 0, true));
+        //board.add(new King(4, 0, true));
         board.add(new Bishop(5, 0, true));
         board.add(new Knight(6, 0, true));
         board.add(new Rook(7, 0, true));
@@ -40,6 +41,11 @@ public class Test1
                 board.add(new Pawn(i, 1, true));
                 continue;
             }
+            if(i == 6) {
+                board.add( new Pawn(i, 1, true) );
+                board.add( new Pawn(i, 5, false) );
+                continue;
+            }
             board.add(new Pawn(i, 1, true));
             board.add(new Pawn(i, 6, false));
         }
@@ -47,7 +53,7 @@ public class Test1
         Board a = new Board(board);
         a.printBoard();
         
-        for(Board i : board.get( 0 ).findMoves( new Board(board), 0 )) {
+        for(Board i : a.getPossibleMoves( true )) {
             i.printBoard();
         }
     }
