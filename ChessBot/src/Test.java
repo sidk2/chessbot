@@ -245,7 +245,7 @@ public class Test {
 
 							}
 							if (valid) {
-							    panel.update(panel.getBoard().updateBoard(new Pawn(Integer.parseInt(s[2]), Integer.parseInt(s[3]), false), new Pawn(Integer.parseInt(s[5]), Integer.parseInt(s[6]), false)));
+							    panel.update(b.updateBoard(new Pawn(Integer.parseInt(s[2]), Integer.parseInt(s[3]), false), new Pawn(Integer.parseInt(s[5]), Integer.parseInt(s[6]), false)));
 								b = b.updateBoard(new Pawn(Integer.parseInt(s[2]), Integer.parseInt(s[3]), false),
 										new Pawn(Integer.parseInt(s[5]), Integer.parseInt(s[6]), false));
 								//b.printBoard();

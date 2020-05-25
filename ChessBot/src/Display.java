@@ -81,28 +81,28 @@ public class Display extends JPanel implements MouseListener {
                 toMove = false;
                 Piece p = board.getPiece(new Location(oldTile.currX, oldTile.currY));
                 if(p instanceof Pawn) {
-                    this.update(board.updateBoard(p, new Pawn(t.currX, t.currY, p.getColor())));
+                    //this.update(board.updateBoard(p, new Pawn(t.currX, t.currY, p.getColor())));
                     input = "Pawn at " + oldTile.currX + " " + oldTile.currY + " to " + t.currX + " " + t.currY; 
                     
                 } 
                 else if(p instanceof Rook) {
-                    this.update(board.updateBoard(p, new Rook(t.currX, t.currY, p.getColor())));
+                    //this.update(board.updateBoard(p, new Rook(t.currX, t.currY, p.getColor())));
                     input = "Rook at " + oldTile.currX + " " + oldTile.currY + " to " + t.currX + " " + t.currY; 
                 } 
                 else if(p instanceof Bishop) {
-                    this.update(board.updateBoard(p, new Bishop(t.currX, t.currY, p.getColor())));
+                    //this.update(board.updateBoard(p, new Bishop(t.currX, t.currY, p.getColor())));
                     input = "Bishop at " + oldTile.currX + " " + oldTile.currY + " to " + t.currX + " " + t.currY; 
                 } 
                 else if(p instanceof Knight) {
-                    this.update(board.updateBoard(p, new Knight(t.currX, t.currY, p.getColor())));
+                    //this.update(board.updateBoard(p, new Knight(t.currX, t.currY, p.getColor())));
                     input = "Knight at " + oldTile.currX + " " + oldTile.currY + " to " + t.currX + " " + t.currY; 
                 } 
                 else if(p instanceof Queen) {
-                    this.update(board.updateBoard(p, new Queen(t.currX, t.currY, p.getColor())));
+                    //this.update(board.updateBoard(p, new Queen(t.currX, t.currY, p.getColor())));
                     input = "Queen at " + oldTile.currX + " " + oldTile.currY + " to " + t.currX + " " + t.currY; 
                 } 
                 else if(p instanceof King) {
-                    this.update(board.updateBoard(p, new King(t.currX, t.currY, p.getColor())));
+                    //this.update(board.updateBoard(p, new King(t.currX, t.currY, p.getColor())));
                     input = "King at " + oldTile.currX + " " + oldTile.currY + " to " + t.currX + " " + t.currY; 
                 }
                 //System.out.println(getInput());
