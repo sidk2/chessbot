@@ -2,9 +2,13 @@ import java.util.ArrayList;
 
 public class AI {
 	private Board board;
-	public AI(Board b)
+	private int depth;
+	private boolean checkmate = false;
+	private boolean whiteWon = false;
+	public AI(Board b, int depth)
 	{
 		board = b;
+		this.depth = depth;
 	}
 	/**
 	 * 
@@ -12,6 +16,13 @@ public class AI {
 	 * @return the best possible board config after a given turn. returns null if no possible moves.
 	 */
 
+	public boolean isCheckMate() {
+	    return checkmate;
+	}
+	
+	public boolean isWhite() {
+	    return whiteWon;
+	}
 	public Board minimax(Board board, int depth, boolean color) {
 		if(depth == 1)
 		{
@@ -36,8 +47,10 @@ public class AI {
 					best = board.getPossibleMoves( color).get(i);
 				}
 			}
-			if(value == 100000000 && depth == 4) {
+			if(value == 100000000 && depth == this.depth) {
 			    System.out.println("Checkmate");
+			    checkmate = true;
+			    whiteWon = true;
 			}
 			return best;
 		}
@@ -60,8 +73,10 @@ public class AI {
 					best = board.getPossibleMoves(color).get(i);
 				}
 			}
-			if(value == -100000000 && depth == 4) {
+			if(value == -100000000 && depth == this.depth) {
                 System.out.println("Checkmate");
+                checkmate = true;
+                whiteWon = false;
             }
 			return best;
 		}

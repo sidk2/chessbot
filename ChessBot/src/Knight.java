@@ -60,7 +60,7 @@ public class Knight implements Piece
                             }
                             nextPos.add( q );     
                         }
-                        nextPos.add( new Knight(curX + dx[i], curY + dy[i], pieces.get( r ).getColor()) );
+                        nextPos.add( new Knight(curX + dx[i], curY + dy[i], pieces.get( index ).getColor()) );
                         ans.add( new Board(nextPos) );
                         break;
                     }

@@ -62,12 +62,24 @@ public class Test {
 		}
 		Board b = new Board(board);
 		takebacks.add(b);
-		AI ai = new AI(b);
+		AI ai = new AI(b, level);
 		while (true) {
 
 			b = ai.minimax(b, level, true);
 			takebacks.add(b);
+			if(ai.isCheckMate()) {
+			    b.printBoard();
+			    if(ai.isWhite()) {
+			        System.out.println("Checkmate, white won!");
+			    }
+			    return;
+			}
 			ArrayList<Piece> save = new ArrayList<Piece>();
+			
+			if(b == null) {
+			    System.out.println("Checkmate, black won!");
+			    return;
+			}
 			for (Piece piece : b.getBoard())
 			{
 				if(piece instanceof Knight)
