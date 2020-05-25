@@ -49,6 +49,22 @@ public class King implements Piece
                 nextPos.add( new King(curX + dx[i], curY + dy[i], pieces.get( index ).getColor()) );
                 ans.add( new Board(nextPos) );
             }
+            if(curX + dx[i] >= 0 && curX + dx[i] < 8 && curY + dy[i] >= 0 && curY + dy[i] < 8 && (b.check(new Location(curX + dx[i], curY + dy[i])) == false)) {
+                for(int r = 0; r < pieces.size(); r++) {
+                    if(pieces.get( r ).getLoc().getXPos() == curX + dx[i] && pieces.get( r ).getLoc().getYPos() == curY + dy[i] && pieces.get( r ).getColor() != pieces.get( index ).getColor()) {
+                        ArrayList<Piece> nextPos = new ArrayList<>();
+                        for(Piece q : temp) {
+                            if(q.equals( pieces.get( r ) )) {
+                                continue;
+                            }
+                            nextPos.add( q );     
+                        }
+                        nextPos.add( new King(curX + dx[i], curY + dy[i], pieces.get( index ).getColor()) );
+                        ans.add( new Board(nextPos) );
+                        break;
+                    }
+                }
+            }
         }
         
         return ans;

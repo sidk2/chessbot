@@ -13,6 +13,10 @@ public class Board
             isOccupied[i][1] = true;
             isOccupied[i][6] = true;
             isOccupied[i][7] = true;
+            isOccupied[i][2] = false;
+            isOccupied[i][3] = false;
+            isOccupied[i][4] = false;
+            isOccupied[i][5] = false;
         }
         
         for(int i = 0; i < 8; i++) {
