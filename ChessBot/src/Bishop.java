@@ -2,9 +2,24 @@ import java.util.ArrayList;
 
 public class Bishop implements Piece
 {
+    /**
+     * the location of the piece 
+     */
     private Location loc;
+    /**
+     * the color of the piece, true = white, false = black
+     */
     private boolean color;
+    /**
+     * the material value of the piece
+     */
     public final int VALUE =30;
+    /**
+     * @param xPos the xPosition of the piece
+     * @param yPos the yPosition of the piece
+     * @param color the color of the piece
+     * A constructor for a bishop, instantiates fields
+     */
     public Bishop(int xPos, int yPos, boolean color) {
         loc = new Location(xPos, yPos);
         this.color = color;

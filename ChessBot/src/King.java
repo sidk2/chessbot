@@ -1,10 +1,35 @@
 import java.util.ArrayList;
 
+/**
+ *  A class for the King piece, methods to find Moves, keeps the location, does not include castling
+ *
+ *  @author  Shreyas Kaasyap
+ *  @version May 25, 2020
+ *  @author  Period: 1
+ *  @author  Assignment: ChessBot
+ *
+ *  @author  Sources: Shreyas Kaasyap, Sidharth Kannan, Leo Yang
+ */
 public class King implements Piece
 {
+    /**
+     * the location of the piece
+     */
     private Location loc;
+    /**
+     * the color of the piece
+     */
     private boolean color;
+    /**
+     * the material value of the piece
+     */
     public final int VALUE =900;
+    /**
+     * @param xPos the x coordinate of the location
+     * @param yPos the y coordinate of the location
+     * @param color the color of the piece
+     * A constructor for a king piece, instantiates fields
+     */
     public King(int xPos, int yPos, boolean color) {
         loc = new Location(xPos, yPos);
         this.color = color;

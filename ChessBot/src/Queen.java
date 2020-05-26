@@ -1,11 +1,36 @@
 import java.util.ArrayList;
 
+/**
+ *  A class for a Queen piece, has methods to find moves, includes location and color
+ *
+ *  @author  Shreyas Kaasyap
+ *  @version May 25, 2020
+ *  @author  Period: 1
+ *  @author  Assignment: ChessBot
+ *
+ *  @author  Sources: Shreyas Kaasyap, Sidharth Kannan, Leo Yang
+ */
 public class Queen implements Piece
 {
     
+    /**
+     * the location of the piece
+     */
     private Location loc;
+    /**
+     * the color of the piece
+     */
     private boolean color;
+    /**
+     * the value of the piece
+     */
     public final int VALUE =90;
+    /**
+     * @param xPos the xPosition of the location
+     * @param yPos the yPosition of the location
+     * @param color the color of the piece
+     * A constructor for a Queen piece, instantiates fields
+     */
     public Queen(int xPos, int yPos, boolean color) {
         loc = new Location(xPos, yPos);
         this.color = color;

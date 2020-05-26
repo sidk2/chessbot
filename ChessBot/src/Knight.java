@@ -1,11 +1,37 @@
 import java.util.ArrayList;
 
+/**
+ *  TODO Write a one-sentence summary of your class here.
+ *  TODO Follow it with additional details about its purpose, what abstraction
+ *  it represents, and how to use it.
+ *
+ *  @author  Shreyas
+ *  @version May 25, 2020
+ *  @author  Period: 1
+ *  @author  Assignment: ChessBot
+ *
+ *  @author  Sources: Shreyas Kaasyap, Sidharth Kannan, Leo Yang
+ */
 public class Knight implements Piece
 {
-
+    /**
+     * returns the location of the piece
+     */
     private Location loc;
+    /**
+     * returns the color of the piece, true = white, false = black
+     */
     private boolean color;
+    /**
+     * the value of the piece
+     */
     public final int VALUE =30;
+    /**
+     * @param xPos the xPosition of the location
+     * @param yPos the yPosition of the location
+     * @param color the color of that piece
+     * Constructor for Knight, instantiates fields
+     */
     public Knight(int xPos, int yPos, boolean color) {
         loc = new Location(xPos, yPos);
         this.color = color;

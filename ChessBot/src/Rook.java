@@ -1,10 +1,34 @@
 import java.util.ArrayList;
 
+/**
+ *  A class for a Rook piece, has fields for location and color, methods to find possible moves
+ *  @author  Shreyas Kaasyap
+ *  @version May 25, 2020
+ *  @author  Period: 1
+ *  @author  Assignment: ChessBot
+ *
+ *  @author  Sources: Shreyas Kaasyap, Sidharth Kannan, Leo Yang
+ */
 public class Rook implements Piece
 {
+    /**
+     * the Location of the current piece
+     */
     private Location loc;
+    /**
+     * the color of the piece
+     */
     private boolean color;
+    /**
+     * the material value of the piece
+     */
     public final int VALUE =50;
+    /**
+     * @param xPos the x coordinate of the location
+     * @param yPos the y coordinate of the location
+     * @param color the color of the piece
+     * A constructor for the Rook piece, instantiates fields
+     */
     public Rook(int xPos, int yPos, boolean color) {
         loc = new Location(xPos, yPos);
         this.color = color;

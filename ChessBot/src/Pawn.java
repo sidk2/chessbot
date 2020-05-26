@@ -1,16 +1,14 @@
 import java.util.ArrayList;
 
 /**
- *  TODO Write a one-sentence summary of your class here.
- *  TODO Follow it with additional details about its purpose, what abstraction
- *  it represents, and how to use it.
+ *  A class for a Pawn, includes the location of the Pawn and the color. Includes methods to find the possible moves for the pawn, does not include pawn promotion
  *
  *  @author  Shreyas Kaasyap
  *  @version May 25, 2020
  *  @author  Period: 1
  *  @author  Assignment: ChessBot
  *
- *  @author  Sources: Leo Yang, Shreyas Kaasyap, Sidharth Kannan
+ *  @author  Sources: Shreyas Kaasyap, Sidharth Kannan, Leo Yang
  */
 public class Pawn implements Piece 
 {
@@ -23,7 +21,7 @@ public class Pawn implements Piece
      */
     private Boolean color;
     /**
-     * the material value of the piece
+     * the material value of the piece, true = white, false = black
      */
     public final int VALUE =10;
     /**
