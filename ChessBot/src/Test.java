@@ -33,7 +33,7 @@ public class Test {
     }
     
     public static void textMode() {
-        LinkedList<Board> takebacks = new LinkedList<Board>();
+        Stack<Board> takebacks = new Stack<Board>();
         ArrayList<Piece> board = new ArrayList<>();
         Pawn p = new Pawn(4, 1, true);
         Pawn p1 = new Pawn(5, 6, false);
@@ -88,12 +88,12 @@ public class Test {
         }
         Board b = new Board(board);
         
-        takebacks.add(b);
+        takebacks.push(b);
         AI ai = new AI(b, level);
         while (true) {
             b = ai.minimax(b, level, true);
             b.printBoard();
-            takebacks.add(b);
+            takebacks.push(b);
             if(ai.isCheckMate()) {
                 b.printBoard();
                 if(ai.isWhite()) {
@@ -162,7 +162,7 @@ public class Test {
                     
                   if(string.contains("takeback"))
                   {
-                      b = takebacks.get(takebacks.size()-3);
+                      b = takebacks.pop();
                       break;
                   }
                     
