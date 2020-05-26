@@ -123,6 +123,35 @@ public class Board
         }
 		return null;
     }
+    
+    public ArrayList<Piece> copyBoard(Board temp) {
+        ArrayList<Piece> pieces = new ArrayList<>();
+        for(Piece i : temp.getBoard()) {
+            int xPos = i.getLoc().getXPos();
+            int yPos = i.getLoc().getYPos();
+            boolean color = i.getColor();
+            if(i instanceof Pawn) {
+                pieces.add( new Pawn(xPos, yPos, color) );
+            }
+            if(i instanceof Knight) {
+                pieces.add( new Knight(xPos, yPos, color) );
+            }
+            if(i instanceof Bishop) {
+                pieces.add( new Bishop(xPos, yPos, color) );
+            }
+            if(i instanceof Queen) {
+                pieces.add( new Queen(xPos, yPos, color) );
+            }
+            if(i instanceof Rook) {
+                pieces.add( new Rook(xPos, yPos, color) );
+            }
+            if(i instanceof King) {
+                pieces.add( new King(xPos, yPos, color) );
+            }
+        }
+        return pieces;
+    }
+    
     public Boolean check(Location loc) {
         int x = loc.getXPos();
         int y = loc.getYPos();

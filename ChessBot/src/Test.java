@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Stack;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -411,11 +412,11 @@ public class Test {
     
     public static void guiMode() {
         ArrayList<Piece> board = new ArrayList<>();
-        //LinkedList<Board> takebacks = new LinkedList<Board>();
+        Stack<Board> takebacks = new Stack<>();
         Pawn p = new Pawn(4, 1, true);
         Pawn p1 = new Pawn(5, 6, false);
         board.add(new King(3, 0, true));
-        board.add(p);// index is 0
+        board.add(p);
         board.add(p1);
         board.add(new Rook(0, 0, true));
         board.add(new Knight(1, 0, true));
@@ -468,9 +469,9 @@ public class Test {
         w.setBounds( 100, 100, 816, 836 );
         w.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
         Display panel = new Display();
-        //JButton button = new JButton("Takeback");
-        //button.setLocation( 458, 100 );
-        //panel.add( button );
+        JButton button = new JButton("Takeback");
+        button.setLocation( 458, 100 );
+        panel.add( button );
         panel.setBackground( Color.WHITE );
         Container c = w.getContentPane();
         c.add( panel );
@@ -478,12 +479,14 @@ public class Test {
         w.setVisible( true );
         
         
-        
-//        takebacks.add(b);
+        takebacks.push(new Board(b.copyBoard( b )));
         AI ai = new AI(b, level);
         while (true) {
             b = ai.minimax(b, level, true);
-//            takebacks.add(b);
+            //System.out.println(takebacks.size());
+            if(b != null) {
+            takebacks.push( new Board(b.copyBoard(b)) );
+            }
             if(ai.isCheckMate()) {
                 panel.update(b);
                 if(ai.isWhite()) {
@@ -502,14 +505,24 @@ public class Test {
                 return;
             }
             
-            
+
             panel.update(b);
             while(!panel.getUpdate()) {
-//                if(button.getModel().isPressed()) {
-//                    b = takebacks.get( takebacks.size() - 3 );
-//                    panel.update(b);
-//                    break;
-//                }
+                if(button.getModel().isPressed()) {
+                    //System.out.println("->->->->_>    " + takebacks.size());
+                     
+                    takebacks.pop();
+                    takebacks.pop();
+                    takebacks.pop();
+                    //System.out.println(takebacks.size());
+                    //System.out.println(takebacks.size());
+                    Board temp = takebacks.pop();
+                    b = new Board(temp.copyBoard(temp));
+                    panel.setBoard( b );
+                    button.getModel().setPressed( false );
+                    panel.update(b);
+                    continue;
+                }
                 try {
                     Thread.sleep( 10 );
                 }
@@ -519,7 +532,7 @@ public class Test {
             }
             panel.setUpdate( false );
             b = panel.getBoard();
- //           takebacks.add( b );
+            takebacks.push( new Board(b.copyBoard( b )) );
         }
     }
 }
