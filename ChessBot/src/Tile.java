@@ -18,7 +18,7 @@ public class Tile extends JComponent {
     public int currY;
  
     public Tile(char c, int xPos, int yPos) {
- 
+ //R, 0, 0
         currPiece = c;
         currX = xPos;
         currY = yPos;
@@ -34,7 +34,11 @@ public class Tile extends JComponent {
         }
         this.setBorder(BorderFactory.createEmptyBorder());
     }
- 
+    
+    public char getCurrPiece() {
+        return currPiece;
+    }
+    
     public void update(char c) {
         currPiece = c;
     }
