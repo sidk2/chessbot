@@ -27,8 +27,23 @@ public class Test {
                  + "            |   |_______  |     |     |     | |   |_______     _______\\   \\       _______\\   \\    " + '\n'
                  + "            |           \\ |     |     |     | |           \\   /            |     /            | " + '\n'
                  + "             \\__________/ |_____|     |_____| |____________|  \\____________/     \\____________/    " + '\n');
-                    
-        guiMode();
+         
+        BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
+        String str = null;
+            try {
+                System.out.println("Would you like to use the console or GUI? Type 'console' for console and 'GUI' for GUI.");
+                str = r.readLine();   
+            } 
+            catch (IOException e) {
+            }
+            if(str.contains("GUI"))
+            {
+                guiMode();
+            }
+            else
+            {
+            	textMode();
+            }
         return;
     }
     
