@@ -133,7 +133,6 @@ public class Board
         ArrayList<Board> allNextMoves = new ArrayList<>();
  
         for(int i = 0; i < this.getBoard().size(); i++) {
-            //System.out.println(b.getBoard().size());
             if(this.getBoard().get( i ).getColor() == color) {
                 ArrayList<Board> temp = this.getBoard().get( i ).findMoves( this, i );
  
@@ -201,7 +200,6 @@ public class Board
             }
         }
         ArrayList<Piece> pieces = getBoard();
-        //System.out.println(pieces == null);
         for(Piece i : pieces) {
             
             if(i instanceof Pawn && i.getColor()) {
@@ -251,7 +249,6 @@ public class Board
             }
         }
         ArrayList<Piece> pieces = getBoard();
-        //System.out.println(pieces == null);
         for(Piece i : pieces) {
             
             if(i instanceof Pawn && i.getColor()) {

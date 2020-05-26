@@ -23,7 +23,6 @@ public class Bishop implements Piece
     @Override
     public ArrayList<Board> findMoves( Board b, int index)
     {
-        // ADD TAKING
         ArrayList<Piece> pieces = b.getBoard();
         ArrayList<Piece> temp = new ArrayList<>();
         for(Piece i : pieces) {

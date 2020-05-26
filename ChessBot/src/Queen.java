@@ -39,8 +39,6 @@ public class Queen implements Piece
         int tempX = curX;
         int tempY = curY;
         
-        //SAME AS ROOK METHODS
-        
         while(tempX - 1 >= 0) {
             tempX--;
             if(b.check( new Location(tempX, tempY) ) == true) {
@@ -160,8 +158,6 @@ public class Queen implements Piece
                 break;
             }
         }
-        
-        //SAME AS BISHOP METHODS
         
         tempX = curX;
         tempY = curY;

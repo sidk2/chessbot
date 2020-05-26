@@ -24,7 +24,6 @@ public class King implements Piece
     @Override
     public ArrayList<Board> findMoves( Board b, int index )
     {
-        //ADD TAKING
         ArrayList<Piece> pieces = b.getBoard();
         ArrayList<Piece> temp = new ArrayList<>();
         for(Piece i : pieces) {
@@ -40,7 +39,6 @@ public class King implements Piece
         int curY = pieces.get( index ).getLoc().getYPos();
         
         for(int i = 0; i < 8; i++) {
-            //System.out.println((curX + dx[i]) + " " + (curY + dy[i]));
             if(curX + dx[i] >= 0 && curX + dx[i] < 8 && curY + dy[i] >= 0 && curY + dy[i] < 8 && (b.check(new Location(curX + dx[i], curY + dy[i])) == true)) {
                 ArrayList<Piece> nextPos = new ArrayList<>();
                 for(Piece r : temp) {

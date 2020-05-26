@@ -25,7 +25,6 @@ public class Knight implements Piece
     @Override
     public ArrayList<Board> findMoves( Board b, int index )
     {
-        //ADD TAKING
         ArrayList<Piece> pieces = b.getBoard();
         ArrayList<Piece> temp = new ArrayList<>();
         for(Piece i : pieces) {
@@ -39,9 +38,7 @@ public class Knight implements Piece
         
         int curX = pieces.get( index ).getLoc().getXPos();
         int curY = pieces.get( index ).getLoc().getYPos();
-        //System.out.println(curX + " " + curY);
         for(int i = 0; i < 8; i++) {
-            //System.out.println((curX + dx[i]) + " " + (curY + dy[i]));
             if(curX + dx[i] >= 0 && curX + dx[i] < 8 && curY + dy[i] >= 0 && curY + dy[i] < 8 && b.check( new Location(curX + dx[i], curY + dy[i]) ) == true) {
                 ArrayList<Piece> nextPos = new ArrayList<>();
                 for(Piece r : temp) {
@@ -98,13 +95,10 @@ public class Knight implements Piece
                 whiteKY = i.getLoc().getYPos();
             }
         }
-        //System.out.println(blackKX  + " " + blackKY);
         for(int i = 0; i < 8; i++) {
             int nextX = curX + dx[i];
             int nextY = curY + dy[i];
-            //System.out.println(nextX + " " + nextY);
             if(((nextX == blackKX) && (nextY == blackKY) && (pieces.get( index ).getColor() == true))||((nextX == whiteKX) && (nextY == whiteKY) && pieces.get( index ).getColor() == false)) {
-                //System.out.println(nextY + " " + blackKY);
                  return true;
             }   
         }

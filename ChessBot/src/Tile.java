@@ -12,13 +12,11 @@ public class Tile extends JComponent {
  
     private int color;
     public char currPiece;
-//  private boolean toDisplay;
  
     public int currX;
     public int currY;
  
     public Tile(char c, int xPos, int yPos) {
- //R, 0, 0
         currPiece = c;
         currX = xPos;
         currY = yPos;
@@ -59,7 +57,6 @@ public class Tile extends JComponent {
                 pieceImg = ImageIO.read(getClass().getResource("bpawn.png"));
                  g.drawImage(pieceImg, this.getX(), this.getY(), null);
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         } else if (currPiece == 'r') {
@@ -68,7 +65,6 @@ public class Tile extends JComponent {
                 pieceImg = ImageIO.read(getClass().getResource("brook.png"));
                  g.drawImage(pieceImg, this.getX(), this.getY(), null);
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         } else if (currPiece == 'n') {
@@ -77,7 +73,6 @@ public class Tile extends JComponent {
                 pieceImg = ImageIO.read(getClass().getResource("bknight.png"));
                  g.drawImage(pieceImg, this.getX(), this.getY(), null);
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         } else if (currPiece == 'b') {
@@ -86,7 +81,6 @@ public class Tile extends JComponent {
                 pieceImg = ImageIO.read(getClass().getResource("bbishop.png"));
                  g.drawImage(pieceImg, this.getX(), this.getY(), null);
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         } else if (currPiece == 'q') {
@@ -95,7 +89,6 @@ public class Tile extends JComponent {
                 pieceImg = ImageIO.read(getClass().getResource("bqueen.png"));
                  g.drawImage(pieceImg, this.getX(), this.getY(), null);
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         } else if (currPiece == 'k') {
@@ -104,7 +97,6 @@ public class Tile extends JComponent {
                 pieceImg = ImageIO.read(getClass().getResource("bking.png"));
                  g.drawImage(pieceImg, this.getX(), this.getY(), null);
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         } else if(currPiece == 'P') {
@@ -113,7 +105,6 @@ public class Tile extends JComponent {
                 pieceImg = ImageIO.read(getClass().getResource("wpawn.png"));
                  g.drawImage(pieceImg, this.getX(), this.getY(), null);
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         } else if (currPiece == 'R') {
@@ -122,7 +113,6 @@ public class Tile extends JComponent {
                 pieceImg = ImageIO.read(getClass().getResource("wrook.png"));
                  g.drawImage(pieceImg, this.getX(), this.getY(), null);
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         } else if (currPiece == 'N') {
@@ -131,7 +121,6 @@ public class Tile extends JComponent {
                 pieceImg = ImageIO.read(getClass().getResource("wknight.png"));
                  g.drawImage(pieceImg,this.getX(), this.getY(), null);
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         } else if (currPiece == 'B') {
@@ -140,7 +129,6 @@ public class Tile extends JComponent {
                 pieceImg = ImageIO.read(getClass().getResource("wbishop.png"));
                  g.drawImage(pieceImg, this.getX(), this.getY(), null);
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         } else if (currPiece == 'Q') {
@@ -149,7 +137,6 @@ public class Tile extends JComponent {
                 pieceImg = ImageIO.read(getClass().getResource("wqueen.png"));
                  g.drawImage(pieceImg, this.getX(), this.getY(), null);
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         } else if (currPiece == 'K') {
@@ -158,7 +145,6 @@ public class Tile extends JComponent {
                 pieceImg = ImageIO.read(getClass().getResource("wking.png"));
                  g.drawImage(pieceImg, this.getX(), this.getY(), null);
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }

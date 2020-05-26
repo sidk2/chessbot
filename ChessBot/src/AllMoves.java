@@ -20,7 +20,6 @@ public class AllMoves
         ArrayList<Board> allNextMoves = new ArrayList<>();
         
         for(int i = 0; i < b.getBoard().size(); i++) {
-            //System.out.println(b.getBoard().size());
             if(b.getBoard().get( i ).getColor() == color) {
                 ArrayList<Board> temp = b.getBoard().get( i ).findMoves( b, i );
                     
@@ -31,8 +30,6 @@ public class AllMoves
                 for(Board board : temp) {
                     allNextMoves.add( board );
                 }
-                
-                //System.out.println(b.getBoard().size());
             }
         }
         return allNextMoves;

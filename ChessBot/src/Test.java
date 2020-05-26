@@ -7,13 +7,12 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.Popup;
 
-//This is the test program
 public class Test {
-    static LinkedList<Board> takebacks = new LinkedList<Board>();
     
     public static void main(String[] args) {
         System.out.print("              __________   _____       _____   ____________       ___________         ___________  " + '\n'
@@ -33,11 +32,12 @@ public class Test {
     }
     
     public static void textMode() {
+        LinkedList<Board> takebacks = new LinkedList<Board>();
         ArrayList<Piece> board = new ArrayList<>();
         Pawn p = new Pawn(4, 1, true);
         Pawn p1 = new Pawn(5, 6, false);
         board.add(new King(3, 0, true));
-        board.add(p);// index is 0
+        board.add(p);
         board.add(p1);
         board.add(new Rook(0, 0, true));
         board.add(new Knight(1, 0, true));
@@ -86,7 +86,6 @@ public class Test {
             }
         }
         Board b = new Board(board);
-        b.printBoard();
         
         takebacks.add(b);
         AI ai = new AI(b, level);
@@ -139,7 +138,6 @@ public class Test {
 
             while (true) {
                 try {
-                   // b.printBoard();
                   System.out.print(
                           "Please type in your next move in the format:'Piece' at 'current row' 'current col' to 'new row' 'new column'"
                                   + "\n");
@@ -159,9 +157,6 @@ public class Test {
                       continue;
                   }
                     
-                    //System.out.println(panel.getInput());
-                    
-                    //b.printBoard();
                     
                     
                   if(string.contains("takeback"))
@@ -416,6 +411,7 @@ public class Test {
     
     public static void guiMode() {
         ArrayList<Piece> board = new ArrayList<>();
+        //LinkedList<Board> takebacks = new LinkedList<Board>();
         Pawn p = new Pawn(4, 1, true);
         Pawn p1 = new Pawn(5, 6, false);
         board.add(new King(3, 0, true));
@@ -472,6 +468,9 @@ public class Test {
         w.setBounds( 100, 100, 816, 836 );
         w.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
         Display panel = new Display();
+        //JButton button = new JButton("Takeback");
+        //button.setLocation( 458, 100 );
+        //panel.add( button );
         panel.setBackground( Color.WHITE );
         Container c = w.getContentPane();
         c.add( panel );
@@ -480,14 +479,11 @@ public class Test {
         
         
         
-        takebacks.add(b);
+//        takebacks.add(b);
         AI ai = new AI(b, level);
         while (true) {
             b = ai.minimax(b, level, true);
-            //b.printBoard();
-
-            //b.printBoard();
-            takebacks.add(b);
+//            takebacks.add(b);
             if(ai.isCheckMate()) {
                 panel.update(b);
                 if(ai.isWhite()) {
@@ -498,7 +494,6 @@ public class Test {
                 }
                 return;
             }
-            //ArrayList<Piece> save = new ArrayList<Piece>();
             
             if(b == null) {
                 JOptionPane.showMessageDialog(panel, "Checkmate! Black Wins!");
@@ -510,6 +505,11 @@ public class Test {
             
             panel.update(b);
             while(!panel.getUpdate()) {
+//                if(button.getModel().isPressed()) {
+//                    b = takebacks.get( takebacks.size() - 3 );
+//                    panel.update(b);
+//                    break;
+//                }
                 try {
                     Thread.sleep( 10 );
                 }
@@ -517,37 +517,9 @@ public class Test {
                     
                 }
             }
-//          for (Piece piece : b.getBoard())
-//            {
-//                if(piece instanceof Knight)
-//                {
-//                    save.add(new Knight(piece.getLoc().getXPos(),piece.getLoc().getYPos(), piece.getColor()));
-//                    
-//                }
-//                else if(piece instanceof Pawn)
-//                {
-//                    save.add(new Pawn(piece.getLoc().getXPos(),piece.getLoc().getYPos(), piece.getColor()));
-//                }
-//                else if(piece instanceof King)
-//                {
-//                    save.add(new King(piece.getLoc().getXPos(),piece.getLoc().getYPos(), piece.getColor()));
-//                }
-//                else if(piece instanceof Bishop)
-//                {
-//                    save.add(new Bishop(piece.getLoc().getXPos(),piece.getLoc().getYPos(), piece.getColor()));
-//                }
-//                else if(piece instanceof Rook)
-//                {
-//                    save.add(new Rook(piece.getLoc().getXPos(),piece.getLoc().getYPos(), piece.getColor()));
-//                }
-//                else if(piece instanceof Queen)
-//                {
-//                    save.add(new Queen(piece.getLoc().getXPos(),piece.getLoc().getYPos(), piece.getColor()));
-//                }
-//            }
             panel.setUpdate( false );
             b = panel.getBoard();
-            
+ //           takebacks.add( b );
         }
     }
 }

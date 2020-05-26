@@ -24,18 +24,11 @@ import javax.swing.JPanel;
      public Display() {
          disp = new Tile[8][8];
          board = new Board(true);
- //      this.update(board.updateBoard(board.getPiece(new Location(0, 1)), new Pawn(0, 2, true)));
          for (int x = 0; x < 8; x++) {
              for (int y = 0; y < 8; y++) {
                  disp[x][y] = new Tile(board.charBoard()[x][y], x, y);
              }
          }
-//         for(int x = 0; x < 8; x++) {
-//             for(int y = 0; y < 8; y++) {
-//                 System.out.print(disp[x][y].getCurrPiece() + " ");
-//             }
-//             System.out.println();
-//         }
          this.addMouseListener(this);
 
          toMove = false;
@@ -104,7 +97,6 @@ import javax.swing.JPanel;
              for (int y = 0; y < 8; y++) {
                  Tile t = disp[x][y];
                  t.paintComponent(g);
- //                    System.out.println(t.getX()+ " "  + t.getY());
              }
          }
 
@@ -113,12 +105,10 @@ import javax.swing.JPanel;
      @Override
      public void mouseClicked(MouseEvent e) {
          Tile t = disp[e.getX()/100][e.getY()/100];
- //      if(currPiece == ' ') {
              if(!toMove) {
                  System.out.println("You have Selected : " + t.currPiece + " " + t.currX + " " + t.currY);
                  currPiece = t.currPiece;
                  toMove = true;
- //          }
              oldTile = t;
          } else {
              if(toMove) {
@@ -127,7 +117,6 @@ import javax.swing.JPanel;
                  toMove = false;
                  Piece p = board.getPiece(new Location(oldTile.currX, oldTile.currY));
                  if(p instanceof Pawn) {
-                     //board = board.updateBoard(p, new Pawn(t.currX, t.currY, p.getColor()));
                      input = "Pawn at " + oldTile.currX + " " + oldTile.currY + " to " + t.currX + " " + t.currY;
                      String ans = helper(input);
                      if(ans.equals( "Success" )) {
@@ -140,8 +129,7 @@ import javax.swing.JPanel;
                      
 
                  }
-                 else if(p instanceof Rook) {
-                     //board = board.updateBoard(p, new Rook(t.currX, t.currY, p.getColor()));
+                 else if(p instanceof Rook) {;
                      input = "Rook at " + oldTile.currX + " " + oldTile.currY + " to " + t.currX + " " + t.currY;
                      String ans = helper(input);
                      if(ans.equals( "Success" )) {
@@ -155,7 +143,6 @@ import javax.swing.JPanel;
                      
                  }
                  else if(p instanceof Bishop) {
-                     //board = board.updateBoard(p, new Bishop(t.currX, t.currY, p.getColor()));
                      input = "Bishop at " + oldTile.currX + " " + oldTile.currY + " to " + t.currX + " " + t.currY;
                      String ans = helper(input);
                      if(ans.equals( "Success" )) {
@@ -169,7 +156,6 @@ import javax.swing.JPanel;
                      
                  }
                  else if(p instanceof Knight) {
-                     //board = board.updateBoard(p, new Pawn(t.currX, t.currY, p.getColor()));
                      input = "Knight at " + oldTile.currX + " " + oldTile.currY + " to " + t.currX + " " + t.currY;
                      String ans = helper(input);
                      if(ans.equals( "Success" )) {
@@ -183,7 +169,6 @@ import javax.swing.JPanel;
                      
                  }
                  else if(p instanceof Queen) {
-                     //board = board.updateBoard(p, new Pawn(t.currX, t.currY, p.getColor()));
                      input = "Queen at " + oldTile.currX + " " + oldTile.currY + " to " + t.currX + " " + t.currY;
                      String ans = helper(input);
                      if(ans.equals( "Success" )) {
@@ -197,7 +182,6 @@ import javax.swing.JPanel;
                      
                  }
                  else if(p instanceof King) {
-                     //board = board.updateBoard(p, new Pawn(t.currX, t.currY, p.getColor()));
                      input = "King at " + oldTile.currX + " " + oldTile.currY + " to " + t.currX + " " + t.currY;
                      String ans = helper(input);
                      if(ans.equals( "Success" )) {
@@ -209,33 +193,9 @@ import javax.swing.JPanel;
                      }
                      
                  }
-                 //System.out.println(getInput());
              }
              currPiece = ' ';
          }
-     }
-
-     @Override
-     public void mousePressed(MouseEvent e) {
-         // TODO Auto-generated method stub
-     }
-
-     @Override
-     public void mouseReleased(MouseEvent e) {
-         // TODO Auto-generated method stub
-
-     }
-
-     @Override
-     public void mouseEntered(MouseEvent e) {
-         // TODO Auto-generated method stub
-
-     }
-
-     @Override
-     public void mouseExited(MouseEvent e) {
-         // TODO Auto-generated method stub
-
      }
       public static void main(String[] args) throws IOException {
              JFrame w = new JFrame( "ChessBoard - Itr2" );
@@ -283,63 +243,10 @@ import javax.swing.JPanel;
                     }
                }
               
-              //b.printBoard();
-              //update(board);
-//            System.out.print(
-//                    "Please type in your next move in the format:'Piece' at 'current row' 'current col' to 'new row' 'new column'"
-//                            + "\n");
+
 
               Board saved = new Board(save);
-              //System.out.println(b.getPiece( new Location(1, 7) ) instanceof Knight == true);
-              //BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-//              String string = null;
-//              String[] s = null;
-//            try {
-//                 string = reader.readLine();
-//                
-//                s = string.split("\\s+");
-//            } catch (IOException e) {
-//                continue;
-//            }
               
-              //System.out.println(getInput());
-              
-              //b.printBoard();
-              //b.printBoard();
-              
-//              while(getInput() == null) {
-//                  try {
-//                      Thread.sleep( 1000 );
-//                  }
-//                  catch(Exception ex){
-//                      
-//                  }
-//                  System.out.println(getInput());
-//              }
-//              System.out.println("HIIIIIIIIIIIIIIIIIIII");
-//              
-//              if(getInput() != null) {
-//                  string = getInput();
-//                  s = string.split( "\\s+");
-//              }
-//
-//              for(String i : s) {
-//                  System.out.println(i + " " );
-//              }
-//              board.printBoard();
-//              
-//              try {
-//                  Thread.sleep( 1000 );
-//              }
-//              catch(Exception ex){
-//                  
-//              }
-              
-//            if(string.contains("takeback"))
-//            {
-//                b = takebacks.get(takebacks.size()-3);
-//                break;
-//            }
               
               String[] s = str.split("\\s+");
               
@@ -349,8 +256,6 @@ import javax.swing.JPanel;
                   } else if (!board.getPiece(new Location(Integer.parseInt(s[2]), Integer.parseInt(s[3]))).getClass()
                           .getCanonicalName().contentEquals("Knight")) {
                       return "There is no Knight there! Please try again.";
-                      // System.out.println(b.getPiece(new
-                      // Location(Integer.parseInt(s[2]),Integer.parseInt(s[3]))).getClass().getCanonicalName());
 
                   } else if (board.getPiece(new Location(Integer.parseInt(s[2]), Integer.parseInt(s[3])))
                           .getColor()) {
@@ -374,9 +279,6 @@ import javax.swing.JPanel;
 
                       }
                       if (valid) {
-//                          board = board.updateBoard(new Knight(Integer.parseInt(s[2]), Integer.parseInt(s[3]), false),
-//                                  new Knight(Integer.parseInt(s[5]), Integer.parseInt(s[6]), false));
-                          //b.printBoard();
                           return "Success";
                       } else {
                           board = new Board(save);
@@ -389,8 +291,6 @@ import javax.swing.JPanel;
                   } else if (!board.getPiece(new Location(Integer.parseInt(s[2]), Integer.parseInt(s[3]))).getClass()
                           .getCanonicalName().contentEquals("Pawn")) {
                       return "There is no Pawn there! Please try again.";
-                      // System.out.println(b.getPiece(new
-                      // Location(Integer.parseInt(s[2]),Integer.parseInt(s[3]))).getClass().getCanonicalName());
 
                   } else if (board.getPiece(new Location(Integer.parseInt(s[2]), Integer.parseInt(s[3])))
                           .getColor()) {
@@ -409,9 +309,6 @@ import javax.swing.JPanel;
 
                       }
                       if (valid) {
-//                          board = board.updateBoard(new Pawn(Integer.parseInt(s[2]), Integer.parseInt(s[3]), false),
-//                                  new Pawn(Integer.parseInt(s[5]), Integer.parseInt(s[6]), false));
-                          //b.printBoard();
                           return "Success";
                       } 
                       else 
@@ -426,8 +323,6 @@ import javax.swing.JPanel;
                   } else if (!board.getPiece(new Location(Integer.parseInt(s[2]), Integer.parseInt(s[3]))).getClass()
                           .getCanonicalName().contentEquals("Rook")) {
                       return "There is no Rook there! Please try again.";
-                      // System.out.println(b.getPiece(new
-                      // Location(Integer.parseInt(s[2]),Integer.parseInt(s[3]))).getClass().getCanonicalName());
 
                   } else if (board.getPiece(new Location(Integer.parseInt(s[2]), Integer.parseInt(s[3])))
                           .getColor()) {
@@ -449,9 +344,6 @@ import javax.swing.JPanel;
 
                       }
                       if (valid) {
-//                          board = board.updateBoard(new Rook(Integer.parseInt(s[2]), Integer.parseInt(s[3]), false),
-//                                  new Rook(Integer.parseInt(s[5]), Integer.parseInt(s[6]), false));
-                          //b.printBoard();
                           return "Success";
                       } else {
                           board = new Board(save);
@@ -464,8 +356,6 @@ import javax.swing.JPanel;
                   } else if (!board.getPiece(new Location(Integer.parseInt(s[2]), Integer.parseInt(s[3]))).getClass()
                           .getCanonicalName().contentEquals("Queen")) {
                       return "There is no Queen there! Please try again.";
-                      // System.out.println(b.getPiece(new
-                      // Location(Integer.parseInt(s[2]),Integer.parseInt(s[3]))).getClass().getCanonicalName());
 
                   } else if (board.getPiece(new Location(Integer.parseInt(s[2]), Integer.parseInt(s[3])))
                           .getColor()) {
@@ -488,9 +378,6 @@ import javax.swing.JPanel;
 
                       }
                       if (valid) {
-//                          board = board.updateBoard(new Queen(Integer.parseInt(s[2]), Integer.parseInt(s[3]), false),
-//                                  new Queen(Integer.parseInt(s[5]), Integer.parseInt(s[6]), false));
-                          //b.printBoard();
                           return "Success";
                       } else {
                           board = new Board(save);
@@ -503,8 +390,6 @@ import javax.swing.JPanel;
                   } else if (!board.getPiece(new Location(Integer.parseInt(s[2]), Integer.parseInt(s[3]))).getClass()
                           .getCanonicalName().contentEquals("Bishop")) {
                       return "There is no Bishop there! Please try again.";
-                      // System.out.println(b.getPiece(new
-                      // Location(Integer.parseInt(s[2]),Integer.parseInt(s[3]))).getClass().getCanonicalName());
 
                   } else if (board.getPiece(new Location(Integer.parseInt(s[2]), Integer.parseInt(s[3])))
                           .getColor()) {
@@ -528,9 +413,6 @@ import javax.swing.JPanel;
 
                       }
                       if (valid) {
-//                          board = board.updateBoard(new Bishop(Integer.parseInt(s[2]), Integer.parseInt(s[3]), false),
-//                                  new Bishop(Integer.parseInt(s[5]), Integer.parseInt(s[6]), false));
-                          //b.printBoard();
                           return "Success";
                       } else {
                           board = new Board(save);
@@ -543,8 +425,6 @@ import javax.swing.JPanel;
                   } else if (!board.getPiece(new Location(Integer.parseInt(s[2]), Integer.parseInt(s[3]))).getClass()
                           .getCanonicalName().contentEquals("King")) {
                       return "There is no King there! Please try again.";
-                      // System.out.println(b.getPiece(new
-                      // Location(Integer.parseInt(s[2]),Integer.parseInt(s[3]))).getClass().getCanonicalName());
 
                   } else if (board.getPiece(new Location(Integer.parseInt(s[2]), Integer.parseInt(s[3])))
                           .getColor()) {
@@ -566,9 +446,6 @@ import javax.swing.JPanel;
 
                       }
                       if (valid) {
-//                          board = board.updateBoard(new King(Integer.parseInt(s[2]), Integer.parseInt(s[3]), false),
-//                                  new King(Integer.parseInt(s[5]), Integer.parseInt(s[6]), false));
-                          //b.printBoard();
                           return "Success";
                       } else {
                           board = new Board(save);
@@ -581,23 +458,28 @@ import javax.swing.JPanel;
           }
         return "Success";
       }
-      
 
- //      System.out.println("Hi");
- //
- //      Tile t = (Tile) this.getComponentAt(new Point(e.getX(), e.getY()));
- //      System.out.println(t.getX() + " " + t.getY());
- //
- //      if(t.currPiece != ' ' && !toMove) {
- //          System.out.println("You have Selected : " + t.currPiece);
- //          currPiece = t.currPiece;
- //          toMove = true;
- //          oldTile = t;
- //      } else {
- //          oldTile.currPiece = ' ';
- //          t.currPiece = currPiece;
- //          toMove = false;
- //      }
- //      repaint();
+    @Override
+    public void mouseEntered( MouseEvent arg0 )
+    {
+        
+    }
 
+    @Override
+    public void mouseExited( MouseEvent arg0 )
+    {
+        
+    }
+
+    @Override
+    public void mousePressed( MouseEvent arg0 )
+    {
+        
+    }
+
+    @Override
+    public void mouseReleased( MouseEvent arg0 )
+    {
+        
+    }
  }

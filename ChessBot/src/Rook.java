@@ -23,7 +23,6 @@ public class Rook implements Piece
     @Override
     public ArrayList<Board> findMoves( Board b, int index )
     {
-        //ADD TAKING
         ArrayList<Piece> pieces = b.getBoard();
         ArrayList<Piece> temp = new ArrayList<>();
         for(Piece i : pieces) {
@@ -198,8 +197,6 @@ public class Rook implements Piece
             }
         }
         
-        //System.out.println(blackKX + " " + blackKY);
-        
         int tempX = curX;
         int tempY = curY;
         
@@ -231,7 +228,6 @@ public class Rook implements Piece
         
         while(tempY + 1 < 8) {
             tempY = tempY + 1;
-            //System.out.println(tempY);
             if((tempX == blackKX && tempY == blackKY && pieces.get( index ).getColor() == true) || (tempX == whiteKX && tempY == whiteKY && pieces.get( index ).getColor() == false)) {
                 return true;
             }
