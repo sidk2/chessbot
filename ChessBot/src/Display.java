@@ -23,7 +23,7 @@ import javax.swing.JPanel;
      private boolean isSuccessful = false;
      public Display() {
          disp = new Tile[8][8];
-         board = new Board(true);
+         board = new Board();
          for (int x = 0; x < 8; x++) {
              for (int y = 0; y < 8; y++) {
                  disp[x][y] = new Tile(board.charBoard()[x][y], x, y);

@@ -1,12 +1,33 @@
 
 import java.util.ArrayList;
 
+/**
+ *  A class for a Board, which has an ArrayList of pieces that stores all the pieces currently on the board. Has methods to manipulate and return parts of the board.
+ *
+ *  @author  Shreyas Kaasyap
+ *  @version May 26, 2020
+ *  @author  Period: 1
+ *  @author  Assignment: ChessBot
+ *
+ *  @author  Sources: Shreyas Kaasyap, Sidharth Kannan, Leo Yang
+ */
 public class Board
 {
+    /**
+     * the set of pieces currently on the board
+     */
     private ArrayList<Piece> board;
+    /**
+     * a boolean matrix that keeps track of which tiles have any piece on it
+     * true if there is a piece at the tile, false otherwise
+     */
     private Boolean[][] isOccupied;
-    private int value;
-    public Board(boolean full) {
+    
+    /**
+     * Makes a board with the position set as the starting position of a chess game
+     * Instantiates fields
+     */
+    public Board() {
         board = new ArrayList<>();
         isOccupied = new Boolean[8][8];
         for(int i = 0; i < 8; i++) {
@@ -44,16 +65,11 @@ public class Board
         board.add( new Rook(7, 7, false) );
 
     }
-    public Board(Board b)
-    {
-    	board = new ArrayList<>();
-        isOccupied = new Boolean[8][8];
-    	for(Piece p : b.getBoard())
-    	{
-    		board.add(p);
-    		isOccupied[p.getLoc().getXPos()][p.getLoc().getYPos()] = true;
-    	}
-    }
+   
+    /**
+     * @param board an arraylist of pieces that are on a board
+     * sets the board to have the pieces in board, updates fields
+     */
     public Board(ArrayList<Piece> board) {
         this.board = board;
         isOccupied = new Boolean[8][8];
@@ -67,6 +83,11 @@ public class Board
         }
         
     }
+    /**
+     * Checks if two boards have the same pieces in the same spots
+     * @param other the board to compare to
+     * @return boolean true if the boards are equal, false otherwise
+     */
     public boolean equals(Board other)
     {
     	char[][] c1 = this.charBoard();
@@ -84,9 +105,17 @@ public class Board
     	}
     	return ret;
     }
+    /**
+     * returns the set of the pieces currently on the board
+     * @return ArrayList<Piece> the set of pieces
+     */
     public ArrayList<Piece> getBoard(){
         return board;
     }
+    /**
+     * Returns the value of the position, adds up all the material value of every piece on the baord
+     * @return int
+     */
     public int getValue()
     {
     	int val = 0;
@@ -97,20 +126,13 @@ public class Board
 		}
 		return val;
     }
-    public Boolean[][] getOccupied(){
-        return isOccupied;
-    }
-    public boolean oneContains(ArrayList<Board> b, Board e)
-    {
-    	for(Board board : b)
-    	{
-    		if(board.equals(e))
-    		{
-    			return true;
-    		}
-    	}
-    	return false;
-    }
+    
+    
+    /**
+     * Return the pieces at a given location, returns null if there is no piece at that location
+     * @param loc the location to check
+     * @return Piece
+     */
     public Piece getPiece(Location loc) {
         int x = loc.getXPos();
         int y = loc.getYPos();
@@ -124,6 +146,11 @@ public class Board
 		return null;
     }
     
+    /**
+     * Returns the set of pieces on a board
+     * @param temp the board to copy
+     * @return ArrayList<Piece> the set of pieces on the board
+     */
     public ArrayList<Piece> copyBoard(Board temp) {
         ArrayList<Piece> pieces = new ArrayList<>();
         for(Piece i : temp.getBoard()) {
@@ -152,11 +179,21 @@ public class Board
         return pieces;
     }
     
+    /**
+     * Return true if there is no piece at a given location, false otherwise
+     * @param loc the location to check
+     * @return Boolean 
+     */
     public Boolean check(Location loc) {
         int x = loc.getXPos();
         int y = loc.getYPos();
         return !isOccupied[x][y];
     }
+    /**
+     * returns the set of all possible moves for a side(color->true = white, false = black), removes illegal moves, returns null if the current position is checkmate
+     * @param color true if it is white's turn, false otherwise
+     * @return ArrayList<Board> the set of all possible resulting Boards
+     */
     public ArrayList<Board> getPossibleMoves( boolean color) {
     	 
         ArrayList<Board> allNextMoves = new ArrayList<>();
@@ -187,6 +224,11 @@ public class Board
         }
         return allNextMoves;
     }
+	/**
+	 * Returns the best next possible board based on the material evalution of the board for a given color
+	 * @param color true if it white to move, false otherwise
+	 * @return Board
+	 */
 	public Board getBestBoard(boolean color)
 	{
 		Board best = null;
@@ -206,6 +248,12 @@ public class Board
 		}
 		return best;
 	}
+	/**
+	 * updates the board, removes the piece p1, and adds the piece p2, takes care of the possibility of p2 is taking another piece, p1 and p2 will be the same type
+	 * @param p1 the piece to remove
+	 * @param p2 the piece to put on the board
+	 * @return Board, the updated Board
+	 */
 	public Board updateBoard(Piece p1, Piece p2) {
         ArrayList<Piece> pieces = this.getBoard();
         
@@ -221,6 +269,10 @@ public class Board
         pieces.add( p2 );
         return new Board(pieces);
     }
+    /**
+     * returns a matrix of the current Board, capital letter for a white piece, lowercase for black
+     * @return char[][]
+     */
     public char[][] charBoard() {
     	char[][] board = new char[8][8];
         for(int i = 0; i < 8; i++) {
@@ -270,6 +322,9 @@ public class Board
         }
         return board;
     }
+    /**
+     * prints out the currentBoard, uppercase for white, lowercase for black, prints out the rows and columns as well
+     */
     public void printBoard() {
         char[][] board = new char[8][8];
         for(int i = 0; i < 8; i++) {
