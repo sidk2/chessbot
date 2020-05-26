@@ -1,19 +1,49 @@
 import java.util.ArrayList;
 
+/**
+ *  TODO Write a one-sentence summary of your class here.
+ *  TODO Follow it with additional details about its purpose, what abstraction
+ *  it represents, and how to use it.
+ *
+ *  @author  Shreyas Kaasyap
+ *  @version May 25, 2020
+ *  @author  Period: 1
+ *  @author  Assignment: ChessBot
+ *
+ *  @author  Sources: Leo Yang, Shreyas Kaasyap, Sidharth Kannan
+ */
 public class Pawn implements Piece 
 {
+    /**
+     * the location of the current piece
+     */
     private Location loc;
+    /**
+     * the color of the current piece
+     */
     private Boolean color;
+    /**
+     * the material value of the piece
+     */
     public final int VALUE =10;
+    /**
+     * @param xPos the xPosition of the Location
+     * @param yPos the yPosition of the Location
+     * @param color the color of the piece
+     * Constructor for the Pawn class, instantiates the private fields
+     */
     public Pawn( int xPos, int yPos, Boolean color )
     {
         loc = new Location(xPos, yPos);
         this.color = color;
     }
+
     public boolean equals(Piece other)
     {
     	return other.getLoc().equals(getLoc()) && other.getClass().getCanonicalName().equals(this.getClass().getCanonicalName());
     }
+    
+
     public int getValue()
     {
     	if(color)
@@ -21,6 +51,7 @@ public class Pawn implements Piece
     	else
     		return -1*VALUE;
     }
+
     @Override
     public ArrayList<Board> findMoves(Board b, int index) {
         ArrayList<Piece> pieces = b.getBoard(); 
@@ -153,6 +184,7 @@ public class Pawn implements Piece
     {
         return loc;
     }
+
 
     @Override
     public boolean isInCheck( Board b, int index )
