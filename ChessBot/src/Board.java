@@ -148,12 +148,11 @@ public class Board
     
     /**
      * Returns the set of pieces on a board
-     * @param temp the board to copy
      * @return ArrayList<Piece> the set of pieces on the board
      */
-    public ArrayList<Piece> copyBoard(Board temp) {
+    public ArrayList<Piece> copyBoard() {
         ArrayList<Piece> pieces = new ArrayList<>();
-        for(Piece i : temp.getBoard()) {
+        for(Piece i : this.getBoard()) {
             int xPos = i.getLoc().getXPos();
             int yPos = i.getLoc().getYPos();
             boolean color = i.getColor();

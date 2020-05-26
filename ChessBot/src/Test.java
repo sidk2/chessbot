@@ -49,44 +49,6 @@ public class Test {
     
     public static void textMode() {
         Stack<Board> takebacks = new Stack<Board>();
-        ArrayList<Piece> board = new ArrayList<>();
-        Pawn p = new Pawn(4, 1, true);
-        Pawn p1 = new Pawn(5, 6, false);
-        board.add(new King(3, 0, true));
-        board.add(p);
-        board.add(p1);
-        board.add(new Rook(0, 0, true));
-        board.add(new Knight(1, 0, true));
-        board.add(new Bishop(2, 0, true));
-        board.add(new Queen(4, 0, true));
-
-        board.add(new Bishop(5, 0, true));
-        board.add(new Knight(6, 0, true));
-        board.add(new Rook(7, 0, true));
-
-        board.add(new Rook(0, 7, false));
-        Knight n1 = new Knight(1, 7, false);
-        board.add(n1);
-        board.add(new Bishop(2, 7, false));
-        board.add(new Queen(4, 7, false));
-        board.add(new King(3, 7, false));
-        board.add(new Bishop(5, 7, false));
-        Knight n2 = new Knight(6, 7, false);
-        board.add(n2);
-        board.add(new Rook(7, 7, false));
-
-        for (int i = 0; i < 8; i++) {
-            if (i == 4) {
-                board.add(new Pawn(i, 6, false));
-                continue;
-            }
-            if (i == 5) {
-                board.add(new Pawn(i, 1, true));
-                continue;
-            }
-            board.add(new Pawn(i, 1, true));
-            board.add(new Pawn(i, 6, false));
-        }
         int level = 4;
         while(true) {
         BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
@@ -101,7 +63,7 @@ public class Test {
                 continue;
             }
         }
-        Board b = new Board(board);
+        Board b = new Board();
         
         takebacks.push(b);
         AI ai = new AI(b, level);
@@ -426,45 +388,7 @@ public class Test {
     }
     
     public static void guiMode() {
-        ArrayList<Piece> board = new ArrayList<>();
         Stack<Board> takebacks = new Stack<>();
-        Pawn p = new Pawn(4, 1, true);
-        Pawn p1 = new Pawn(5, 6, false);
-        board.add(new King(3, 0, true));
-        board.add(p);
-        board.add(p1);
-        board.add(new Rook(0, 0, true));
-        board.add(new Knight(1, 0, true));
-        board.add(new Bishop(2, 0, true));
-        board.add(new Queen(4, 0, true));
-
-        board.add(new Bishop(5, 0, true));
-        board.add(new Knight(6, 0, true));
-        board.add(new Rook(7, 0, true));
-
-        board.add(new Rook(0, 7, false));
-        Knight n1 = new Knight(1, 7, false);
-        board.add(n1);
-        board.add(new Bishop(2, 7, false));
-        board.add(new Queen(4, 7, false));
-        board.add(new King(3, 7, false));
-        board.add(new Bishop(5, 7, false));
-        Knight n2 = new Knight(6, 7, false);
-        board.add(n2);
-        board.add(new Rook(7, 7, false));
-
-        for (int i = 0; i < 8; i++) {
-            if (i == 4) {
-                board.add(new Pawn(i, 6, false));
-                continue;
-            }
-            if (i == 5) {
-                board.add(new Pawn(i, 1, true));
-                continue;
-            }
-            board.add(new Pawn(i, 1, true));
-            board.add(new Pawn(i, 6, false));
-        }
         int level = 4;
         while(true) {
         BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
@@ -479,7 +403,7 @@ public class Test {
                 continue;
             }
         }
-        Board b = new Board(board);
+        Board b = new Board();
         JFrame w = new JFrame( "ChessBoard" );
         w.setBounds( 100, 100, 816, 836 );
         w.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
@@ -494,13 +418,13 @@ public class Test {
         w.setVisible( true );
         
         
-        takebacks.push(new Board(b.copyBoard( b )));
+        takebacks.push(new Board(b.copyBoard(  )));
         AI ai = new AI(b, level);
         while (true) {
             b = ai.minimax(b, level, true);
             //System.out.println(takebacks.size());
             if(b != null) {
-            takebacks.push( new Board(b.copyBoard(b)) );
+            takebacks.push( new Board(b.copyBoard()) );
             }
             if(ai.isCheckMate()) {
                 panel.update(b);
@@ -532,7 +456,7 @@ public class Test {
                     //System.out.println(takebacks.size());
                     //System.out.println(takebacks.size());
                     Board temp = takebacks.pop();
-                    b = new Board(temp.copyBoard(temp));
+                    b = new Board(temp.copyBoard());
                     panel.setBoard( b );
                     button.getModel().setPressed( false );
                     panel.update(b);
@@ -547,7 +471,7 @@ public class Test {
             }
             panel.setUpdate( false );
             b = panel.getBoard();
-            takebacks.push( new Board(b.copyBoard( b )) );
+            takebacks.push( new Board(b.copyBoard(  )) );
         }
     }
 }
