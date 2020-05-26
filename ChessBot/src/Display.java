@@ -292,6 +292,7 @@ import javax.swing.JPanel;
                       Knight n = (Knight) board
                               .getPiece(new Location(Integer.parseInt(s[2]), Integer.parseInt(s[3])));
                       boolean valid = false;
+                      boolean inCheck = false;
                       for (Board b1 : n.findMoves(board, board.getBoard().indexOf(n))) {
 
                           Board b2 = board;
@@ -300,7 +301,12 @@ import javax.swing.JPanel;
 
                           if (b1.equals(b2)) {
                               valid = true;
-
+                              for(Piece i : b1.getBoard()) {
+                                  if(i.getColor() && i.isInCheck( b1, b1.getBoard().indexOf( i ) )) {
+                                      valid = false;
+                                      break;
+                                  }
+                              }
                               break;
 
                           }
@@ -326,13 +332,21 @@ import javax.swing.JPanel;
                   } else {
                       Pawn n = (Pawn) board.getPiece(new Location(Integer.parseInt(s[2]), Integer.parseInt(s[3])));
                       boolean valid = false;
+                      boolean inCheck = false;
                       for (Board b1 : n.findMoves(board, board.getBoard().indexOf(n))) {
                           Board b2 = board;
                           b2 = b2.updateBoard(n, new Pawn(Integer.parseInt(s[5]), Integer.parseInt(s[6]), false));
                           
                           if (b1.equals(b2)) {
-                              
                               valid = true;
+                              for(Piece i : b1.getBoard()) {
+                                  if(i.getColor() && i.isInCheck( b1, b1.getBoard().indexOf( i ) )) {
+                                      valid = false;
+                                      break;
+                                  }
+                              }
+                              break;
+
                           }
 
                       }
@@ -358,6 +372,7 @@ import javax.swing.JPanel;
                   } else {
                       Rook n = (Rook) board.getPiece(new Location(Integer.parseInt(s[2]), Integer.parseInt(s[3])));
                       boolean valid = false;
+                      boolean inCheck = false;
                       for (Board b1 : n.findMoves(board, board.getBoard().indexOf(n))) {
 
                           Board b2 = board;
@@ -365,7 +380,12 @@ import javax.swing.JPanel;
 
                           if (b1.equals(b2)) {
                               valid = true;
-
+                              for(Piece i : b1.getBoard()) {
+                                  if(i.getColor() && i.isInCheck( b1, b1.getBoard().indexOf( i ) )) {
+                                      valid = false;
+                                      break;
+                                  }
+                              }
                               break;
 
                           }
@@ -391,6 +411,7 @@ import javax.swing.JPanel;
                   } else {
                       Queen n = (Queen) board.getPiece(new Location(Integer.parseInt(s[2]), Integer.parseInt(s[3])));
                       boolean valid = false;
+                      boolean inCheck = false;
                       for (Board b1 : n.findMoves(board, board.getBoard().indexOf(n))) {
 
                           Board b2 = board;
@@ -399,7 +420,12 @@ import javax.swing.JPanel;
 
                           if (b1.equals(b2)) {
                               valid = true;
-
+                              for(Piece i : b1.getBoard()) {
+                                  if(i.getColor() && i.isInCheck( b1, b1.getBoard().indexOf( i ) )) {
+                                      valid = false;
+                                      break;
+                                  }
+                              }
                               break;
 
                           }
@@ -426,6 +452,7 @@ import javax.swing.JPanel;
                       Bishop n = (Bishop) board
                               .getPiece(new Location(Integer.parseInt(s[2]), Integer.parseInt(s[3])));
                       boolean valid = false;
+                      boolean inCheck = false;
                       for (Board b1 : n.findMoves(board, board.getBoard().indexOf(n))) {
 
                           Board b2 = board;
@@ -434,7 +461,12 @@ import javax.swing.JPanel;
 
                           if (b1.equals(b2)) {
                               valid = true;
-
+                              for(Piece i : b1.getBoard()) {
+                                  if(i.getColor() && i.isInCheck( b1, b1.getBoard().indexOf( i ) )) {
+                                      valid = false;
+                                      break;
+                                  }
+                              }
                               break;
 
                           }
@@ -460,6 +492,7 @@ import javax.swing.JPanel;
                   } else {
                       King n = (King) board.getPiece(new Location(Integer.parseInt(s[2]), Integer.parseInt(s[3])));
                       boolean valid = false;
+                      boolean inCheck = false;
                       for (Board b1 : n.findMoves(board, board.getBoard().indexOf(n))) {
 
                           Board b2 = board;
@@ -467,7 +500,12 @@ import javax.swing.JPanel;
 
                           if (b1.equals(b2)) {
                               valid = true;
-
+                              for(Piece i : b1.getBoard()) {
+                                  if(i.getColor() && i.isInCheck( b1, b1.getBoard().indexOf( i ) )) {
+                                      valid = false;
+                                      break;
+                                  }
+                              }
                               break;
 
                           }
