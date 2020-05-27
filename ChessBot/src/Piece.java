@@ -11,7 +11,7 @@ import java.util.ArrayList;
  *
  * @author Sources: Shreyas Kaasyap, Sidharth Kannan, Leo Yang
  */
-interface Piece
+public interface Piece
 {
     /**
      * Finds all possible resulting boards after moving this piece, includes
@@ -21,7 +21,7 @@ interface Piece
      *            the current chessBoard
      * @param index
      *            the index of that piece in the ArrayList of the current Board
-     * @return ArrayList<Board> the ArrayList of possible Boards
+     * @return ArrayList the ArrayList of possible Boards
      */
     ArrayList<Board> findMoves( Board b, int index );
 

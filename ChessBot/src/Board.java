@@ -128,7 +128,7 @@ public class Board
     /**
      * returns the set of the pieces currently on the board
      * 
-     * @return ArrayList<Piece> the set of pieces
+     * @return ArrayList the set of pieces
      */
     public ArrayList<Piece> getBoard()
     {
@@ -180,7 +180,7 @@ public class Board
     /**
      * Returns the set of pieces on a board
      * 
-     * @return ArrayList<Piece> the set of pieces on the board
+     * @return ArrayList the set of pieces on the board
      */
     public ArrayList<Piece> copyBoard()
     {
@@ -235,13 +235,13 @@ public class Board
 
 
     /**
-     * returns the set of all possible moves for a side(color->true = white,
+     * returns the set of all possible moves for a side(color is true = white,
      * false = black), removes illegal moves, returns null if the current
      * position is checkmate
      * 
      * @param color
      *            true if it is white's turn, false otherwise
-     * @return ArrayList<Board> the set of all possible resulting Boards
+     * @return ArrayList the set of all possible resulting Boards
      */
     public ArrayList<Board> getPossibleMoves( boolean color )
     {
