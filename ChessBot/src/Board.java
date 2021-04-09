@@ -47,9 +47,14 @@ public class Board
             isOccupied[i][4] = false;
             isOccupied[i][5] = false;
         }
-
+        board.add(new Pawn(4, 1, true));
+        board.add(new Pawn(4, 6, false));
         for ( int i = 0; i < 8; i++ )
         {
+            if( i == 4)
+            {
+                continue;
+            }
             board.add( new Pawn( i, 1, true ) );
             board.add( new Pawn( i, 6, false ) );
         }

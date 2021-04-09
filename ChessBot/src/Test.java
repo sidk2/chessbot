@@ -97,7 +97,7 @@ public class Test
             String str = null;
             try
             {
-                System.out.println( "Pick a level from 1 - 4" );
+                System.out.println( "Pick a level from 1 - 8" );
                 str = r.readLine();
                 level = Integer.parseInt( str );
                 break;
