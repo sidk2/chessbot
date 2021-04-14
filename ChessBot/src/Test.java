@@ -83,7 +83,20 @@ public class Test
         return;
     }
 
-
+    public static int convLetters(char c){
+        System.out.println(c);
+        switch(c){
+            case 'A': return 0;
+            case 'B': return 1;
+            case 'C': return 2;
+            case 'D': return 3;
+            case 'E': return 4;
+            case 'F': return 5;
+            case 'G': return 6;
+            case 'H': return 7;
+        }
+        return 8;
+    }
     /**
      * A functional chess game without a GUI, resembles command line chess
      */
@@ -113,7 +126,7 @@ public class Test
         AI ai = new AI( b, level );
         while ( true )
         {
-            b = ai.minimax( b, level, true );
+            b = ai.minimax( b, level, true, -99999999, 999999999 );
             b.printBoard();
             takebacks.push( b );
             if ( ai.isCheckMate() )
@@ -209,14 +222,14 @@ public class Test
 
                     if ( s[0].contains( "Knight" ) )
                     {
-                        if ( b.getPiece( new Location( Integer.parseInt( s[2] ),
-                            Integer.parseInt( s[3] ) ) ) == null )
+                        if ( b.getPiece( new Location( convLetters(s[2].charAt(0)),
+                            Integer.parseInt( s[3] ) - 1 ) ) == null )
                         {
                             System.out.println( "There is no Knight there! Please try again." );
                         }
                         else if ( !b
                             .getPiece(
-                                new Location( Integer.parseInt( s[2] ), Integer.parseInt( s[3] ) ) )
+                                new Location( convLetters(s[2].charAt(0)), Integer.parseInt( s[3] ) - 1 ) )
                             .getClass()
                             .getCanonicalName()
                             .contentEquals( "Knight" ) )
@@ -224,31 +237,31 @@ public class Test
                             System.out.println( "There is no Knight there! Please try again." );
                             System.out
                                 .println( b
-                                    .getPiece( new Location( Integer.parseInt( s[2] ),
-                                        Integer.parseInt( s[3] ) ) )
+                                    .getPiece( new Location( convLetters(s[2].charAt(0)),
+                                        Integer.parseInt( s[3] ) - 1 ) )
                                     .getClass()
                                     .getCanonicalName() );
 
                         }
                         else if ( b
                             .getPiece(
-                                new Location( Integer.parseInt( s[2] ), Integer.parseInt( s[3] ) ) )
+                                new Location( convLetters(s[2].charAt(0)), Integer.parseInt( s[3] ) - 1 ) )
                             .getColor() )
                         {
                             System.out.println( "That's not your Knight! Please try again." );
                         }
                         else
                         {
-                            Knight n = (Knight)b.getPiece( new Location( Integer.parseInt( s[2] ),
-                                Integer.parseInt( s[3] ) ) );
+                            Knight n = (Knight)b.getPiece( new Location( convLetters(s[2].charAt(0)),
+                                Integer.parseInt( s[3] ) - 1 ) );
                             boolean valid = false;
                             for ( Board b1 : n.findMoves( b, b.getBoard().indexOf( n ) ) )
                             {
 
                                 Board b2 = b;
                                 b2 = b2.updateBoard( n,
-                                    new Knight( Integer.parseInt( s[5] ),
-                                        Integer.parseInt( s[6] ),
+                                    new Knight( convLetters(s[5].charAt(0)),
+                                        Integer.parseInt( s[6] ) - 1,
                                         false ) );
 
                                 if ( b1.equals( b2 ) )
@@ -263,11 +276,11 @@ public class Test
                             if ( valid )
                             {
                                 b = b.updateBoard(
-                                    new Knight( Integer.parseInt( s[2] ),
-                                        Integer.parseInt( s[3] ),
+                                    new Knight( convLetters(s[2].charAt(0)),
+                                        Integer.parseInt( s[3] ) - 1,
                                         false ),
-                                    new Knight( Integer.parseInt( s[5] ),
-                                        Integer.parseInt( s[6] ),
+                                    new Knight( convLetters(s[5].charAt(0)),
+                                        Integer.parseInt( s[6] ) - 1,
                                         false ) );
                                 b.printBoard();
                                 break;
@@ -281,45 +294,47 @@ public class Test
                     }
                     else if ( s[0].contains( "Pawn" ) )
                     {
-                        if ( b.getPiece( new Location( Integer.parseInt( s[2] ),
-                            Integer.parseInt( s[3] ) ) ) == null )
+                        if ( b.getPiece( new Location( convLetters(s[2].charAt(0)),
+                            Integer.parseInt( s[3] ) - 1 ) ) == null )
                         {
+                            System.out.println(b.getPiece( new Location( convLetters(s[2].charAt(0)),
+                            Integer.parseInt( s[3] ) - 1 ) ) == null );
                             System.out.println( "There is no Pawn there! Please try again." );
+                            System.out
+                                .println( convLetters(s[2].charAt(0)) + " " +
+                                        (Integer.parseInt( s[3] ) - 1) );
                         }
                         else if ( !b
                             .getPiece(
-                                new Location( Integer.parseInt( s[2] ), Integer.parseInt( s[3] ) ) )
+                                new Location( convLetters(s[2].charAt(0)), Integer.parseInt( s[3] ) - 1 ) )
                             .getClass()
                             .getCanonicalName()
                             .contentEquals( "Pawn" ) )
                         {
                             System.out.println( "There is no Pawn there! Please try again." );
                             System.out
-                                .println( b
-                                    .getPiece( new Location( Integer.parseInt( s[2] ),
-                                        Integer.parseInt( s[3] ) ) )
-                                    .getClass()
-                                    .getCanonicalName() );
+                                .println( convLetters(s[2].charAt(0)) + " " +
+                                        (Integer.parseInt( s[3] ) - 1) );
 
                         }
                         else if ( b
                             .getPiece(
-                                new Location( Integer.parseInt( s[2] ), Integer.parseInt( s[3] ) ) )
+                                new Location( convLetters(s[2].charAt(0)), Integer.parseInt( s[3] ) - 1 ) )
                             .getColor() )
                         {
                             System.out.println( "That's not your Pawn! Please try again." );
                         }
                         else
                         {
-                            Pawn n = (Pawn)b.getPiece( new Location( Integer.parseInt( s[2] ),
-                                Integer.parseInt( s[3] ) ) );
+                            Pawn n = (Pawn)b.getPiece( new Location( convLetters(s[2].charAt(0)),
+                                Integer.parseInt( s[3] ) - 1 ) );
                             boolean valid = false;
                             for ( Board b1 : n.findMoves( b, b.getBoard().indexOf( n ) ) )
                             {
                                 Board b2 = b;
                                 b2 = b2.updateBoard( n,
-                                    new Pawn( Integer.parseInt( s[5] ),
-                                        Integer.parseInt( s[6] ),
+                                    new Pawn( convLetters(s[5].charAt(0)),
+                                        Integer.parseInt( s[6] ) - 1,
                                         false ) );
 
                                 if ( b1.equals( b2 ) )
@@ -336,11 +351,11 @@ public class Test
                             if ( valid )
                             {
                                 b = b.updateBoard(
-                                    new Pawn( Integer.parseInt( s[2] ),
-                                        Integer.parseInt( s[3] ),
+                                    new Pawn( convLetters(s[2].charAt(0)),
+                                        Integer.parseInt( s[3] ) - 1,
                                         false ),
-                                    new Pawn( Integer.parseInt( s[5] ),
-                                        Integer.parseInt( s[6] ),
+                                    new Pawn( convLetters(s[5].charAt(0)),
+                                        Integer.parseInt( s[6] ) - 1,
                                         false ) );
                                 b.printBoard();
                                 break;
@@ -354,14 +369,14 @@ public class Test
                     }
                     else if ( s[0].contains( "Rook" ) )
                     {
-                        if ( b.getPiece( new Location( Integer.parseInt( s[2] ),
-                            Integer.parseInt( s[3] ) ) ) == null )
+                        if ( b.getPiece( new Location( convLetters(s[2].charAt(0)),
+                            Integer.parseInt( s[3] ) - 1 ) ) == null )
                         {
                             System.out.println( "There is no Rook there! Please try again." );
                         }
                         else if ( !b
                             .getPiece(
-                                new Location( Integer.parseInt( s[2] ), Integer.parseInt( s[3] ) ) )
+                                new Location( convLetters(s[2].charAt(0)), Integer.parseInt( s[3] ) - 1 ) )
                             .getClass()
                             .getCanonicalName()
                             .contentEquals( "Rook" ) )
@@ -369,31 +384,31 @@ public class Test
                             System.out.println( "There is no Rook there! Please try again." );
                             System.out
                                 .println( b
-                                    .getPiece( new Location( Integer.parseInt( s[2] ),
-                                        Integer.parseInt( s[3] ) ) )
+                                    .getPiece( new Location( convLetters(s[2].charAt(0)),
+                                        Integer.parseInt( s[3] ) - 1 ) )
                                     .getClass()
                                     .getCanonicalName() );
 
                         }
                         else if ( b
                             .getPiece(
-                                new Location( Integer.parseInt( s[2] ), Integer.parseInt( s[3] ) ) )
+                                new Location( convLetters(s[2].charAt(0)), Integer.parseInt( s[3] ) - 1 ) )
                             .getColor() )
                         {
                             System.out.println( "That's not your Rook! Please try again." );
                         }
                         else
                         {
-                            Rook n = (Rook)b.getPiece( new Location( Integer.parseInt( s[2] ),
-                                Integer.parseInt( s[3] ) ) );
+                            Rook n = (Rook)b.getPiece( new Location( convLetters(s[2].charAt(0)),
+                                Integer.parseInt( s[3] ) - 1 ) );
                             boolean valid = false;
                             for ( Board b1 : n.findMoves( b, b.getBoard().indexOf( n ) ) )
                             {
 
                                 Board b2 = b;
                                 b2 = b2.updateBoard( n,
-                                    new Rook( Integer.parseInt( s[5] ),
-                                        Integer.parseInt( s[6] ),
+                                    new Rook( convLetters(s[5].charAt(0)),
+                                        Integer.parseInt( s[6] ) - 1,
                                         false ) );
 
                                 if ( b1.equals( b2 ) )
@@ -408,11 +423,11 @@ public class Test
                             if ( valid )
                             {
                                 b = b.updateBoard(
-                                    new Rook( Integer.parseInt( s[2] ),
-                                        Integer.parseInt( s[3] ),
+                                    new Rook( convLetters(s[2].charAt(0)),
+                                        Integer.parseInt( s[3] ) - 1,
                                         false ),
-                                    new Rook( Integer.parseInt( s[5] ),
-                                        Integer.parseInt( s[6] ),
+                                    new Rook( convLetters(s[5].charAt(0)),
+                                        Integer.parseInt( s[6] ) - 1,
                                         false ) );
                                 b.printBoard();
                                 break;
@@ -426,14 +441,14 @@ public class Test
                     }
                     else if ( s[0].contains( "Queen" ) )
                     {
-                        if ( b.getPiece( new Location( Integer.parseInt( s[2] ),
-                            Integer.parseInt( s[3] ) ) ) == null )
+                        if ( b.getPiece( new Location( convLetters(s[2].charAt(0)),
+                            Integer.parseInt( s[3] ) - 1 ) ) == null )
                         {
                             System.out.println( "There is no Queen there! Please try again." );
                         }
                         else if ( !b
                             .getPiece(
-                                new Location( Integer.parseInt( s[2] ), Integer.parseInt( s[3] ) ) )
+                                new Location( convLetters(s[2].charAt(0)), Integer.parseInt( s[3] ) - 1 ) )
                             .getClass()
                             .getCanonicalName()
                             .contentEquals( "Queen" ) )
@@ -441,31 +456,31 @@ public class Test
                             System.out.println( "There is no Queen there! Please try again." );
                             System.out
                                 .println( b
-                                    .getPiece( new Location( Integer.parseInt( s[2] ),
-                                        Integer.parseInt( s[3] ) ) )
+                                    .getPiece( new Location( convLetters(s[2].charAt(0)),
+                                        Integer.parseInt( s[3] ) - 1 ) )
                                     .getClass()
                                     .getCanonicalName() );
 
                         }
                         else if ( b
                             .getPiece(
-                                new Location( Integer.parseInt( s[2] ), Integer.parseInt( s[3] ) ) )
+                                new Location( convLetters(s[2].charAt(0)), Integer.parseInt( s[3] ) - 1 ) )
                             .getColor() )
                         {
                             System.out.println( "That's not your Queen! Please try again." );
                         }
                         else
                         {
-                            Queen n = (Queen)b.getPiece( new Location( Integer.parseInt( s[2] ),
-                                Integer.parseInt( s[3] ) ) );
+                            Queen n = (Queen)b.getPiece( new Location( convLetters(s[2].charAt(0)),
+                                Integer.parseInt( s[3] ) - 1 ) );
                             boolean valid = false;
                             for ( Board b1 : n.findMoves( b, b.getBoard().indexOf( n ) ) )
                             {
 
                                 Board b2 = b;
                                 b2 = b2.updateBoard( n,
-                                    new Queen( Integer.parseInt( s[5] ),
-                                        Integer.parseInt( s[6] ),
+                                    new Queen( convLetters(s[5].charAt(0)),
+                                        Integer.parseInt( s[6] ) - 1,
                                         false ) );
 
                                 if ( b1.equals( b2 ) )
@@ -480,11 +495,11 @@ public class Test
                             if ( valid )
                             {
                                 b = b.updateBoard(
-                                    new Queen( Integer.parseInt( s[2] ),
-                                        Integer.parseInt( s[3] ),
+                                    new Queen( convLetters(s[2].charAt(0)),
+                                        Integer.parseInt( s[3] ) - 1,
                                         false ),
-                                    new Queen( Integer.parseInt( s[5] ),
-                                        Integer.parseInt( s[6] ),
+                                    new Queen( convLetters(s[5].charAt(0)),
+                                        Integer.parseInt( s[6] ) - 1,
                                         false ) );
                                 b.printBoard();
                                 break;
@@ -498,14 +513,14 @@ public class Test
                     }
                     else if ( s[0].contains( "Bishop" ) )
                     {
-                        if ( b.getPiece( new Location( Integer.parseInt( s[2] ),
-                            Integer.parseInt( s[3] ) ) ) == null )
+                        if ( b.getPiece( new Location( convLetters(s[2].charAt(0)),
+                            Integer.parseInt( s[3] ) - 1 ) ) == null )
                         {
                             System.out.println( "There is no Bishop there! Please try again." );
                         }
                         else if ( !b
                             .getPiece(
-                                new Location( Integer.parseInt( s[2] ), Integer.parseInt( s[3] ) ) )
+                                new Location( convLetters(s[2].charAt(0)), Integer.parseInt( s[3] ) - 1 ) )
                             .getClass()
                             .getCanonicalName()
                             .contentEquals( "Bishop" ) )
@@ -513,31 +528,31 @@ public class Test
                             System.out.println( "There is no Bishop there! Please try again." );
                             System.out
                                 .println( b
-                                    .getPiece( new Location( Integer.parseInt( s[2] ),
-                                        Integer.parseInt( s[3] ) ) )
+                                    .getPiece( new Location( convLetters(s[2].charAt(0)),
+                                        Integer.parseInt( s[3] ) - 1 ) )
                                     .getClass()
                                     .getCanonicalName() );
 
                         }
                         else if ( b
                             .getPiece(
-                                new Location( Integer.parseInt( s[2] ), Integer.parseInt( s[3] ) ) )
+                                new Location( convLetters(s[2].charAt(0)), Integer.parseInt( s[3] ) - 1 ) )
                             .getColor() )
                         {
                             System.out.println( "That's not your Bishop! Please try again." );
                         }
                         else
                         {
-                            Bishop n = (Bishop)b.getPiece( new Location( Integer.parseInt( s[2] ),
-                                Integer.parseInt( s[3] ) ) );
+                            Bishop n = (Bishop)b.getPiece( new Location( convLetters(s[2].charAt(0)),
+                                Integer.parseInt( s[3] ) - 1 ) );
                             boolean valid = false;
                             for ( Board b1 : n.findMoves( b, b.getBoard().indexOf( n ) ) )
                             {
 
                                 Board b2 = b;
                                 b2 = b2.updateBoard( n,
-                                    new Bishop( Integer.parseInt( s[5] ),
-                                        Integer.parseInt( s[6] ),
+                                    new Bishop( convLetters(s[5].charAt(0)),
+                                        Integer.parseInt( s[6] ) - 1,
                                         false ) );
 
                                 if ( b1.equals( b2 ) )
@@ -552,11 +567,11 @@ public class Test
                             if ( valid )
                             {
                                 b = b.updateBoard(
-                                    new Bishop( Integer.parseInt( s[2] ),
-                                        Integer.parseInt( s[3] ),
+                                    new Bishop( convLetters(s[2].charAt(0)),
+                                        Integer.parseInt( s[3] ) - 1,
                                         false ),
-                                    new Bishop( Integer.parseInt( s[5] ),
-                                        Integer.parseInt( s[6] ),
+                                    new Bishop( convLetters(s[5].charAt(0)),
+                                        Integer.parseInt( s[6] ) - 1,
                                         false ) );
                                 b.printBoard();
                                 break;
@@ -570,14 +585,14 @@ public class Test
                     }
                     else if ( s[0].contains( "King" ) )
                     {
-                        if ( b.getPiece( new Location( Integer.parseInt( s[2] ),
-                            Integer.parseInt( s[3] ) ) ) == null )
+                        if ( b.getPiece( new Location( convLetters(s[2].charAt(0)),
+                            Integer.parseInt( s[3] ) - 1 ) ) == null )
                         {
                             System.out.println( "There is no King there! Please try again." );
                         }
                         else if ( !b
                             .getPiece(
-                                new Location( Integer.parseInt( s[2] ), Integer.parseInt( s[3] ) ) )
+                                new Location( convLetters(s[2].charAt(0)), Integer.parseInt( s[3] ) - 1 ) )
                             .getClass()
                             .getCanonicalName()
                             .contentEquals( "King" ) )
@@ -585,31 +600,31 @@ public class Test
                             System.out.println( "There is no King there! Please try again." );
                             System.out
                                 .println( b
-                                    .getPiece( new Location( Integer.parseInt( s[2] ),
-                                        Integer.parseInt( s[3] ) ) )
+                                    .getPiece( new Location( convLetters(s[2].charAt(0)),
+                                        Integer.parseInt( s[3] ) - 1 ) )
                                     .getClass()
                                     .getCanonicalName() );
 
                         }
                         else if ( b
                             .getPiece(
-                                new Location( Integer.parseInt( s[2] ), Integer.parseInt( s[3] ) ) )
+                                new Location( convLetters(s[2].charAt(0)), Integer.parseInt( s[3] ) - 1 ) )
                             .getColor() )
                         {
                             System.out.println( "That's not your King! Please try again." );
                         }
                         else
                         {
-                            King n = (King)b.getPiece( new Location( Integer.parseInt( s[2] ),
-                                Integer.parseInt( s[3] ) ) );
+                            King n = (King)b.getPiece( new Location( convLetters(s[2].charAt(0)),
+                                Integer.parseInt( s[3] ) - 1 ) );
                             boolean valid = false;
                             for ( Board b1 : n.findMoves( b, b.getBoard().indexOf( n ) ) )
                             {
 
                                 Board b2 = b;
                                 b2 = b2.updateBoard( n,
-                                    new King( Integer.parseInt( s[5] ),
-                                        Integer.parseInt( s[6] ),
+                                    new King( convLetters(s[5].charAt(0)),
+                                        Integer.parseInt( s[6] ) - 1,
                                         false ) );
 
                                 if ( b1.equals( b2 ) )
@@ -624,11 +639,11 @@ public class Test
                             if ( valid )
                             {
                                 b = b.updateBoard(
-                                    new King( Integer.parseInt( s[2] ),
-                                        Integer.parseInt( s[3] ),
+                                    new King( convLetters(s[2].charAt(0)),
+                                        Integer.parseInt( s[3] ) - 1,
                                         false ),
-                                    new King( Integer.parseInt( s[5] ),
-                                        Integer.parseInt( s[6] ),
+                                    new King( convLetters(s[5].charAt(0)),
+                                        Integer.parseInt( s[6] ) - 1,
                                         false ) );
                                 b.printBoard();
                                 break;
@@ -643,6 +658,7 @@ public class Test
                 }
                 catch ( NumberFormatException e )
                 {
+                    System.out.println(e);
                     System.out.println( "Wrong format! Try Again!" );
                 }
             }
@@ -692,7 +708,7 @@ public class Test
         AI ai = new AI( b, level );
         while ( true )
         {
-            b = ai.minimax( b, level, true );
+            b = ai.minimax( b, level, true, -99999999, 999999999);
             // System.out.println(takebacks.size());
             if ( b != null )
             {

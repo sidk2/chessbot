@@ -443,54 +443,55 @@ public class Board
 
             if ( i instanceof Pawn && i.getColor() )
             {
-                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = 'P';
+                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = '\u2659';
             }
             else if ( i instanceof Pawn && !i.getColor() )
             {
-                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = 'p';
+                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = '\u265F';
             }
             if ( i instanceof Knight && i.getColor() )
             {
-                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = 'N';
+                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = '\u2658';
             }
             else if ( i instanceof Knight && !i.getColor() )
             {
-                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = 'n';
+                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = '\u265E';
             }
             if ( i instanceof Bishop && i.getColor() )
             {
-                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = 'B';
+                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = '\u2657';
             }
             else if ( i instanceof Bishop && !i.getColor() )
             {
-                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = 'b';
+                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = '\u265D';
             }
             if ( i instanceof Queen && i.getColor() )
             {
-                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = 'Q';
+                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = '\u2655';
             }
             else if ( i instanceof Queen && !i.getColor() )
             {
-                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = 'q';
+                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = '\u265B';
             }
             if ( i instanceof Rook && i.getColor() )
             {
-                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = 'R';
+                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = '\u2656';
             }
             else if ( i instanceof Rook && !i.getColor() )
             {
-                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = 'r';
+                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = '\u265C';
             }
             if ( i instanceof King && i.getColor() )
             {
-                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = 'K';
+                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = '\u2654';
             }
             else if ( i instanceof King && !i.getColor() )
             {
-                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = 'k';
+                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = '\u265A';
             }
         }
-        System.out.println( "  0 1 2 3 4 5 6 7 " );
+        System.out.println( "  1 2 3 4 5 6 7 8" );
+        char[] letterConvs = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
         for ( int i = 0; i < 8; i++ )
         {
 
@@ -499,7 +500,7 @@ public class Board
 
                 if ( j == 0 )
                 {
-                    System.out.print( i + " " );
+                    System.out.print( letterConvs[i] + " " );
                 }
 
                 System.out.print( board[i][j] + " " );

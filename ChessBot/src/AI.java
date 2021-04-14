@@ -85,7 +85,7 @@ public class AI
      *            true if it is white's turn, false otherwise
      * @return Board
      */
-    public Board minimax( Board board, int depth, boolean color )
+    public Board minimax( Board board, int depth, boolean color, int alpha, int beta)
     {
         if ( depth == 1 )
         {
@@ -97,7 +97,7 @@ public class AI
             Board best = null;
             for ( int i = 0; i < board.getPossibleMoves( color ).size(); i++ )
             {
-                Board one = minimax( board.getPossibleMoves( color ).get( i ), depth - 1, !color );
+                Board one = minimax( board.getPossibleMoves( color ).get( i ), depth - 1, !color, alpha, beta);
                 if ( one == null )
                 {
                     best = board.getPossibleMoves( color ).get( i );
@@ -107,8 +107,10 @@ public class AI
                 if ( one.getValue() > value || best == null )
                 {
                     value = one.getValue();
+                    alpha = Math.max(alpha, value);
                     best = board.getPossibleMoves( color ).get( i );
                 }
+                if(alpha >= beta) break;
             }
             if ( value == 100000000 && depth == this.depth )
             {
@@ -124,7 +126,7 @@ public class AI
             Board best = null;
             for ( int i = 0; i < board.getPossibleMoves( color ).size(); i++ )
             {
-                Board one = minimax( board.getPossibleMoves( color ).get( i ), depth - 1, !color );
+                Board one = minimax( board.getPossibleMoves( color ).get( i ), depth - 1, !color, alpha, beta);
                 if ( one == null )
                 {
                     best = board.getPossibleMoves( color ).get( i );
@@ -134,8 +136,10 @@ public class AI
                 if ( one.getValue() < value || best == null )
                 {
                     value = one.getValue();
+                    beta = Math.min(beta, value);
                     best = board.getPossibleMoves( color ).get( i );
                 }
+                if (beta<=alpha) break;
             }
             if ( value == -100000000 && depth == this.depth )
             {
