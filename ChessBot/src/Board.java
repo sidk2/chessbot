@@ -27,6 +27,8 @@ public class Board
      */
     private Boolean[][] isOccupied;
 
+    public final double activityRelativeWeight = 0.5;
+
 
     /**
      * Makes a board with the position set as the starting position of a chess
@@ -153,8 +155,12 @@ public class Board
         ArrayList<Piece> p = getBoard();
         for ( Piece piece : p )
         {
+            // System.out.println(piece.getValue());
             val += piece.getValue();
         }
+        val += (activityRelativeWeight * getPossibleMoves(true).size());
+
+        // System.out.println("Poss Moves: " + getPossibleMoves(true).size() + '\n' + "Board Value: " + val );
         return val;
     }
 
