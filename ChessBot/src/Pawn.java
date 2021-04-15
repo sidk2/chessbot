@@ -30,6 +30,8 @@ public class Pawn implements Piece
      */
     public final int VALUE = 10;
 
+    public char code;
+
 
     /**
      * @param xPos
@@ -44,8 +46,12 @@ public class Pawn implements Piece
     {
         loc = new Location( xPos, yPos );
         this.color = color;
+        code = color ? 'P' : 'p';
     }
-
+    public char getCode()
+    {
+        return code;
+    }
 
     public boolean equals( Piece other )
     {

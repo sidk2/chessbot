@@ -369,60 +369,33 @@ public class Board
         ArrayList<Piece> pieces = getBoard();
         for ( Piece i : pieces )
         {
-
-            if ( i instanceof Pawn && i.getColor() )
-            {
-                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = 'P';
-            }
-            else if ( i instanceof Pawn && !i.getColor() )
-            {
-                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = 'p';
-            }
-            if ( i instanceof Knight && i.getColor() )
-            {
-                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = 'N';
-            }
-            else if ( i instanceof Knight && !i.getColor() )
-            {
-                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = 'n';
-            }
-            if ( i instanceof Bishop && i.getColor() )
-            {
-                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = 'B';
-            }
-            else if ( i instanceof Bishop && !i.getColor() )
-            {
-                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = 'b';
-            }
-            if ( i instanceof Queen && i.getColor() )
-            {
-                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = 'Q';
-            }
-            else if ( i instanceof Queen && !i.getColor() )
-            {
-                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = 'q';
-            }
-            if ( i instanceof Rook && i.getColor() )
-            {
-                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = 'R';
-            }
-            else if ( i instanceof Rook && !i.getColor() )
-            {
-                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = 'r';
-            }
-            if ( i instanceof King && i.getColor() )
-            {
-                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = 'K';
-            }
-            else if ( i instanceof King && !i.getColor() )
-            {
-                board[i.getLoc().getXPos()][i.getLoc().getYPos()] = 'k';
-            }
+            board[i.getLoc().getXPos()][i.getLoc().getYPos()] = i.getCode();
         }
         return board;
     }
 
-
+    public String hash()
+    {
+        String hash = "";
+        ArrayList<Piece> pieces = getBoard();
+        int row = 0;
+        for ( Boolean[] b : isOccupied )
+        {
+            int col = 0;
+            for(Boolean i : b){
+                if(!i)
+                {
+                    hash+="0";
+                }
+                else{
+                    hash+=this.getPiece(new Location(row, col));
+                }
+                col++;
+            }
+            row++;
+        }
+        return hash;
+    }
     /**
      * prints out the currentBoard, uppercase for white, lowercase for black,
      * prints out the rows and columns as well

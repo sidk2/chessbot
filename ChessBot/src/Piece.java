@@ -13,6 +13,7 @@ import java.util.ArrayList;
  */
 public interface Piece
 {
+    
     /**
      * Finds all possible resulting boards after moving this piece, includes
      * illegal moves
@@ -72,4 +73,7 @@ public interface Piece
      * @return boolean
      */
     boolean equals( Piece other );
+
+    char getCode();
+
 }
