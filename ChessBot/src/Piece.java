@@ -76,4 +76,6 @@ public interface Piece
 
     char getCode();
 
+    int getActivity(Location loc);
+
 }

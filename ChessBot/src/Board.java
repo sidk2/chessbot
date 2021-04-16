@@ -1,7 +1,6 @@
 
 import java.util.ArrayList;
 
-
 /**
  * A class for a Board, which has an ArrayList of pieces that stores all the
  * pieces currently on the board. Has methods to manipulate and return parts of
@@ -14,32 +13,28 @@ import java.util.ArrayList;
  *
  * @author Sources: Shreyas Kaasyap, Sidharth Kannan, Leo Yang
  */
-public class Board
-{
+public class Board {
     /**
      * the set of pieces currently on the board
      */
     private ArrayList<Piece> board;
 
     /**
-     * a boolean matrix that keeps track of which tiles have any piece on it
-     * true if there is a piece at the tile, false otherwise
+     * a boolean matrix that keeps track of which tiles have any piece on it true if
+     * there is a piece at the tile, false otherwise
      */
     private Boolean[][] isOccupied;
 
-    public final double activityRelativeWeight = 0.5;
-
+    public final double activityRelativeWeight = 0.1;
 
     /**
-     * Makes a board with the position set as the starting position of a chess
-     * game Instantiates fields
+     * Makes a board with the position set as the starting position of a chess game
+     * Instantiates fields
      */
-    public Board()
-    {
+    public Board() {
         board = new ArrayList<>();
         isOccupied = new Boolean[8][8];
-        for ( int i = 0; i < 8; i++ )
-        {
+        for (int i = 0; i < 8; i++) {
             isOccupied[i][0] = true;
             isOccupied[i][1] = true;
             isOccupied[i][6] = true;
@@ -51,79 +46,65 @@ public class Board
         }
         board.add(new Pawn(4, 1, true));
         board.add(new Pawn(4, 6, false));
-        for ( int i = 0; i < 8; i++ )
-        {
-            if( i == 4)
-            {
+        for (int i = 0; i < 8; i++) {
+            if (i == 4) {
                 continue;
             }
-            board.add( new Pawn( i, 1, true ) );
-            board.add( new Pawn( i, 6, false ) );
+            board.add(new Pawn(i, 1, true));
+            board.add(new Pawn(i, 6, false));
         }
 
-        board.add( new Rook( 0, 0, true ) );
-        board.add( new Knight( 1, 0, true ) );
-        board.add( new Bishop( 2, 0, true ) );
-        board.add( new Queen( 4, 0, true ) );
-        board.add( new King( 3, 0, true ) );
-        board.add( new Bishop( 5, 0, true ) );
-        board.add( new Knight( 6, 0, true ) );
-        board.add( new Rook( 7, 0, true ) );
+        board.add(new Rook(0, 0, true));
+        board.add(new Knight(1, 0, true));
+        board.add(new Bishop(2, 0, true));
+        board.add(new Queen(4, 0, true));
+        board.add(new King(3, 0, true));
+        board.add(new Bishop(5, 0, true));
+        board.add(new Knight(6, 0, true));
+        board.add(new Rook(7, 0, true));
 
-        board.add( new Rook( 0, 7, false ) );
-        board.add( new Knight( 1, 7, false ) );
-        board.add( new Bishop( 2, 7, false ) );
-        board.add( new Queen( 4, 7, false ) );
-        board.add( new King( 3, 7, false ) );
-        board.add( new Bishop( 5, 7, false ) );
-        board.add( new Knight( 6, 7, false ) );
-        board.add( new Rook( 7, 7, false ) );
+        board.add(new Rook(0, 7, false));
+        board.add(new Knight(1, 7, false));
+        board.add(new Bishop(2, 7, false));
+        board.add(new Queen(4, 7, false));
+        board.add(new King(3, 7, false));
+        board.add(new Bishop(5, 7, false));
+        board.add(new Knight(6, 7, false));
+        board.add(new Rook(7, 7, false));
 
     }
 
-
     /**
-     * @param board
-     *            an arraylist of pieces that are on a board sets the board to
-     *            have the pieces in board, updates fields
+     * @param board an arraylist of pieces that are on a board sets the board to
+     *              have the pieces in board, updates fields
      */
-    public Board( ArrayList<Piece> board )
-    {
+    public Board(ArrayList<Piece> board) {
         this.board = board;
         isOccupied = new Boolean[8][8];
-        for ( int i = 0; i < 8; i++ )
-        {
-            for ( int j = 0; j < 8; j++ )
-            {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
                 isOccupied[i][j] = false;
             }
         }
-        for ( int i = 0; i < board.size(); i++ )
-        {
-            isOccupied[board.get( i ).getLoc().getXPos()][board.get( i ).getLoc().getYPos()] = true;
+        for (int i = 0; i < board.size(); i++) {
+            isOccupied[board.get(i).getLoc().getXPos()][board.get(i).getLoc().getYPos()] = true;
         }
 
     }
-
 
     /**
      * Checks if two boards have the same pieces in the same spots
      * 
-     * @param other
-     *            the board to compare to
+     * @param other the board to compare to
      * @return boolean true if the boards are equal, false otherwise
      */
-    public boolean equals( Board other )
-    {
+    public boolean equals(Board other) {
         char[][] c1 = this.charBoard();
         char[][] c2 = other.charBoard();
         boolean ret = true;
-        for ( int i = 0; i < 8; i++ )
-        {
-            for ( int j = 0; j < 8; j++ )
-            {
-                if ( c1[i][j] != c2[i][j] )
-                {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (c1[i][j] != c2[i][j]) {
                     ret = false;
                 }
             }
@@ -131,162 +112,130 @@ public class Board
         return ret;
     }
 
-
     /**
      * returns the set of the pieces currently on the board
      * 
      * @return ArrayList the set of pieces
      */
-    public ArrayList<Piece> getBoard()
-    {
+    public ArrayList<Piece> getBoard() {
         return board;
     }
 
-
     /**
-     * Returns the value of the position, adds up all the material value of
-     * every piece on the baord
+     * Returns the value of the position, adds up all the material value of every
+     * piece on the baord
      * 
      * @return int
      */
-    public int getValue()
-    {
-        int val = 0;
+    public double getValue() {
+        double val = 0.0;
         ArrayList<Piece> p = getBoard();
-        for ( Piece piece : p )
-        {
-            // System.out.println(piece.getValue());
+        for (Piece piece : p) {
             val += piece.getValue();
+            val = (piece.getColor()) ? (val + (activityRelativeWeight * piece.getActivity(piece.getLoc()))) : val - (activityRelativeWeight * piece.getActivity(piece.getLoc()));
         }
-        val += (activityRelativeWeight * getPossibleMoves(true).size());
 
-        // System.out.println("Poss Moves: " + getPossibleMoves(true).size() + '\n' + "Board Value: " + val );
+        // System.out.println("Poss Moves: " + getPossibleMoves(true).size() + '\n' +
+        // "Board Value: " + val );
         return val;
     }
 
-
     /**
-     * Return the pieces at a given location, returns null if there is no piece
-     * at that location
+     * Return the pieces at a given location, returns null if there is no piece at
+     * that location
      * 
-     * @param loc
-     *            the location to check
+     * @param loc the location to check
      * @return Piece
      */
-    public Piece getPiece( Location loc )
-    {
+    public Piece getPiece(Location loc) {
         int x = loc.getXPos();
         int y = loc.getYPos();
-        for ( Piece p : getBoard() )
-        {
-            if ( p.getLoc().getXPos() == x && p.getLoc().getYPos() == y )
-            {
+        for (Piece p : getBoard()) {
+            if (p.getLoc().getXPos() == x && p.getLoc().getYPos() == y) {
                 return p;
             }
         }
         return null;
     }
 
-
     /**
      * Returns the set of pieces on a board
      * 
      * @return ArrayList the set of pieces on the board
      */
-    public ArrayList<Piece> copyBoard()
-    {
+    public ArrayList<Piece> copyBoard() {
         ArrayList<Piece> pieces = new ArrayList<>();
-        for ( Piece i : this.getBoard() )
-        {
+        for (Piece i : this.getBoard()) {
             int xPos = i.getLoc().getXPos();
             int yPos = i.getLoc().getYPos();
             boolean color = i.getColor();
-            if ( i instanceof Pawn )
-            {
-                pieces.add( new Pawn( xPos, yPos, color ) );
+            if (i instanceof Pawn) {
+                pieces.add(new Pawn(xPos, yPos, color));
             }
-            if ( i instanceof Knight )
-            {
-                pieces.add( new Knight( xPos, yPos, color ) );
+            if (i instanceof Knight) {
+                pieces.add(new Knight(xPos, yPos, color));
             }
-            if ( i instanceof Bishop )
-            {
-                pieces.add( new Bishop( xPos, yPos, color ) );
+            if (i instanceof Bishop) {
+                pieces.add(new Bishop(xPos, yPos, color));
             }
-            if ( i instanceof Queen )
-            {
-                pieces.add( new Queen( xPos, yPos, color ) );
+            if (i instanceof Queen) {
+                pieces.add(new Queen(xPos, yPos, color));
             }
-            if ( i instanceof Rook )
-            {
-                pieces.add( new Rook( xPos, yPos, color ) );
+            if (i instanceof Rook) {
+                pieces.add(new Rook(xPos, yPos, color));
             }
-            if ( i instanceof King )
-            {
-                pieces.add( new King( xPos, yPos, color ) );
+            if (i instanceof King) {
+                pieces.add(new King(xPos, yPos, color));
             }
         }
         return pieces;
     }
 
-
     /**
      * Return true if there is no piece at a given location, false otherwise
      * 
-     * @param loc
-     *            the location to check
+     * @param loc the location to check
      * @return Boolean
      */
-    public Boolean check( Location loc )
-    {
+    public Boolean check(Location loc) {
         int x = loc.getXPos();
         int y = loc.getYPos();
         return !isOccupied[x][y];
     }
 
-
     /**
-     * returns the set of all possible moves for a side(color is true = white,
-     * false = black), removes illegal moves, returns null if the current
-     * position is checkmate
+     * returns the set of all possible moves for a side(color is true = white, false
+     * = black), removes illegal moves, returns null if the current position is
+     * checkmate
      * 
-     * @param color
-     *            true if it is white's turn, false otherwise
+     * @param color true if it is white's turn, false otherwise
      * @return ArrayList the set of all possible resulting Boards
      */
-    public ArrayList<Board> getPossibleMoves( boolean color )
-    {
+    public ArrayList<Board> getPossibleMoves(boolean color) {
 
         ArrayList<Board> allNextMoves = new ArrayList<>();
 
-        for ( int i = 0; i < this.getBoard().size(); i++ )
-        {
-            if ( this.getBoard().get( i ).getColor() == color )
-            {
-                ArrayList<Board> temp = this.getBoard().get( i ).findMoves( this, i );
+        for (int i = 0; i < this.getBoard().size(); i++) {
+            if (this.getBoard().get(i).getColor() == color) {
+                ArrayList<Board> temp = this.getBoard().get(i).findMoves(this, i);
 
-                if ( temp == null )
-                {
+                if (temp == null) {
                     continue;
                 }
 
-                for ( Board board : temp )
-                {
+                for (Board board : temp) {
                     boolean bad = false;
-                    for ( int j = 0; j < board.getBoard().size(); j++ )
-                    {
-                        if ( board.getBoard().get( j ).getColor() != color
-                            && board.getBoard().get( j ).isInCheck( board, j ) == true )
-                        {
+                    for (int j = 0; j < board.getBoard().size(); j++) {
+                        if (board.getBoard().get(j).getColor() != color
+                                && board.getBoard().get(j).isInCheck(board, j) == true) {
                             bad = true;
                             break;
                         }
                     }
-                    if ( bad )
-                    {
+                    if (bad) {
                         continue;
                     }
-                    allNextMoves.add( board );
+                    allNextMoves.add(board);
                 }
 
             }
@@ -294,28 +243,20 @@ public class Board
         return allNextMoves;
     }
 
-
     /**
-     * Returns the best next possible board based on the material evalution of
-     * the board for a given color
+     * Returns the best next possible board based on the material evalution of the
+     * board for a given color
      * 
-     * @param color
-     *            true if it white to move, false otherwise
+     * @param color true if it white to move, false otherwise
      * @return Board
      */
-    public Board getBestBoard( boolean color )
-    {
+    public Board getBestBoard(boolean color) {
         Board best = null;
-        for ( Board board : getPossibleMoves( color ) )
-        {
-            if ( best == null )
-            {
+        for (Board board : getPossibleMoves(color)) {
+            if (best == null) {
                 best = board;
-            }
-            else
-            {
-                if ( best.getValue() < board.getValue() )
-                {
+            } else {
+                if (best.getValue() < board.getValue()) {
                     best = board;
                 }
             }
@@ -323,38 +264,31 @@ public class Board
         return best;
     }
 
-
     /**
-     * updates the board, removes the piece p1, and adds the piece p2, takes
-     * care of the possibility of p2 is taking another piece, p1 and p2 will be
-     * the same type
+     * updates the board, removes the piece p1, and adds the piece p2, takes care of
+     * the possibility of p2 is taking another piece, p1 and p2 will be the same
+     * type
      * 
-     * @param p1
-     *            the piece to remove
-     * @param p2
-     *            the piece to put on the board
+     * @param p1 the piece to remove
+     * @param p2 the piece to put on the board
      * @return Board, the updated Board
      */
-    public Board updateBoard( Piece p1, Piece p2 )
-    {
+    public Board updateBoard(Piece p1, Piece p2) {
         ArrayList<Piece> pieces = this.getBoard();
 
-        pieces.remove( p1 );
+        pieces.remove(p1);
 
-        for ( int i = 0; i < pieces.size(); i++ )
-        {
-            if ( pieces.get( i ).getLoc().getXPos() == p2.getLoc().getXPos()
-                && pieces.get( i ).getLoc().getYPos() == p2.getLoc().getYPos() )
-            {
-                pieces.remove( i );
+        for (int i = 0; i < pieces.size(); i++) {
+            if (pieces.get(i).getLoc().getXPos() == p2.getLoc().getXPos()
+                    && pieces.get(i).getLoc().getYPos() == p2.getLoc().getYPos()) {
+                pieces.remove(i);
                 break;
             }
         }
 
-        pieces.add( p2 );
-        return new Board( pieces );
+        pieces.add(p2);
+        return new Board(pieces);
     }
-
 
     /**
      * returns a matrix of the current Board, capital letter for a white piece,
@@ -362,39 +296,31 @@ public class Board
      * 
      * @return char[][]
      */
-    public char[][] charBoard()
-    {
+    public char[][] charBoard() {
         char[][] board = new char[8][8];
-        for ( int i = 0; i < 8; i++ )
-        {
-            for ( int j = 0; j < 8; j++ )
-            {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
                 board[i][j] = ' ';
             }
         }
         ArrayList<Piece> pieces = getBoard();
-        for ( Piece i : pieces )
-        {
+        for (Piece i : pieces) {
             board[i.getLoc().getXPos()][i.getLoc().getYPos()] = i.getCode();
         }
         return board;
     }
 
-    public String hash()
-    {
+    public String hash() {
         String hash = "";
         ArrayList<Piece> pieces = getBoard();
         int row = 0;
-        for ( Boolean[] b : isOccupied )
-        {
+        for (Boolean[] b : isOccupied) {
             int col = 0;
-            for(Boolean i : b){
-                if(!i)
-                {
-                    hash+="0";
-                }
-                else{
-                    hash+=this.getPiece(new Location(row, col));
+            for (Boolean i : b) {
+                if (!i) {
+                    hash += "0";
+                } else {
+                    hash += this.getPiece(new Location(row, col));
                 }
                 col++;
             }
@@ -402,87 +328,63 @@ public class Board
         }
         return hash;
     }
+
     /**
-     * prints out the currentBoard, uppercase for white, lowercase for black,
-     * prints out the rows and columns as well
+     * prints out the currentBoard, uppercase for white, lowercase for black, prints
+     * out the rows and columns as well
      */
-    public void printBoard()
-    {
+    public void printBoard() {
         char[][] board = new char[8][8];
-        for ( int i = 0; i < 8; i++ )
-        {
-            for ( int j = 0; j < 8; j++ )
-            {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
                 board[i][j] = ' ';
             }
         }
         ArrayList<Piece> pieces = getBoard();
-        for ( Piece i : pieces )
-        {
+        for (Piece i : pieces) {
 
-            if ( i instanceof Pawn && i.getColor() )
-            {
+            if (i instanceof Pawn && i.getColor()) {
                 board[i.getLoc().getXPos()][i.getLoc().getYPos()] = '\u2659';
-            }
-            else if ( i instanceof Pawn && !i.getColor() )
-            {
+            } else if (i instanceof Pawn && !i.getColor()) {
                 board[i.getLoc().getXPos()][i.getLoc().getYPos()] = '\u265F';
             }
-            if ( i instanceof Knight && i.getColor() )
-            {
+            if (i instanceof Knight && i.getColor()) {
                 board[i.getLoc().getXPos()][i.getLoc().getYPos()] = '\u2658';
-            }
-            else if ( i instanceof Knight && !i.getColor() )
-            {
+            } else if (i instanceof Knight && !i.getColor()) {
                 board[i.getLoc().getXPos()][i.getLoc().getYPos()] = '\u265E';
             }
-            if ( i instanceof Bishop && i.getColor() )
-            {
+            if (i instanceof Bishop && i.getColor()) {
                 board[i.getLoc().getXPos()][i.getLoc().getYPos()] = '\u2657';
-            }
-            else if ( i instanceof Bishop && !i.getColor() )
-            {
+            } else if (i instanceof Bishop && !i.getColor()) {
                 board[i.getLoc().getXPos()][i.getLoc().getYPos()] = '\u265D';
             }
-            if ( i instanceof Queen && i.getColor() )
-            {
+            if (i instanceof Queen && i.getColor()) {
                 board[i.getLoc().getXPos()][i.getLoc().getYPos()] = '\u2655';
-            }
-            else if ( i instanceof Queen && !i.getColor() )
-            {
+            } else if (i instanceof Queen && !i.getColor()) {
                 board[i.getLoc().getXPos()][i.getLoc().getYPos()] = '\u265B';
             }
-            if ( i instanceof Rook && i.getColor() )
-            {
+            if (i instanceof Rook && i.getColor()) {
                 board[i.getLoc().getXPos()][i.getLoc().getYPos()] = '\u2656';
-            }
-            else if ( i instanceof Rook && !i.getColor() )
-            {
+            } else if (i instanceof Rook && !i.getColor()) {
                 board[i.getLoc().getXPos()][i.getLoc().getYPos()] = '\u265C';
             }
-            if ( i instanceof King && i.getColor() )
-            {
+            if (i instanceof King && i.getColor()) {
                 board[i.getLoc().getXPos()][i.getLoc().getYPos()] = '\u2654';
-            }
-            else if ( i instanceof King && !i.getColor() )
-            {
+            } else if (i instanceof King && !i.getColor()) {
                 board[i.getLoc().getXPos()][i.getLoc().getYPos()] = '\u265A';
             }
         }
-        System.out.println( "  1 2 3 4 5 6 7 8" );
-        char[] letterConvs = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
-        for ( int i = 0; i < 8; i++ )
-        {
+        System.out.println("  1 2 3 4 5 6 7 8");
+        char[] letterConvs = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H' };
+        for (int i = 0; i < 8; i++) {
 
-            for ( int j = 0; j < 8; j++ )
-            {
+            for (int j = 0; j < 8; j++) {
 
-                if ( j == 0 )
-                {
-                    System.out.print( letterConvs[i] + " " );
+                if (j == 0) {
+                    System.out.print(letterConvs[i] + " ");
                 }
 
-                System.out.print( board[i][j] + " " );
+                System.out.print(board[i][j] + " ");
             }
             System.out.println();
         }

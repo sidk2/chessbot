@@ -32,6 +32,8 @@ public class Pawn implements Piece
 
     public char code;
 
+    private int[][] activityTable;
+
 
     /**
      * @param xPos
@@ -47,6 +49,25 @@ public class Pawn implements Piece
         loc = new Location( xPos, yPos );
         this.color = color;
         code = color ? 'P' : 'p';
+        activityTable = this.color ? new int[][]{
+            {2, 2, 2, 2, 2, 2, 2, 0},
+            {3, 3, 3, 3, 3, 3, 3, 0},
+            {3, 3, 3, 3, 3, 3, 3, 0},
+            {3, 3, 3, 9, 3, 3, 3, 0},
+            {3, 3, 3, 9, 3, 3, 3, 0},
+            {3, 3, 3, 3, 3, 3, 3, 0},
+            {3, 3, 3, 3, 3, 3, 3, 0},
+            {2, 2, 2, 2, 2, 2, 2, 0}
+        } : new int[][]{
+            {0, 2, 2, 2, 2, 2, 2, 2},
+            {0, 3, 3, 3, 3, 3, 3, 3},
+            {0, 3, 3, 3, 3, 3, 3, 3},
+            {0, 3, 3, 3, 9, 3, 3, 3},
+            {0, 3, 3, 3, 9, 3, 3, 3},
+            {0, 3, 3, 3, 3, 3, 3, 3},
+            {0, 3, 3, 3, 3, 3, 3, 3},
+            {0, 2, 2, 2, 2, 2, 2, 2}
+        };
     }
     public char getCode()
     {
@@ -326,6 +347,9 @@ public class Pawn implements Piece
     public boolean getColor()
     {
         return color;
+    }
+    public int getActivity(Location loc) {
+        return activityTable[loc.getXPos()][loc.getYPos()];
     }
 
 }

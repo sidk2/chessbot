@@ -21,11 +21,15 @@ public class Bishop implements Piece {
      * the color of the piece, true = white, false = black
      */
     private boolean color;
-    public char code;
+    public final char code = color ? 'B' : 'b';
     /**
      * the material value of the piece
      */
     public final int VALUE = 30;
+
+    private final int[][] activityTable = { { 7, 7, 7, 7, 7, 7, 7, 7 }, { 7, 9, 9, 9, 9, 9, 9, 7 },
+            { 7, 9, 11, 11, 11, 11, 9, 7 }, { 7, 9, 11, 13, 13, 11, 9, 7 }, { 7, 9, 11, 13, 13, 11, 9, 7 },
+            { 7, 9, 11, 11, 11, 11, 9, 7 }, { 7, 9, 9, 9, 9, 9, 9, 7 }, { 7, 7, 7, 7, 7, 7, 7, 7 } };
 
     /**
      * @param xPos  the xPosition of the piece
@@ -36,7 +40,6 @@ public class Bishop implements Piece {
     public Bishop(int xPos, int yPos, boolean color) {
         loc = new Location(xPos, yPos);
         this.color = color;
-        code = color ? 'B' : 'b';
     }
 
     public char getCode() {
@@ -292,6 +295,10 @@ public class Bishop implements Piece {
     @Override
     public boolean getColor() {
         return color;
+    }
+
+    public int getActivity(Location loc) {
+        return activityTable[loc.getXPos()][loc.getYPos()];
     }
 
 }

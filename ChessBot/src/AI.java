@@ -1,6 +1,11 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
+import java.util.Map.Entry;
+import java.util.AbstractMap.SimpleEntry;
+
 /**
  * The class that plays as the computer, finds the next best move by calculating
  * a given amount of moves deep, the computer is always whtie
@@ -34,6 +39,9 @@ public class AI
      * won the game
      */
     private boolean whiteWon = false;
+
+    private Map<String, Entry<Board, Integer>> transpositions = new HashMap<String, Entry<Board, Integer>>();
+
 
 
     /**
@@ -88,21 +96,22 @@ public class AI
      *            true if it is white's turn, false otherwise
      * @return Board
      */
-    public Board minimax( Board board, int depth, boolean color, int alpha, int beta)
+    public Board minimax( Board board, int depth, boolean color, double alpha, double beta)
     {
+        String hash = board.hash();
+        ArrayList<Board> bestSet = new ArrayList<Board>();
         int searched = 0;
-        Map<String, Board> transpositions = new HashMap<String, Board>();
         if ( depth == 1 )
         {
             return board.getBestBoard( color );
         }
         if ( color )
         {
-            if(transpositions.containsKey(board.hash()))
+            if(transpositions.containsKey(hash))
             {
-                return transpositions.get(board.hash());
+                return transpositions.get(hash).getKey();
             }
-            int value = -1000000;
+            double value = -1000000;
             Board best = null;
             ArrayList<Board> poss = board.getPossibleMoves( color );
             searched += poss.size();
@@ -117,9 +126,14 @@ public class AI
                 }
                 if ( one.getValue() > value || best == null )
                 {
+                    bestSet.clear();;
                     value = one.getValue();
                     alpha = Math.max(alpha, value);
                     best = poss.get( i );
+                    bestSet.add(best);
+                }
+                else if ( one.getValue() == value){
+                    bestSet.add(one);
                 }
                 if(alpha >= beta) break;
             }
@@ -129,17 +143,26 @@ public class AI
                 checkmate = true;
                 whiteWon = true;
             }
-            // System.out.println(searched);
-            transpositions.put(board.hash(), best);
+
+            transpositions.put(hash, new SimpleEntry<Board, Integer>(best, depth));
+            if(bestSet.size() > 1){
+                Board ret = null;
+                for(Board b : bestSet)
+                {
+                    Board temp = minimax(b, depth/2, color, alpha, beta);
+                    if (ret == null || temp.getValue() > ret.getValue()) ret = b;
+                }
+                best = ret;
+            }
             return best;
         }
         else
         {
             if(transpositions.containsKey(board.hash()))
             {
-                return transpositions.get(board.hash());
+                return minimax(board, depth - transpositions.get(hash).getValue(), color, alpha, beta);
             }
-            int value = 1000000;
+            double value = 1000000.0;
             Board best = null;
             for ( int i = 0; i < board.getPossibleMoves( color ).size(); i++ )
             {
@@ -164,7 +187,7 @@ public class AI
                 checkmate = true;
                 whiteWon = false;
             }
-            transpositions.put(board.hash(), best);
+            transpositions.put(hash, new SimpleEntry<Board, Integer>(best, depth));
             return best;
         }
 

@@ -30,6 +30,11 @@ public class Queen implements Piece {
 
     public char code;
 
+    private final int[][] activityTable = { { 21, 21, 21, 21, 21, 21, 21, 21 }, { 21, 23, 23, 23, 23, 23, 23, 21 },
+            { 21, 23, 25, 25, 25, 25, 23, 21 }, { 21, 23, 25, 27, 27, 25, 23, 21 }, { 21, 23, 25, 27, 27, 25, 23, 21 },
+            { 21, 23, 25, 25, 25, 25, 23, 21 }, { 21, 23, 23, 23, 23, 23, 23, 21 },
+            { 21, 21, 21, 21, 21, 21, 21, 21 } };
+
     /**
      * @param xPos  the xPosition of the location
      * @param yPos  the yPosition of the location
@@ -473,4 +478,7 @@ public class Queen implements Piece {
         return color;
     }
 
+    public int getActivity(Location loc) {
+        return activityTable[loc.getXPos()][loc.getYPos()];
+    }
 }

@@ -30,6 +30,17 @@ public class Knight implements Piece {
 
     public char code;
 
+    private int[][] activityTable = {
+        {2, 3, 4, 4, 4, 4, 3, 2},
+        {3, 4, 6, 6, 6, 6, 4, 3},
+        {4, 6, 8, 8, 8, 8, 6, 4},
+        {4, 6, 8, 8, 8, 8, 6, 4},
+        {4, 6, 8, 8, 8, 8, 6, 4},
+        {4, 6, 8, 8, 8, 8, 6, 4},
+        {3, 4, 6, 6, 6, 6, 4, 3},
+        {2, 3, 4, 4, 4, 4, 3, 2}
+    };
+
     /**
      * @param xPos  the xPosition of the location
      * @param yPos  the yPosition of the location
@@ -52,10 +63,7 @@ public class Knight implements Piece {
     }
 
     public int getValue() {
-        if (color)
-            return VALUE;
-        else
-            return -1 * VALUE;
+        return (color) ? VALUE : -1 * VALUE;
     }
 
     @Override
@@ -147,5 +155,7 @@ public class Knight implements Piece {
     public boolean getColor() {
         return color;
     }
-
+    public int getActivity(Location loc) {
+        return activityTable[loc.getXPos()][loc.getYPos()];
+    }
 }

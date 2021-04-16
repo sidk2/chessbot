@@ -29,6 +29,11 @@ public class Rook implements Piece {
 
     public char code;
 
+    private final int[][] activityTable = { { 14, 14, 14, 14, 14, 14, 14, 14 }, { 14, 14, 14, 14, 14, 14, 14, 14 },
+            { 14, 14, 14, 14, 14, 14, 14, 14 }, { 14, 14, 14, 14, 14, 14, 14, 14 }, { 14, 14, 14, 14, 14, 14, 14, 14 },
+            { 14, 14, 14, 14, 14, 14, 14, 14 }, { 14, 14, 14, 14, 14, 14, 14, 14 },
+            { 14, 14, 14, 14, 14, 14, 14, 14 } };
+
     /**
      * @param xPos  the x coordinate of the location
      * @param yPos  the y coordinate of the location
@@ -288,6 +293,10 @@ public class Rook implements Piece {
     @Override
     public boolean getColor() {
         return color;
+    }
+    
+    public int getActivity(Location loc) {
+        return activityTable[loc.getXPos()][loc.getYPos()];
     }
 
 }

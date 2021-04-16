@@ -27,7 +27,17 @@ public class King implements Piece {
      */
     public final int VALUE = 900;
 
-    public char code;
+    public final int[][] activityTable = { 
+        { 3, 5, 5, 5, 5, 5, 5, 3 }, 
+        { 5, 8, 8, 8, 8, 8, 8, 5 },
+        { 5, 8, 8, 8, 8, 8, 8, 5 }, 
+        { 5, 8, 8, 8, 8, 8, 8, 5 }, 
+        { 5, 8, 8, 8, 8, 8, 8, 5 },
+        { 5, 8, 8, 8, 8, 8, 8, 5 }, 
+        { 5, 8, 8, 8, 8, 8, 8, 5 }, 
+        { 3, 5, 5, 5, 5, 5, 5, 3 } };
+
+    public final char code = color ? 'K' : 'k';
 
     /**
      * @param xPos  the x coordinate of the location
@@ -38,7 +48,6 @@ public class King implements Piece {
     public King(int xPos, int yPos, boolean color) {
         loc = new Location(xPos, yPos);
         this.color = color;
-        code = color ? 'K' : 'k';
     }
 
     public char getCode() {
@@ -120,6 +129,9 @@ public class King implements Piece {
     @Override
     public boolean getColor() {
         return color;
+    }
+    public int getActivity(Location loc) {
+        return activityTable[loc.getXPos()][loc.getYPos()];
     }
 
 }
