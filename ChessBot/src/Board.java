@@ -54,23 +54,23 @@ public class Board {
             board.add(new Pawn(i, 6, false));
         }
 
-        board.add(new Rook(0, 0, true));
+        board.add(new Rook(0, 0, true, true));
         board.add(new Knight(1, 0, true));
         board.add(new Bishop(2, 0, true));
         board.add(new Queen(4, 0, true));
-        board.add(new King(3, 0, true));
+        board.add(new King(3, 0, true, false));
         board.add(new Bishop(5, 0, true));
         board.add(new Knight(6, 0, true));
-        board.add(new Rook(7, 0, true));
+        board.add(new Rook(7, 0, true, true));
 
-        board.add(new Rook(0, 7, false));
+        board.add(new Rook(0, 7, false, true));
         board.add(new Knight(1, 7, false));
         board.add(new Bishop(2, 7, false));
         board.add(new Queen(4, 7, false));
-        board.add(new King(3, 7, false));
+        board.add(new King(3, 7, false, false));
         board.add(new Bishop(5, 7, false));
         board.add(new Knight(6, 7, false));
-        board.add(new Rook(7, 7, false));
+        board.add(new Rook(7, 7, false, true));
 
     }
 
@@ -182,10 +182,10 @@ public class Board {
                 pieces.add(new Queen(xPos, yPos, color));
             }
             if (i instanceof Rook) {
-                pieces.add(new Rook(xPos, yPos, color));
+                pieces.add(new Rook(xPos, yPos, color, true));
             }
             if (i instanceof King) {
-                pieces.add(new King(xPos, yPos, color));
+                pieces.add(new King(xPos, yPos, color, false));
             }
         }
         return pieces;

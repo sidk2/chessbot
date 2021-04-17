@@ -125,11 +125,11 @@ public class Display extends JPanel implements MouseListener
             }
             if ( i instanceof Rook )
             {
-                pieces.add( new Rook( xPos, yPos, color ) );
+                pieces.add( new Rook( xPos, yPos, color , true) );
             }
             if ( i instanceof King )
             {
-                pieces.add( new King( xPos, yPos, color ) );
+                pieces.add( new King( xPos, yPos, color , true) );
             }
         }
         board = new Board( pieces );
@@ -215,11 +215,11 @@ public class Display extends JPanel implements MouseListener
             }
             if ( i instanceof Rook )
             {
-                pieces.add( new Rook( xPos, yPos, color ) );
+                pieces.add( new Rook( xPos, yPos, color, true ) );
             }
             if ( i instanceof King )
             {
-                pieces.add( new King( xPos, yPos, color ) );
+                pieces.add( new King( xPos, yPos, color, true ) );
             }
         }
         board = new Board( pieces );
@@ -295,7 +295,7 @@ public class Display extends JPanel implements MouseListener
                     if ( ans.equals( "Success" ) )
                     {
                         this.update(
-                            board.updateBoard( p, new Rook( t.currX, t.currY, p.getColor() ) ) );
+                            board.updateBoard( p, new Rook( t.currX, t.currY, p.getColor() , false) ) );
                         isSuccessful = true;
                     }
                     else
@@ -363,7 +363,7 @@ public class Display extends JPanel implements MouseListener
                     if ( ans.equals( "Success" ) )
                     {
                         this.update(
-                            board.updateBoard( p, new King( t.currX, t.currY, p.getColor() ) ) );
+                            board.updateBoard( p, new King( t.currX, t.currY, p.getColor() , false) ) );
                         isSuccessful = true;
                     }
                     else
@@ -412,7 +412,7 @@ public class Display extends JPanel implements MouseListener
                 {
                     save.add( new King( piece.getLoc().getXPos(),
                         piece.getLoc().getYPos(),
-                        piece.getColor() ) );
+                        piece.getColor() , false) );
                 }
                 else if ( piece instanceof Bishop )
                 {
@@ -424,7 +424,7 @@ public class Display extends JPanel implements MouseListener
                 {
                     save.add( new Rook( piece.getLoc().getXPos(),
                         piece.getLoc().getYPos(),
-                        piece.getColor() ) );
+                        piece.getColor() , false) );
                 }
                 else if ( piece instanceof Queen )
                 {
@@ -596,7 +596,7 @@ public class Display extends JPanel implements MouseListener
 
                         Board b2 = board;
                         b2 = b2.updateBoard( n,
-                            new Rook( Integer.parseInt( s[5] ), Integer.parseInt( s[6] ), false ) );
+                            new Rook( Integer.parseInt( s[5] ), Integer.parseInt( s[6] ), false , false) );
 
                         if ( b1.equals( b2 ) )
                         {
@@ -786,7 +786,7 @@ public class Display extends JPanel implements MouseListener
 
                         Board b2 = board;
                         b2 = b2.updateBoard( n,
-                            new King( Integer.parseInt( s[5] ), Integer.parseInt( s[6] ), false ) );
+                            new King( Integer.parseInt( s[5] ), Integer.parseInt( s[6] ), false, false ) );
 
                         if ( b1.equals( b2 ) )
                         {

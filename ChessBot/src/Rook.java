@@ -34,13 +34,15 @@ public class Rook implements Piece {
             { 14, 14, 14, 14, 14, 14, 14, 14 }, { 14, 14, 14, 14, 14, 14, 14, 14 },
             { 14, 14, 14, 14, 14, 14, 14, 14 } };
 
+    public boolean canCastle = true;
+
     /**
      * @param xPos  the x coordinate of the location
      * @param yPos  the y coordinate of the location
      * @param color the color of the piece A constructor for the Rook piece,
      *              instantiates fields
      */
-    public Rook(int xPos, int yPos, boolean color) {
+    public Rook(int xPos, int yPos, boolean color, boolean canCastle) {
         loc = new Location(xPos, yPos);
         this.color = color;
         code = color ? 'R' : 'r';
@@ -81,7 +83,7 @@ public class Rook implements Piece {
                 for (Piece i : temp) {
                     nextPos.add(i);
                 }
-                nextPos.add(new Rook(tempX, tempY, pieces.get(index).getColor()));
+                nextPos.add(new Rook(tempX, tempY, pieces.get(index).getColor(), false));
                 ans.add(new Board(nextPos));
             } else {
                 if (b.check(new Location(tempX, tempY)) == false) {
@@ -95,7 +97,7 @@ public class Rook implements Piece {
                                 }
                                 nextPos.add(r);
                             }
-                            nextPos.add(new Rook(tempX, tempY, pieces.get(index).getColor()));
+                            nextPos.add(new Rook(tempX, tempY, pieces.get(index).getColor(),false));
                             ans.add(new Board(nextPos));
                         }
                     }
@@ -114,7 +116,7 @@ public class Rook implements Piece {
                 for (Piece i : temp) {
                     nextPos.add(i);
                 }
-                nextPos.add(new Rook(tempX, tempY, pieces.get(index).getColor()));
+                nextPos.add(new Rook(tempX, tempY, pieces.get(index).getColor(), false));
                 ans.add(new Board(nextPos));
             } else {
                 if (b.check(new Location(tempX, tempY)) == false) {
@@ -128,7 +130,7 @@ public class Rook implements Piece {
                                 }
                                 nextPos.add(r);
                             }
-                            nextPos.add(new Rook(tempX, tempY, pieces.get(index).getColor()));
+                            nextPos.add(new Rook(tempX, tempY, pieces.get(index).getColor(), false));
                             ans.add(new Board(nextPos));
                         }
                     }
@@ -147,7 +149,7 @@ public class Rook implements Piece {
                 for (Piece i : temp) {
                     nextPos.add(i);
                 }
-                nextPos.add(new Rook(tempX, tempY, pieces.get(index).getColor()));
+                nextPos.add(new Rook(tempX, tempY, pieces.get(index).getColor(), false));
                 ans.add(new Board(nextPos));
             } else {
                 if (b.check(new Location(tempX, tempY)) == false) {
@@ -161,7 +163,7 @@ public class Rook implements Piece {
                                 }
                                 nextPos.add(r);
                             }
-                            nextPos.add(new Rook(tempX, tempY, pieces.get(index).getColor()));
+                            nextPos.add(new Rook(tempX, tempY, pieces.get(index).getColor(), false));
                             ans.add(new Board(nextPos));
                         }
                     }
@@ -179,7 +181,7 @@ public class Rook implements Piece {
                 for (Piece i : temp) {
                     nextPos.add(i);
                 }
-                nextPos.add(new Rook(tempX, tempY, pieces.get(index).getColor()));
+                nextPos.add(new Rook(tempX, tempY, pieces.get(index).getColor(), false));
                 ans.add(new Board(nextPos));
             } else {
                 if (b.check(new Location(tempX, tempY)) == false) {
@@ -193,7 +195,7 @@ public class Rook implements Piece {
                                 }
                                 nextPos.add(r);
                             }
-                            nextPos.add(new Rook(tempX, tempY, pieces.get(index).getColor()));
+                            nextPos.add(new Rook(tempX, tempY, pieces.get(index).getColor(), false));
                             ans.add(new Board(nextPos));
                         }
                     }
@@ -297,6 +299,16 @@ public class Rook implements Piece {
     
     public int getActivity(Location loc) {
         return activityTable[loc.getXPos()][loc.getYPos()];
+    }
+
+    public void setCastled(boolean b)
+    {
+        canCastle = b;
+    }
+
+    public boolean canCastle()
+    {
+        return canCastle;
     }
 
 }

@@ -146,11 +146,11 @@ public class Test {
                 } else if (piece instanceof Pawn) {
                     save.add(new Pawn(piece.getLoc().getXPos(), piece.getLoc().getYPos(), piece.getColor()));
                 } else if (piece instanceof King) {
-                    save.add(new King(piece.getLoc().getXPos(), piece.getLoc().getYPos(), piece.getColor()));
+                    save.add(new King(piece.getLoc().getXPos(), piece.getLoc().getYPos(), piece.getColor(), false));
                 } else if (piece instanceof Bishop) {
                     save.add(new Bishop(piece.getLoc().getXPos(), piece.getLoc().getYPos(), piece.getColor()));
                 } else if (piece instanceof Rook) {
-                    save.add(new Rook(piece.getLoc().getXPos(), piece.getLoc().getYPos(), piece.getColor()));
+                    save.add(new Rook(piece.getLoc().getXPos(), piece.getLoc().getYPos(), piece.getColor(), true));
                 } else if (piece instanceof Queen) {
                     save.add(new Queen(piece.getLoc().getXPos(), piece.getLoc().getYPos(), piece.getColor()));
                 }
@@ -285,7 +285,7 @@ public class Test {
 
                                 Board b2 = b;
                                 b2 = b2.updateBoard(n,
-                                        new Rook(convLetters(s[5].charAt(0)), Integer.parseInt(s[6]) - 1, false));
+                                        new Rook(convLetters(s[5].charAt(0)), Integer.parseInt(s[6]) - 1, false, false));
 
                                 if (b1.equals(b2)) {
                                     valid = true;
@@ -297,8 +297,8 @@ public class Test {
                             }
                             if (valid) {
                                 b = b.updateBoard(
-                                        new Rook(convLetters(s[2].charAt(0)), Integer.parseInt(s[3]) - 1, false),
-                                        new Rook(convLetters(s[5].charAt(0)), Integer.parseInt(s[6]) - 1, false));
+                                        new Rook(convLetters(s[2].charAt(0)), Integer.parseInt(s[3]) - 1, false, false),
+                                        new Rook(convLetters(s[5].charAt(0)), Integer.parseInt(s[6]) - 1, false, false));
                                 b.printBoard();
                                 break;
                             } else {
@@ -404,16 +404,24 @@ public class Test {
                                 .getColor()) {
                             System.out.println("That's not your King! Please try again.");
                         } else {
+                            boolean castle = false;
                             King n = (King) b
                                     .getPiece(new Location(convLetters(s[2].charAt(0)), Integer.parseInt(s[3]) - 1));
                             boolean valid = false;
-                            for (Board b1 : n.findMoves(b, b.getBoard().indexOf(n))) {
-
-                                Board b2 = b;
+                            Board b2 = new Board(b.copyBoard());
                                 b2 = b2.updateBoard(n,
-                                        new King(convLetters(s[5].charAt(0)), Integer.parseInt(s[6]) - 1, false));
-
+                                        new King(convLetters(s[5].charAt(0)), Integer.parseInt(s[6]) - 1, false, true));
+                            
+                            for (Board b1 : n.findMoves(b, b.getBoard().indexOf(n))) {
+                                
+                            
                                 if (b1.equals(b2)) {
+                                    if(n.getLoc().equals(new Location(3, 7)) && (b1.getPiece(new Location(1, 7)) instanceof King || b1.getPiece(
+                                        new Location(5, 7)) instanceof King
+                                    ))
+                                    {
+                                       castle = true;
+                                    }
                                     valid = true;
 
                                     break;
@@ -423,8 +431,19 @@ public class Test {
                             }
                             if (valid) {
                                 b = b.updateBoard(
-                                        new King(convLetters(s[2].charAt(0)), Integer.parseInt(s[3]) - 1, false),
-                                        new King(convLetters(s[5].charAt(0)), Integer.parseInt(s[6]) - 1, false));
+                                        b.getPiece(new Location(convLetters(s[2].charAt(0)), Integer.parseInt(s[3]) - 1)),
+                                        new King(convLetters(s[5].charAt(0)), Integer.parseInt(s[6]) - 1, false, true));
+                                if (castle)
+                                {
+                                    if(b.getPiece(new Location(1, 7)) instanceof King && !b.getPiece(new Location(1, 7)).getColor())
+                                    {
+                                        b.updateBoard(b.getPiece(new Location(0, 7)), new Rook(2, 7, false, false));
+                                    }
+                                    else if(b.getPiece(new Location(5, 7)) instanceof King && !b.getPiece(new Location(5, 7)).getColor())
+                                    {
+                                        b.updateBoard(b.getPiece(new Location(7, 7)), new Rook(4, 7, false, false));
+                                    }
+                                }
                                 b.printBoard();
                                 break;
                             } else {
