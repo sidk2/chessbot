@@ -452,6 +452,58 @@ public class Test {
                             }
                         }
                     }
+                    else if (s[0].contains("Castle")){
+                        if(s[1].contains("long"))
+                        {
+                            Board copy = new Board(b.copyBoard());
+                            try{
+                                copy.updateBoard((King)copy.getPiece(new Location(3, 7)), new King(5, 7, false, true));
+                                copy.updateBoard((Rook)copy.getPiece(new Location(7,7)), new Rook(4, 7, false, false));
+                                King n = (King) b
+                                        .getPiece(new Location(3,7));
+                                for(Board board : n.findMoves(b, b.getBoard().indexOf(n)))
+                                {  
+                                    if(board.equals(copy))
+                                    {
+                                        b = copy;
+                                        b.printBoard();
+                                        break;
+                                    }
+                                }
+                            }
+                            catch(ClassCastException e){
+                                System.out.println("You can't castle!");
+                            }
+                            
+                        }
+                        else if(s[1].contains("short")){
+                            Board copy = new Board(b.copyBoard());
+                            try{
+                                copy.updateBoard((King)copy.getPiece(new Location(3, 7)), new King(1, 7, false, true));
+                                copy.updateBoard((Rook)copy.getPiece(new Location(0,7)), new Rook(2, 7, false, false));
+                                King n = (King) b
+                                        .getPiece(new Location(3,7));
+                                copy.updateBoard((King)copy.getPiece(new Location(3, 7)), null);
+                                for(Board board : n.findMoves(b, b.getBoard().indexOf(n)))
+                                {  
+                                    if(board.equals(copy))
+                                    {
+                                        b = copy;
+                                        b.printBoard();
+                                        break;
+                                    }
+                                }
+                            }
+                            catch(ClassCastException e){
+                                System.out.println("You can't castle!");
+                            }
+                        }
+                        else{
+                            System.out.println("If you want to castle, please type \"Castle long\" or \"Castle short\".");
+                            b = new Board(save);
+                        }
+
+                    }
                 } catch (NumberFormatException e) {
                     System.out.println(e);
                     System.out.println("Wrong format! Try Again!");

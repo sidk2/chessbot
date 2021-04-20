@@ -125,7 +125,8 @@ public class King implements Piece {
                 }
                 copy = new Board(b.copyBoard());
                 copy.updateBoard(this, new King(this.getLoc().getXPos() - 2, this.getLoc().getYPos(), color, true));
-                // copy.updateBoard(copy.getPiece(new Location(0, 0)), new Rook(2, 0, color, false));
+                copy.updateBoard(copy.getPiece(new Location(0, 0)), new Rook(2, 0, color, false));
+                copy.updateBoard(copy.getPiece(new Location(3, 0)), null);
                 for (Piece p : copy.getBoard()) {
                     if (p.isInCheck(copy, copy.getBoard().indexOf(p))) {
                         passed2 = false;
@@ -133,7 +134,7 @@ public class King implements Piece {
                     }
                 }
                 if (passed1 && passed2) {
-                    // copy.updateBoard(new Rook(2, 0, color, false), copy.getPiece(new Location(0, 0)));
+                    copy.updateBoard( copy.getPiece(new Location(0, 0)), new Rook(2, 0, color, false));
                     ans.add(copy);
                 }
             }
@@ -153,7 +154,8 @@ public class King implements Piece {
                 }
                 copy = new Board(b.copyBoard());
                 copy.updateBoard(this, new King(this.getLoc().getXPos()  + 2, this.getLoc().getYPos(), color, true));
-                // copy.updateBoard(copy.getPiece(new Location(7, 0)), new Rook(4, 0, color, false));
+                copy.updateBoard(copy.getPiece(new Location(7, 0)), new Rook(4, 0, color, false));
+                copy.updateBoard(copy.getPiece(new Location(3, 0)), null);
                 for (Piece p : copy.getBoard()) {
                     if (p.isInCheck(copy, copy.getBoard().indexOf(p))) {
                         passed2 = false;
@@ -180,7 +182,9 @@ public class King implements Piece {
                 }
                 copy = new Board(b.copyBoard());
                 copy.updateBoard(this, new King(this.getLoc().getXPos() - 2, this.getLoc().getYPos(), color, true));
-                // copy.updateBoard(copy.getPiece(new Location(0, 7)), new Rook(2, 7, color, false));
+                copy.updateBoard(copy.getPiece(new Location(0, 7)), new Rook(2, 7, color, false));
+                copy.updateBoard(this, null);
+                copy.updateBoard(copy.getPiece(new Location(3, 7)), null);
                 for (Piece p : copy.getBoard()) {
                     if (p.isInCheck(copy, copy.getBoard().indexOf(p))) {
                         passed2 = false;
@@ -189,6 +193,8 @@ public class King implements Piece {
                 }
                 if (passed1 && passed2) {
                     ans.add(copy);
+                    // System.out.println("short castle");
+                    // copy.printBoard();
                 }
             }
             if (!color && b.check(new Location(4, 7)) && b.check(new Location(5, 7)) && b.check(new Location(6, 7))
@@ -210,7 +216,8 @@ public class King implements Piece {
                 copy = new Board(b.copyBoard());
                 // copy.updateBoard(copy.getPiece(new Location(this.getLoc().getXPos() + 1, this.getLoc().getYPos())), null);
                 copy.updateBoard(this, new King(this.getLoc().getXPos() + 2, this.getLoc().getYPos(), color, true));
-                // copy.updateBoard(copy.getPiece(new Location(7, 7)), new Rook(4, 7, color, false));
+                copy.updateBoard(copy.getPiece(new Location(7, 7)), new Rook(4, 7, color, false));
+                copy.updateBoard(copy.getPiece(new Location(3, 7)), null);
                 for (Piece p : copy.getBoard()) {
                     if (p.isInCheck(copy, copy.getBoard().indexOf(p))) {
                         passed2 = false;
@@ -219,9 +226,9 @@ public class King implements Piece {
                 }
                 if (passed1 && passed2) {
                     ans.add(copy);
-                    System.out.println("Castled");
-                    copy.printBoard();
-                    System.out.println('\n');
+                    // System.out.println("Castled");
+                    // copy.printBoard();
+                    // System.out.println('\n');
                 }
             }
 

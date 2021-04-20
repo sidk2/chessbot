@@ -277,16 +277,18 @@ public class Board {
         ArrayList<Piece> pieces = this.getBoard();
 
         pieces.remove(p1);
-
-        for (int i = 0; i < pieces.size(); i++) {
-            if (pieces.get(i).getLoc().getXPos() == p2.getLoc().getXPos()
-                    && pieces.get(i).getLoc().getYPos() == p2.getLoc().getYPos()) {
-                pieces.remove(i);
-                break;
+        if(p2 != null)
+        {
+            for (int i = 0; i < pieces.size(); i++) {
+                if (pieces.get(i).getLoc().getXPos() == p2.getLoc().getXPos()
+                        && pieces.get(i).getLoc().getYPos() == p2.getLoc().getYPos()) {
+                    pieces.remove(i);
+                    break;
+                }
             }
-        }
 
-        pieces.add(p2);
+            pieces.add(p2);
+        }
         return new Board(pieces);
     }
 
