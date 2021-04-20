@@ -156,6 +156,6 @@ public class Knight implements Piece {
         return color;
     }
     public int getActivity(Location loc) {
-        return activityTable[loc.getXPos()][loc.getYPos()];
+        return activityTable[loc.getXPos()][loc.getYPos()] - 4;
     }
 }

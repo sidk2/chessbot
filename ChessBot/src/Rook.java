@@ -29,7 +29,7 @@ public class Rook implements Piece {
 
     public char code;
 
-    private final int[][] activityTable = { { 14, 14, 14, 14, 14, 14, 14, 14 }, { 14, 14, 14, 14, 14, 14, 14, 14 },
+    private final int[][] activityTable = { { 14, 14, 20, 20, 20, 20, 14, 14 }, { 14, 14, 14, 14, 14, 14, 14, 14 },
             { 14, 14, 14, 14, 14, 14, 14, 14 }, { 14, 14, 14, 14, 14, 14, 14, 14 }, { 14, 14, 14, 14, 14, 14, 14, 14 },
             { 14, 14, 14, 14, 14, 14, 14, 14 }, { 14, 14, 14, 14, 14, 14, 14, 14 },
             { 14, 14, 14, 14, 14, 14, 14, 14 } };
@@ -298,7 +298,7 @@ public class Rook implements Piece {
     }
     
     public int getActivity(Location loc) {
-        return activityTable[loc.getXPos()][loc.getYPos()];
+        return activityTable[loc.getXPos()][loc.getYPos()] - 14;
     }
 
     public void setCastled(boolean b)

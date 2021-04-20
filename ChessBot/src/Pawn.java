@@ -34,6 +34,8 @@ public class Pawn implements Piece
 
     private int[][] activityTable;
 
+    // private Board prevBoard = new Board();
+
 
     /**
      * @param xPos
@@ -351,5 +353,9 @@ public class Pawn implements Piece
     public int getActivity(Location loc) {
         return activityTable[loc.getXPos()][loc.getYPos()];
     }
+    // public void setPrevBoard(Board b)
+    // {
+    //     prevBoard = b;
+    // }
 
 }

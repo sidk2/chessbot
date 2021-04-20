@@ -109,7 +109,7 @@ public class AI
         {
             if(transpositions.containsKey(hash))
             {
-                return transpositions.get(hash).getKey();
+                return minimax_no_transpose(board, depth, color, alpha, beta);
             }
             double value = -1000000;
             Board best = null;
@@ -160,7 +160,7 @@ public class AI
         {
             if(transpositions.containsKey(board.hash()))
             {
-                return minimax(board, depth - transpositions.get(hash).getValue(), color, alpha, beta);
+                return minimax_no_transpose(board, 3, !color, alpha, beta);
             }
             double value = 1000000.0;
             Board best = null;
@@ -193,4 +193,92 @@ public class AI
 
     }
 
+    public Board minimax_no_transpose( Board board, int depth, boolean color, double alpha, double beta)
+    {
+        String hash = board.hash();
+        ArrayList<Board> bestSet = new ArrayList<Board>();
+        int searched = 0;
+        if ( depth == 1 )
+        {
+            return board.getBestBoard( color );
+        }
+        if ( color )
+        {
+            double value = -1000000;
+            Board best = null;
+            ArrayList<Board> poss = board.getPossibleMoves( color );
+            searched += poss.size();
+            for ( int i = 0; i < poss.size(); i++ )
+            {
+                Board one = minimax( poss.get( i ), depth - 1, !color, alpha, beta);
+                if ( one == null )
+                {
+                    best = poss.get( i );
+                    value = 100000000;
+                    break;
+                }
+                if ( one.getValue() > value || best == null )
+                {
+                    bestSet.clear();;
+                    value = one.getValue();
+                    alpha = Math.max(alpha, value);
+                    best = poss.get( i );
+                    bestSet.add(best);
+                }
+                else if ( one.getValue() == value){
+                    bestSet.add(one);
+                }
+                if(alpha >= beta) break;
+            }
+            if ( value == 100000000 && depth == this.depth )
+            {
+                System.out.println( "Checkmate" );
+                checkmate = true;
+                whiteWon = true;
+            }
+
+            transpositions.put(hash, new SimpleEntry<Board, Integer>(best, depth));
+            if(bestSet.size() > 1){
+                Board ret = null;
+                for(Board b : bestSet)
+                {
+                    Board temp = minimax(b, depth/2, color, alpha, beta);
+                    if (ret == null || temp.getValue() > ret.getValue()) ret = b;
+                }
+                best = ret;
+            }
+            return best;
+        }
+        else
+        {
+            double value = 1000000.0;
+            Board best = null;
+            for ( int i = 0; i < board.getPossibleMoves( color ).size(); i++ )
+            {
+                Board one = minimax( board.getPossibleMoves( color ).get( i ), depth - 1, !color, alpha, beta);
+                if ( one == null )
+                {
+                    best = board.getPossibleMoves( color ).get( i );
+                    value = -100000000;
+                    break;
+                }
+                if ( one.getValue() < value || best == null )
+                {
+                    value = one.getValue();
+                    beta = Math.min(beta, value);
+                    best = board.getPossibleMoves( color ).get( i );
+                }
+                if (beta<=alpha) break;
+            }
+            if ( value == -100000000 && depth == this.depth )
+            {
+                System.out.println( "Checkmate" );
+                checkmate = true;
+                whiteWon = false;
+            }
+            transpositions.put(hash, new SimpleEntry<Board, Integer>(best, depth));
+            return best;
+        }
+
+    }
 }

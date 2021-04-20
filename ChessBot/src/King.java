@@ -253,7 +253,7 @@ public class King implements Piece {
     }
 
     public int getActivity(Location loc) {
-        return activityTable[loc.getXPos()][loc.getYPos()];
+        return -activityTable[loc.getXPos()][loc.getYPos()];
     }
 
     public void setCastled(boolean b) {

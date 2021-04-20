@@ -284,8 +284,8 @@ public class Test {
                             for (Board b1 : n.findMoves(b, b.getBoard().indexOf(n))) {
 
                                 Board b2 = b;
-                                b2 = b2.updateBoard(n,
-                                        new Rook(convLetters(s[5].charAt(0)), Integer.parseInt(s[6]) - 1, false, false));
+                                b2 = b2.updateBoard(n, new Rook(convLetters(s[5].charAt(0)), Integer.parseInt(s[6]) - 1,
+                                        false, false));
 
                                 if (b1.equals(b2)) {
                                     valid = true;
@@ -298,7 +298,8 @@ public class Test {
                             if (valid) {
                                 b = b.updateBoard(
                                         new Rook(convLetters(s[2].charAt(0)), Integer.parseInt(s[3]) - 1, false, false),
-                                        new Rook(convLetters(s[5].charAt(0)), Integer.parseInt(s[6]) - 1, false, false));
+                                        new Rook(convLetters(s[5].charAt(0)), Integer.parseInt(s[6]) - 1, false,
+                                                false));
                                 b.printBoard();
                                 break;
                             } else {
@@ -404,62 +405,58 @@ public class Test {
                                 .getColor()) {
                             System.out.println("That's not your King! Please try again.");
                         } else {
-                                System.out.println("Invalid move! Please try again.");
-                                b = new Board(save);
-                            }
+                            System.out.println("Invalid move! Please try again.");
+                            b = new Board(save);
                         }
                     }
-                    else if (s[0].contains("Castle")){
-                        if(s[1].contains("long"))
-                        {
+
+                    else if (s[0].contains("Castle")) {
+                        if (s[1].contains("long")) {
                             Board copy = new Board(b.copyBoard());
-                            try{
-                                copy.updateBoard((King)copy.getPiece(new Location(3, 7)), new King(5, 7, false, true));
-                                copy.updateBoard((Rook)copy.getPiece(new Location(7,7)), new Rook(4, 7, false, false));
-                                King n = (King) b
-                                        .getPiece(new Location(3,7));
-                                for(Board board : n.findMoves(b, b.getBoard().indexOf(n)))
-                                {  
-                                    if(board.equals(copy))
-                                    {
+                            try {
+                                copy.updateBoard((King) copy.getPiece(new Location(3, 7)), new King(5, 7, false, true));
+                                copy.updateBoard((Rook) copy.getPiece(new Location(7, 7)),
+                                        new Rook(4, 7, false, false));
+                                King n = (King) b.getPiece(new Location(3, 7));
+                                for (Board board : n.findMoves(b, b.getBoard().indexOf(n))) {
+                                    if (board.equals(copy)) {
                                         b = copy;
                                         b.printBoard();
                                         break;
                                     }
                                 }
-                            }
-                            catch(ClassCastException e){
+                            } catch (ClassCastException e) {
                                 System.out.println("You can't castle!");
                             }
-                            
-                        }
-                        else if(s[1].contains("short")){
+
+                        } else if (s[1].contains("short")) {
                             Board copy = new Board(b.copyBoard());
-                            try{
-                                copy.updateBoard((King)copy.getPiece(new Location(3, 7)), new King(1, 7, false, true));
-                                copy.updateBoard((Rook)copy.getPiece(new Location(0,7)), new Rook(2, 7, false, false));
-                                King n = (King) b
-                                        .getPiece(new Location(3,7));
-                                copy.updateBoard((King)copy.getPiece(new Location(3, 7)), null);
-                                for(Board board : n.findMoves(b, b.getBoard().indexOf(n)))
-                                {  
-                                    if(board.equals(copy))
-                                    {
+                            try {
+                                copy.updateBoard((King) copy.getPiece(new Location(3, 7)), new King(1, 7, false, true));
+                                copy.updateBoard((Rook) copy.getPiece(new Location(0, 7)),
+                                        new Rook(2, 7, false, false));
+                                King n = (King) b.getPiece(new Location(3, 7));
+                                copy.updateBoard((King) copy.getPiece(new Location(3, 7)), null);
+                                for (Board board : n.findMoves(b, b.getBoard().indexOf(n))) {
+                                    if (board.equals(copy)) {
                                         b = copy;
                                         b.printBoard();
                                         break;
                                     }
                                 }
-                            }
-                            catch(ClassCastException e){
+                            } catch (ClassCastException e) {
                                 System.out.println("You can't castle!");
                             }
-                        }
-                        else{
-                            System.out.println("If you want to castle, please type \"Castle long\" or \"Castle short\".");
+                        } else {
+                            System.out
+                                    .println("If you want to castle, please type \"Castle long\" or \"Castle short\".");
                             b = new Board(save);
                         }
 
+                    }
+                    else if (s[0].contains("skip"))
+                    {
+                        break;
                     }
                 } catch (NumberFormatException e) {
                     System.out.println(e);
@@ -467,7 +464,15 @@ public class Test {
                 }
             }
             System.out.println("White's move!");
+            // for (Piece p : b.getBoard()) {
+            //     if(p instanceof Pawn)
+            //     {
+            //         ((Pawn) p).setPrevBoard(b);
+            //     }
+            // }
+
         }
+
     }
 
     /**

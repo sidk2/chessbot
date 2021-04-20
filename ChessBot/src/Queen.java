@@ -479,6 +479,6 @@ public class Queen implements Piece {
     }
 
     public int getActivity(Location loc) {
-        return activityTable[loc.getXPos()][loc.getYPos()];
+        return activityTable[loc.getXPos()][loc.getYPos()] - 20;
     }
 }
