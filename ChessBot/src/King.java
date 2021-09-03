@@ -25,7 +25,7 @@ public class King implements Piece {
     /**
      * the material value of the piece
      */
-    public final int VALUE = 900;
+    public final int VALUE = 999999999;
 
     public final int[][] activityTable = { { 3, 5, 5, 5, 5, 5, 5, 3 }, { 5, 8, 8, 8, 8, 8, 8, 5 },
             { 5, 8, 8, 8, 8, 8, 8, 5 }, { 5, 8, 8, 8, 8, 8, 8, 5 }, { 5, 8, 8, 8, 8, 8, 8, 5 },
@@ -81,7 +81,7 @@ public class King implements Piece {
 
         for (int i = 0; i < 8; i++) {
             if (curX + dx[i] >= 0 && curX + dx[i] < 8 && curY + dy[i] >= 0 && curY + dy[i] < 8
-                    && (b.check(new Location(curX + dx[i], curY + dy[i])) == true)) {
+                    && (b.check(curX + dx[i], curY + dy[i]) == true)) {
                 ArrayList<Piece> nextPos = new ArrayList<>();
                 for (Piece r : temp) {
                     nextPos.add(r);
@@ -90,7 +90,7 @@ public class King implements Piece {
                 ans.add(new Board(nextPos));
             }
             if (curX + dx[i] >= 0 && curX + dx[i] < 8 && curY + dy[i] >= 0 && curY + dy[i] < 8
-                    && (b.check(new Location(curX + dx[i], curY + dy[i])) == false)) {
+                    && (b.check(curX + dx[i], curY + dy[i]) == false)) {
                 for (int r = 0; r < pieces.size(); r++) {
                     if (pieces.get(r).getLoc().getXPos() == curX + dx[i]
                             && pieces.get(r).getLoc().getYPos() == curY + dy[i]

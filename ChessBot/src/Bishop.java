@@ -76,7 +76,7 @@ public class Bishop implements Piece {
         while (tempX - 1 >= 0 && tempY - 1 >= 0) {
             tempX--;
             tempY--;
-            if (b.check(new Location(tempX, tempY)) == true) {
+            if (b.check(tempX, tempY) == true) {
                 ArrayList<Piece> nextPos = new ArrayList<>();
                 for (Piece i : temp) {
                     nextPos.add(i);
@@ -84,7 +84,6 @@ public class Bishop implements Piece {
                 nextPos.add(new Bishop(tempX, tempY, pieces.get(index).getColor()));
                 ans.add(new Board(nextPos));
             } else {
-                if (b.check(new Location(tempX, tempY)) == false) {
                     for (int i = 0; i < pieces.size(); i++) {
                         if (pieces.get(i).getLoc().getXPos() == tempX && pieces.get(i).getLoc().getYPos() == tempY
                                 && pieces.get(i).getColor() != pieces.get(index).getColor()) {
@@ -98,7 +97,7 @@ public class Bishop implements Piece {
                             nextPos.add(new Bishop(tempX, tempY, pieces.get(index).getColor()));
                             ans.add(new Board(nextPos));
                         }
-                    }
+                    
                     break;
                 }
 
@@ -110,7 +109,7 @@ public class Bishop implements Piece {
         while (tempX - 1 >= 0 && tempY + 1 < 8) {
             tempX--;
             tempY++;
-            if (b.check(new Location(tempX, tempY)) == true) {
+            if (b.check(tempX, tempY) == true) {
                 ArrayList<Piece> nextPos = new ArrayList<>();
                 for (Piece i : temp) {
                     nextPos.add(i);
@@ -145,7 +144,7 @@ public class Bishop implements Piece {
         while (tempX + 1 < 8 && tempY + 1 < 8) {
             tempX++;
             tempY++;
-            if (b.check(new Location(tempX, tempY)) == true) {
+            if (b.check(tempX, tempY) == true) {
                 ArrayList<Piece> nextPos = new ArrayList<>();
                 for (Piece i : temp) {
                     nextPos.add(i);
@@ -153,7 +152,7 @@ public class Bishop implements Piece {
                 nextPos.add(new Bishop(tempX, tempY, pieces.get(index).getColor()));
                 ans.add(new Board(nextPos));
             } else {
-                if (b.check(new Location(tempX, tempY)) == false) {
+                if (b.check(tempX, tempY) == false) {
                     for (int i = 0; i < pieces.size(); i++) {
                         if (pieces.get(i).getLoc().getXPos() == tempX && pieces.get(i).getLoc().getYPos() == tempY
                                 && pieces.get(i).getColor() != pieces.get(index).getColor()) {
@@ -179,7 +178,7 @@ public class Bishop implements Piece {
         while (tempX + 1 < 8 && tempY - 1 >= 0) {
             tempX++;
             tempY--;
-            if (b.check(new Location(tempX, tempY)) == true) {
+            if (b.check(tempX, tempY) == true) {
                 ArrayList<Piece> nextPos = new ArrayList<>();
                 for (Piece i : temp) {
                     nextPos.add(i);
@@ -187,7 +186,7 @@ public class Bishop implements Piece {
                 nextPos.add(new Bishop(tempX, tempY, pieces.get(index).getColor()));
                 ans.add(new Board(nextPos));
             } else {
-                if (b.check(new Location(tempX, tempY)) == false) {
+                if (b.check(tempX, tempY) == false) {
                     for (int i = 0; i < pieces.size(); i++) {
                         if (pieces.get(i).getLoc().getXPos() == tempX && pieces.get(i).getLoc().getYPos() == tempY
                                 && pieces.get(i).getColor() != pieces.get(index).getColor()) {

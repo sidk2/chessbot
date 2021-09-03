@@ -47,10 +47,10 @@ public class Pawn implements Piece {
         code = color ? 'P' : 'p';
         activityTable = this.color
                 ? new int[][] { { 2, 2, 2, 2, 2, 2, 2, 0 }, { 3, 3, 3, 3, 3, 3, 3, 0 }, { 3, 3, 3, 3, 3, 3, 3, 0 },
-                        { 3, 3, 3, 9, 3, 3, 3, 0 }, { 3, 3, 3, 9, 3, 3, 3, 0 }, { 3, 3, 3, 3, 3, 3, 3, 0 },
+                        { 3, 3, 3, 8, 3, 3, 3, 0 }, { 3, 3, 3, 8, 3, 3, 3, 0 }, { 3, 3, 3, 3, 3, 3, 3, 0 },
                         { 3, 3, 3, 3, 3, 3, 3, 0 }, { 2, 2, 2, 2, 2, 2, 2, 0 } }
                 : new int[][] { { 0, 2, 2, 2, 2, 2, 2, 2 }, { 0, 3, 3, 3, 3, 3, 3, 3 }, { 0, 3, 3, 3, 3, 3, 3, 3 },
-                        { 0, 3, 3, 3, 9, 3, 3, 3 }, { 0, 3, 3, 3, 9, 3, 3, 3 }, { 0, 3, 3, 3, 3, 3, 3, 3 },
+                        { 0, 3, 3, 3, 8, 3, 3, 3 }, { 0, 3, 3, 3, 8, 3, 3, 3 }, { 0, 3, 3, 3, 3, 3, 3, 3 },
                         { 0, 3, 3, 3, 3, 3, 3, 3 }, { 0, 2, 2, 2, 2, 2, 2, 2 } };
         prevBoard = null;
         enPassant = false;
@@ -86,29 +86,28 @@ public class Pawn implements Piece {
         int curY = pieces.get(index).getLoc().getYPos();
         if (pieces.get(index).getColor() == true) {
             if (curY == 1) {
-                if (b.check(new Location(curX, curY + 2)) == true && b.check(new Location(curX, curY + 1)) == true) {
+                if (b.check(curX, curY + 2) == true && b.check(curX, curY + 1) == true) {
                     ArrayList<Piece> nextPos = new ArrayList<>();
                     for (Piece i : temp) {
                         nextPos.add(i);
                     }
                     nextPos.add(new Pawn(curX, curY + 2, pieces.get(index).getColor()));
                     ans.add(new Board(nextPos));
-                    ;
+                    
                 }
             }
             if (curY + 1 < 7) {
-                if (b.check(new Location(curX, curY + 1)) == true) {
+                if (b.check(curX, curY + 1) == true) {
                     ArrayList<Piece> nextPos = new ArrayList<>();
                     for (Piece i : temp) {
                         nextPos.add(i);
                     }
                     nextPos.add(new Pawn(curX, curY + 1, pieces.get(index).getColor()));
-                    Board r = new Board(nextPos);
                     ans.add(new Board(nextPos));
 
                 }
             }
-            if (curX - 1 >= 0 && curY + 1 < 7 && b.check(new Location(curX - 1, curY + 1)) == false) {
+            if (curX - 1 >= 0 && curY + 1 < 7 && b.check(curX - 1, curY + 1) == false) {
                 for (int i = 0; i < pieces.size(); i++) {
                     if (pieces.get(i).getLoc().getXPos() == curX - 1 && pieces.get(i).getLoc().getYPos() == curY + 1
                             && pieces.get(i).getColor() != pieces.get(index).getColor()) {
@@ -125,7 +124,7 @@ public class Pawn implements Piece {
                     }
                 }
             }
-            if (curX + 1 < 8 && curY + 1 < 7 && b.check(new Location(curX + 1, curY + 1)) == false) {
+            if (curX + 1 < 8 && curY + 1 < 7 && b.check(curX + 1, curY + 1) == false) {
                 for (int i = 0; i < pieces.size(); i++) {
                     if (pieces.get(i).getLoc().getXPos() == curX + 1 && pieces.get(i).getLoc().getYPos() == curY + 1
                             && pieces.get(i).getColor() != pieces.get(index).getColor()) {
@@ -166,7 +165,7 @@ public class Pawn implements Piece {
             // }
         } else {
             if (curY == 6) {
-                if (b.check(new Location(curX, curY - 2)) == true && b.check(new Location(curX, curY - 1)) == true) {
+                if (b.check(curX, curY - 2) == true && b.check(curX, curY - 1) == true) {
                     ArrayList<Piece> nextPos = new ArrayList<>();
                     for (Piece i : temp) {
                         nextPos.add(i);
@@ -176,17 +175,16 @@ public class Pawn implements Piece {
                 }
             }
             if (curY - 1 > 0) {
-                if (b.check(new Location(curX, curY - 1)) == true) {
+                if (b.check(curX, curY - 1) == true) {
                     ArrayList<Piece> nextPos = new ArrayList<>();
                     for (Piece i : temp) {
                         nextPos.add(i);
                     }
                     nextPos.add(new Pawn(curX, curY - 1, pieces.get(index).getColor()));
-                    Board r = new Board(nextPos);
                     ans.add(new Board(nextPos));
                 }
             }
-            if (curX - 1 >= 0 && curY - 1 > 0 && b.check(new Location(curX - 1, curY - 1)) == false) {
+            if (curX - 1 >= 0 && curY - 1 > 0 && b.check(curX - 1, curY - 1) == false) {
                 for (int i = 0; i < pieces.size(); i++) {
                     if (pieces.get(i).getLoc().getXPos() == curX - 1 && pieces.get(i).getLoc().getYPos() == curY - 1
                             && pieces.get(i).getColor() != pieces.get(index).getColor()) {
@@ -203,7 +201,7 @@ public class Pawn implements Piece {
                     }
                 }
             }
-            if (curX + 1 < 8 && curY - 1 > 0 && b.check(new Location(curX + 1, curY - 1)) == false) {
+            if (curX + 1 < 8 && curY - 1 > 0 && b.check(curX + 1, curY - 1) == false) {
                 for (int i = 0; i < pieces.size(); i++) {
                     if (pieces.get(i).getLoc().getXPos() == curX + 1 && pieces.get(i).getLoc().getYPos() == curY - 1
                             && pieces.get(i).getColor() != pieces.get(index).getColor()) {

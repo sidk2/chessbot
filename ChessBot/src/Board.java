@@ -27,6 +27,14 @@ public class Board {
 
     public final double activityRelativeWeight = 0.1;
 
+    public int[][] searchOrder = { { 4, 4 }, { 4, 3 }, { 3, 3 }, { 3, 4 }, { 3, 5 }, { 4, 5 }, { 5, 5 }, { 5, 4 },
+            { 5, 3 }, { 5, 2 }, { 4, 2 }, { 3, 2 }, { 2, 2 }, { 2, 3 }, { 2, 4 }, { 2, 5 }, { 2, 6 }, { 3, 6 },
+            { 4, 6 }, { 5, 6 }, { 6, 6 }, { 6, 5 }, { 6, 4 }, { 6, 3 }, { 6, 2 }, { 6, 1 }, { 5, 1 }, { 4, 1 },
+            { 3, 1 }, { 2, 1 }, { 1, 1 }, { 1, 2 }, { 1, 3 }, { 1, 4 }, { 1, 5 }, { 1, 6 }, { 1, 7 }, { 2, 7 },
+            { 3, 7 }, { 4, 7 }, { 5, 7 }, { 6, 7 }, { 7, 7 }, { 7, 6 }, { 7, 5 }, { 7, 4 }, { 7, 3 }, { 7, 2 },
+            { 7, 1 }, { 7, 0 }, { 6, 0 }, { 5, 0 }, { 4, 0 }, { 3, 0 }, { 2, 0 }, { 1, 0 }, { 0, 0 }, { 0, 1 },
+            { 0, 2 }, { 0, 3 }, { 0, 4 }, { 0, 5 }, { 0, 6 }, { 0, 7 } };
+
     /**
      * Makes a board with the position set as the starting position of a chess game
      * Instantiates fields
@@ -132,7 +140,8 @@ public class Board {
         ArrayList<Piece> p = getBoard();
         for (Piece piece : p) {
             val += piece.getValue();
-            val = (piece.getColor()) ? (val + (activityRelativeWeight * piece.getActivity(piece.getLoc()))) : val - (activityRelativeWeight * piece.getActivity(piece.getLoc()));
+            val = (piece.getColor()) ? (val + (activityRelativeWeight * piece.getActivity(piece.getLoc())))
+                    : val - (activityRelativeWeight * piece.getActivity(piece.getLoc()));
         }
 
         // System.out.println("Poss Moves: " + getPossibleMoves(true).size() + '\n' +
@@ -203,6 +212,11 @@ public class Board {
         return !isOccupied[x][y];
     }
 
+    public Boolean check( int x, int y)
+    {
+        return !isOccupied[x][y];
+    }
+
     /**
      * returns the set of all possible moves for a side(color is true = white, false
      * = black), removes illegal moves, returns null if the current position is
@@ -215,9 +229,10 @@ public class Board {
 
         ArrayList<Board> allNextMoves = new ArrayList<>();
 
-        for (int i = 0; i < this.getBoard().size(); i++) {
-            if (this.getBoard().get(i).getColor() == color) {
-                ArrayList<Board> temp = this.getBoard().get(i).findMoves(this, i);
+        for (int x = 0; x < 64; x++) {
+            Piece p = this.getPiece(new Location(searchOrder[x][0], searchOrder[x][1]));
+            if (p != null && p.getColor() == color) {
+                ArrayList<Board> temp = p.findMoves(this, this.getBoard().indexOf(p));
 
                 if (temp == null) {
                     continue;
@@ -237,9 +252,34 @@ public class Board {
                     }
                     allNextMoves.add(board);
                 }
-
             }
         }
+
+        // for (int i = 0; i < this.getBoard().size(); i++) {
+        //     if (this.getBoard().get(i).getColor() == color) {
+        //         ArrayList<Board> temp = this.getBoard().get(i).findMoves(this, i);
+
+        //         if (temp == null) {
+        //             continue;
+        //         }
+
+        //         for (Board board : temp) {
+        //             boolean bad = false;
+        //             for (int j = 0; j < board.getBoard().size(); j++) {
+        //                 if (board.getBoard().get(j).getColor() != color
+        //                         && board.getBoard().get(j).isInCheck(board, j) == true) {
+        //                     bad = true;
+        //                     break;
+        //                 }
+        //             }
+        //             if (bad) {
+        //                 continue;
+        //             }
+        //             allNextMoves.add(board);
+        //         }
+
+        //     }
+        // }
         return allNextMoves;
     }
 
@@ -277,8 +317,7 @@ public class Board {
         ArrayList<Piece> pieces = this.getBoard();
 
         pieces.remove(p1);
-        if(p2 != null)
-        {
+        if (p2 != null) {
             for (int i = 0; i < pieces.size(); i++) {
                 if (pieces.get(i).getLoc().getXPos() == p2.getLoc().getXPos()
                         && pieces.get(i).getLoc().getYPos() == p2.getLoc().getYPos()) {
@@ -389,6 +428,25 @@ public class Board {
                 System.out.print(board[i][j] + " ");
             }
             System.out.println();
+        }
+
+    }
+
+    public Board createOpening(String s) {
+        switch (s) {
+            case "King's Pawn":
+                System.out.println("You are playing against a King's Pawn Opening!");
+                return this.updateBoard(this.getPiece(new Location(4, 1)), new Pawn(4, 3, true));
+            case "Queen's Pawn":
+                System.out.println("You are playing against a Queen's Pawn Opening!");
+
+                return this.updateBoard(this.getPiece(new Location(3, 1)), new Pawn(3, 3, true));
+            case "English":
+                System.out.println("You are playing against an English Opening!");
+
+                return this.updateBoard(this.getPiece(new Location(2, 1)), new Pawn(2, 3, true));
+            default:
+                return this;
         }
 
     }

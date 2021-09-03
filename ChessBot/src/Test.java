@@ -102,6 +102,7 @@ public class Test {
     public static void textMode() {
         Stack<Board> takebacks = new Stack<Board>();
         int level = 4;
+        boolean opening = false;
         while (true) {
             BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
             String str = null;
@@ -116,16 +117,32 @@ public class Test {
         }
         Board b = new Board();
 
+        while (true) {
+            BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
+            String str = null;
+            try {
+                System.out.println("Would you like to choose an opening to play against? If yes, type 'King's Pawn', 'Queen's Pawn', or 'English'. Otherwise, hit Enter.");
+                str = r.readLine();
+                b = b.createOpening(str);
+                if((str.equals("King's Pawn") || str.equals("Queen's Pawn") || str.equals("English")))
+                {
+                    opening = true;
+                }
+                break;
+            } catch (IOException e) {
+                continue;
+            }
+        }
+
         takebacks.push(b);
         AI ai = new AI(b, level);
-        while (true) {
-            long startTime = System.currentTimeMillis();
+        if(!opening){
             b = ai.minimax_no_transpose(b, level, true, -99999999, 999999999);
-            long endTime = System.currentTimeMillis();
-            System.out.println("Boards Searched: " + ai.transpositions.size());
-            System.out.println("Calculation Time: " + (endTime - startTime));
             b.printBoard();
             takebacks.push(b);
+        }
+        while (true) {
+            b.printBoard();
             if (ai.isCheckMate()) {
                 b.printBoard();
                 if (ai.isWhite()) {
@@ -464,6 +481,7 @@ public class Test {
                     System.out.println("Wrong format! Try Again!");
                 }
             }
+            
             System.out.println("White's move!");
             for (Piece p : b.getBoard()) {
                 if(p instanceof Pawn)
@@ -471,6 +489,13 @@ public class Test {
                     ((Pawn) p).setPrevBoard(b);
                 }
             }
+            long startTime = System.currentTimeMillis();
+            b = ai.minimax_no_transpose(b, level, true, -99999999, 999999999);
+            long endTime = System.currentTimeMillis();
+            System.out.println("Boards Searched: " + ai.transpositions.size());
+            System.out.println("Calculation Time: " + (endTime - startTime));
+            b.printBoard();
+            takebacks.push(b);
 
         }
 
