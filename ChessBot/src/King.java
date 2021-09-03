@@ -140,7 +140,7 @@ public class King implements Piece {
             }
             if (color && b.check(new Location(4, 0)) && b.check(new Location(5, 0)) && b.check(new Location(6, 0))
                     && b.getPiece(new Location(7, 0)) instanceof Rook
-                    && ((Rook) (b.getPiece(new Location(0, 7)))).canCastle()) {
+                    && ((Rook) (b.getPiece(new Location(7, 0)))).canCastle()) {
                 boolean passed1 = true;
                 boolean passed2 = true;
                 // boolean passed3 = true;

@@ -319,10 +319,10 @@ public class Board {
         for (Boolean[] b : isOccupied) {
             int col = 0;
             for (Boolean i : b) {
-                if (!i) {
+                if (this.check(new Location(row, col))) {
                     hash += "0";
                 } else {
-                    hash += this.getPiece(new Location(row, col));
+                    hash += this.getPiece(new Location(row, col)).getCode();
                 }
                 col++;
             }

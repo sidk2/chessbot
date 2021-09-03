@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Stack;
+import java.util.function.Consumer;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -74,7 +75,6 @@ public class Test {
     }
 
     public static int convLetters(char c) {
-        System.out.println(c);
         switch (c) {
         case 'A':
             return 0;
@@ -120,8 +120,9 @@ public class Test {
         AI ai = new AI(b, level);
         while (true) {
             long startTime = System.currentTimeMillis();
-            b = ai.minimax(b, level, true, -99999999, 999999999);
+            b = ai.minimax_no_transpose(b, level, true, -99999999, 999999999);
             long endTime = System.currentTimeMillis();
+            System.out.println("Boards Searched: " + ai.transpositions.size());
             System.out.println("Calculation Time: " + (endTime - startTime));
             b.printBoard();
             takebacks.push(b);
@@ -464,12 +465,12 @@ public class Test {
                 }
             }
             System.out.println("White's move!");
-            // for (Piece p : b.getBoard()) {
-            //     if(p instanceof Pawn)
-            //     {
-            //         ((Pawn) p).setPrevBoard(b);
-            //     }
-            // }
+            for (Piece p : b.getBoard()) {
+                if(p instanceof Pawn)
+                {
+                    ((Pawn) p).setPrevBoard(b);
+                }
+            }
 
         }
 
