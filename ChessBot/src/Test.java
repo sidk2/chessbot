@@ -437,6 +437,7 @@ public class Test {
                                         break;
                                     }
                                 }
+                                ((King)b.getPiece(new Location(5, 7))).isCastled = true;
                             } catch (ClassCastException e) {
                                 System.out.println("You can't castle!");
                             }
@@ -456,6 +457,7 @@ public class Test {
                                         break;
                                     }
                                 }
+                                ((King)b.getPiece(new Location(1, 7))).isCastled = true;
                             } catch (ClassCastException e) {
                                 System.out.println("You can't castle!");
                             }

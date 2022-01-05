@@ -21,6 +21,8 @@ public class Board {
 
     public final double activityRelativeWeight = 0.1;
 
+    public final double blockedPawnsRelativeWeight = 0.2;
+
     public int[][] searchOrder = { { 4, 4 }, { 4, 3 }, { 3, 3 }, { 3, 4 }, { 3, 5 }, { 4, 5 }, { 5, 5 }, { 5, 4 },
             { 5, 3 }, { 5, 2 }, { 4, 2 }, { 3, 2 }, { 2, 2 }, { 2, 3 }, { 2, 4 }, { 2, 5 }, { 2, 6 }, { 3, 6 },
             { 4, 6 }, { 5, 6 }, { 6, 6 }, { 6, 5 }, { 6, 4 }, { 6, 3 }, { 6, 2 }, { 6, 1 }, { 5, 1 }, { 4, 1 },
@@ -131,11 +133,19 @@ public class Board {
      */
     public double getValue() {
         double val = 0.0;
+        double blockedPawns = 0;
         ArrayList<Piece> p = getBoard();
         for (Piece piece : p) {
             val += piece.getValue();
-            val = (piece.getColor()) ? (val + (activityRelativeWeight * piece.getActivity(piece.getLoc())))
-                    : val - (activityRelativeWeight * piece.getActivity(piece.getLoc()));
+            if (piece instanceof Pawn)
+            {
+                Location loc = piece.getLoc();
+                if(piece.getColor() && this.getPiece(new Location(loc.getXPos(), loc.getYPos()+1)) != null && this.getPiece(new Location(loc.getXPos(), loc.getYPos()+1)).getColor()) blockedPawns++;
+                else if(!piece.getColor() && this.getPiece(new Location(loc.getXPos(), loc.getYPos()+1)) != null && !this.getPiece(new Location(loc.getXPos(), loc.getYPos()+1)).getColor()) blockedPawns--;
+
+            }
+            val = (piece.getColor()) ? (val + (activityRelativeWeight * piece.getActivity(piece.getLoc())) + blockedPawnsRelativeWeight * blockedPawns)
+                    : val - (activityRelativeWeight * piece.getActivity(piece.getLoc())) + blockedPawnsRelativeWeight * blockedPawns;
         }
 
         // System.out.println("Poss Moves: " + getPossibleMoves(true).size() + '\n' +

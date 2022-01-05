@@ -20,6 +20,8 @@ public class King implements Piece {
      */
     public final int VALUE = 1000;
 
+    public boolean isCastled = false;
+
     public final int[][] activityTable = { { 3, 5, 5, 5, 5, 5, 5, 3 }, { 5, 8, 8, 8, 8, 8, 8, 5 },
             { 5, 8, 8, 8, 8, 8, 8, 5 }, { 5, 8, 8, 8, 8, 8, 8, 5 }, { 5, 8, 8, 8, 8, 8, 8, 5 },
             { 5, 8, 8, 8, 8, 8, 8, 5 }, { 5, 8, 8, 8, 8, 8, 8, 5 }, { 3, 5, 5, 5, 5, 5, 5, 3 } };
