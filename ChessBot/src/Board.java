@@ -21,7 +21,11 @@ public class Board {
 
     public final double activityRelativeWeight = 0.1;
 
-    public final double blockedPawnsRelativeWeight = 0.2;
+    public final double blockedPawnsRelativeWeight = -2;
+
+    public final double knightPeripheryWeight = -1;
+
+    public final int castlingValue = 1;
 
     public int[][] searchOrder = { { 4, 4 }, { 4, 3 }, { 3, 3 }, { 3, 4 }, { 3, 5 }, { 4, 5 }, { 5, 5 }, { 5, 4 },
             { 5, 3 }, { 5, 2 }, { 4, 2 }, { 3, 2 }, { 2, 2 }, { 2, 3 }, { 2, 4 }, { 2, 5 }, { 2, 6 }, { 3, 6 },
@@ -133,7 +137,9 @@ public class Board {
      */
     public double getValue() {
         double val = 0.0;
-        double blockedPawns = 0;
+        int blockedPawns = 0;
+        int knightOnRim = 0;
+        int castled = 0;
         ArrayList<Piece> p = getBoard();
         for (Piece piece : p) {
             val += piece.getValue();
@@ -144,8 +150,26 @@ public class Board {
                 else if(!piece.getColor() && this.getPiece(new Location(loc.getXPos(), loc.getYPos()+1)) != null && !this.getPiece(new Location(loc.getXPos(), loc.getYPos()+1)).getColor()) blockedPawns--;
 
             }
-            val = (piece.getColor()) ? (val + (activityRelativeWeight * piece.getActivity(piece.getLoc())) + blockedPawnsRelativeWeight * blockedPawns)
-                    : val - (activityRelativeWeight * piece.getActivity(piece.getLoc())) + blockedPawnsRelativeWeight * blockedPawns;
+            if(piece instanceof Knight && piece.getLoc().getYPos() == 0 || piece.getLoc().getYPos() == 7) {
+                if(piece.getColor()) knightOnRim++; else knightOnRim--;
+            }
+            if (piece instanceof King)
+            {
+                if (piece.getColor() && ((King)piece).isCastled) castled++;
+                else if (((King)piece).isCastled) castled--;
+            }
+            val = (piece.getColor()) 
+                ? (val + 
+                    (activityRelativeWeight * piece.getActivity(piece.getLoc())) 
+                    + blockedPawnsRelativeWeight * blockedPawns
+                    + knightOnRim * knightPeripheryWeight)
+                    + castlingValue * castled
+                    
+                : val - 
+                    (activityRelativeWeight * piece.getActivity(piece.getLoc()))
+                    + blockedPawnsRelativeWeight * blockedPawns
+                    + knightOnRim * knightPeripheryWeight
+                    + castlingValue * castled;
         }
 
         // System.out.println("Poss Moves: " + getPossibleMoves(true).size() + '\n' +
