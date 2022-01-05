@@ -8,12 +8,6 @@ import java.util.AbstractMap.SimpleEntry;
  * The class that plays as the computer, finds the next best move by calculating
  * a given amount of moves deep, the computer is always whtie
  *
- * @author Shreyas Kaasyap, Sidharth Kannan
- * @version May 25, 2020
- * @author Period: 1
- * @author Assignment: ChessBot
- *
- * @author Sources: Shreyas Kaasyap, Sidharth Kannan, Leo Yang
  */
 public class AI
 {
@@ -278,25 +272,25 @@ public class AI
 
         ret =  minimax_no_transpose(board, depth, color, -20000, 20000);
 
-        // double window_size = 1;
-        // double alpha = -20000;
-        // double beta = 20000;
-        // double eval = 0;
-        // for ( int i = 1; i <= depth; i++){
+        double window_size = 1;
+        double alpha = -20000;
+        double beta = 20000;
+        double eval = 0;
+        for ( int i = 1; i <= depth; i++){
             
-        //     ret = minimax_no_transpose(board, i, color, alpha, beta);
-        //     eval = ret.getValue();
-        //         if(eval <= alpha || eval >= beta){
-        //             i--;
-        //             alpha = -20000;
-        //             beta = 20000;
-        //         }
-        //         else{
-        //             alpha = eval + window_size;
-        //             beta = eval - window_size;
-        //         }
+            ret = minimax_no_transpose(board, i, color, alpha, beta);
+            eval = ret.getValue();
+                if(eval <= alpha || eval >= beta){
+                    i--;
+                    alpha = -20000;
+                    beta = 20000;
+                }
+                else{
+                    alpha = eval + window_size;
+                    beta = eval - window_size;
+                }
             
-        // }
+        }
         long end = System.currentTimeMillis();
         System.out.println(end - time);
         return ret;

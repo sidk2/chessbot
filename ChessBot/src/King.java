@@ -3,13 +3,6 @@ import java.util.ArrayList;
 /**
  * A class for the King piece, methods to find Moves, keeps the location, does
  * not include castling
- *
- * @author Shreyas Kaasyap
- * @version May 25, 2020
- * @author Period: 1
- * @author Assignment: ChessBot
- *
- * @author Sources: Shreyas Kaasyap, Sidharth Kannan, Leo Yang
  */
 public class King implements Piece {
     /**

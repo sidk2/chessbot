@@ -17,12 +17,6 @@ import javax.swing.JPanel;
  * A display class that is the display for the GUI, has a helper method to
  * determine if a move is valid, has methods that are called from test.java
  *
- * @author Shreyas Kaasyap
- * @version May 26, 2020
- * @author Period: 1
- * @author Assignment: ChessBot
- *
- * @author Sources: Shreyas Kaasyap, Sidharth Kannan, Leo Yang
  */
 @SuppressWarnings("serial")
 public class Display extends JPanel implements MouseListener

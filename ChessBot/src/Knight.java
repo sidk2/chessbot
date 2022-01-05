@@ -1,16 +1,7 @@
 import java.util.ArrayList;
 
 /**
- * TODO Write a one-sentence summary of your class here. TODO Follow it with
- * additional details about its purpose, what abstraction it represents, and how
- * to use it.
- *
- * @author Shreyas Kaasyap
- * @version May 25, 2020
- * @author Period: 1
- * @author Assignment: ChessBot
- *
- * @author Sources: Shreyas Kaasyap, Sidharth Kannan, Leo Yang
+ * Implements the details of the Knight piece.
  */
 public class Knight implements Piece {
     /**

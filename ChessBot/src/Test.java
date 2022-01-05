@@ -18,12 +18,6 @@ import javax.swing.Popup;
  * The main method to run the program, the user can choose either the GUI mode
  * or the command line chess textMode
  * 
- * @author Sidharth Kannan
- * @version May 26, 2020
- * @author Period: 1
- * @author Assignment: ChessBot
- *
- * @author Sources: Shreyas Kaasyap, Sidharth Kannan, Leo Yang
  */
 public class Test {
 

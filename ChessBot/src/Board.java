@@ -6,12 +6,6 @@ import java.util.ArrayList;
  * pieces currently on the board. Has methods to manipulate and return parts of
  * the board.
  *
- * @author Shreyas Kaasyap
- * @version May 26, 2020
- * @author Period: 1
- * @author Assignment: ChessBot
- *
- * @author Sources: Shreyas Kaasyap, Sidharth Kannan, Leo Yang
  */
 public class Board {
     /**

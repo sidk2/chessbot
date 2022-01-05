@@ -11,12 +11,6 @@ import javax.swing.JComponent;
 /**
  * A class for a tile, a tile has a position and can hold a piece
  *
- * @author Shreyas Kaasyap
- * @version May 26, 2020
- * @author Period: 1
- * @author Assignment: ChessBot
- *
- * @author Sources: Shreyas Kaasyap, Sidharth Kannan, Leo Yang
  */
 @SuppressWarnings("serial")
 public class Tile extends JComponent

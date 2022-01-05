@@ -4,12 +4,6 @@ import java.util.ArrayList;
 /**
  * An interface for all the pieces: Pawn, Bishop, Knight, Queen, King, Rook
  *
- * @author Shreyas Kaasyap
- * @version May 25, 2020
- * @author Period: 1
- * @author Assignment: ChessBot
- *
- * @author Sources: Shreyas Kaasyap, Sidharth Kannan, Leo Yang
  */
 public interface Piece
 {

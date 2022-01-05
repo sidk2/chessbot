@@ -4,12 +4,6 @@ import java.util.ArrayList;
  * Creates a bishop piece, has methods to find the moves for the piece, keeps
  * trakc of the location of the piece
  *
- * @author Shreyas Kaasyap
- * @version May 26, 2020
- * @author Period: 1
- * @author Assignment: ChessBot
- *
- * @author Sources: Shreyas Kaasyap, Sidharth Kannan, Leo Yang
  */
 public class Bishop implements Piece {
     /**

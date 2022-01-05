@@ -2,12 +2,6 @@
  * A class for the location of a piece, has an xCoordinate and a yCoordinate, 0
  * indexed
  *
- * @author Shreyas Kaasyap
- * @version May 26, 2020
- * @author Period: TODO
- * @author Assignment: ChessBot
- *
- * @author Sources: TODO
  */
 public class Location
 {
