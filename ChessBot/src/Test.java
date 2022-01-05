@@ -486,7 +486,6 @@ public class Test {
             long startTime = System.currentTimeMillis();
             b = ai.search(b, level, true);
             long endTime = System.currentTimeMillis();
-            System.out.println("Boards Searched: " + ai.transpositions.size());
             System.out.println("Calculation Time: " + (endTime - startTime));
             b.printBoard();
             takebacks.push(b);

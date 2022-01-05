@@ -348,18 +348,8 @@ public class Board {
     public String hash() {
         String hash = "";
         ArrayList<Piece> pieces = getBoard();
-        int row = 0;
-        for (Boolean[] b : isOccupied) {
-            int col = 0;
-            for (Boolean i : b) {
-                if (this.check(new Location(row, col))) {
-                    hash += "0";
-                } else {
-                    hash += this.getPiece(new Location(row, col)).getCode();
-                }
-                col++;
-            }
-            row++;
+        for(Piece p : pieces){
+            hash+= p.getCode() + p.getLoc().getXPos() + p.getLoc().getYPos();
         }
         return hash;
     }

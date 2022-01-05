@@ -32,6 +32,8 @@ public class AI
      */
     private boolean whiteWon = false;
 
+    private final int MINIMUM_SEARCH_DEPTH = 4;
+
     public Map<String, Entry<Board, Integer>> transpositions = new HashMap<String, Entry<Board, Integer>>();
 
 
@@ -201,12 +203,18 @@ public class AI
         }
         if ( color )
         {
+            String hash = board.hash();
+            if(transpositions.containsKey(hash) && transpositions.get(hash).getValue() >= MINIMUM_SEARCH_DEPTH)
+            {
+                return transpositions.get(hash).getKey();
+            }
             double value = -1000000;
             Board best = null;
             ArrayList<Board> poss = board.getPossibleMoves( color );
             searched += poss.size();
             for ( int i = 0; i < poss.size(); i++ )
             {
+                
                 Board one = minimax_no_transpose( poss.get( i ), depth - 1, !color, alpha, beta);
                 if ( one == null )
                 {
@@ -229,10 +237,17 @@ public class AI
                 checkmate = true;
                 whiteWon = true;
             }
+            transpositions.put(hash, new SimpleEntry<Board, Integer>(best, depth));
             return best;
         }
         else
         {
+            String hash = board.hash();
+
+            if(transpositions.containsKey(hash) && transpositions.get(hash).getValue() >= MINIMUM_SEARCH_DEPTH)
+            {
+                return transpositions.get(hash).getKey();
+            }
             double value = 1000000.0;
             Board best = null;
             ArrayList<Board> list = board.getPossibleMoves( color );
@@ -260,6 +275,7 @@ public class AI
                 checkmate = true;
                 whiteWon = false;
             }
+            transpositions.put(hash, new SimpleEntry<Board, Integer>(best, depth));
             return best;
         }
 
@@ -268,8 +284,6 @@ public class AI
     {
                 
         Board ret = null;
-        long time = System.currentTimeMillis();
-
         ret =  minimax_no_transpose(board, depth, color, -20000, 20000);
 
         double window_size = 1;
@@ -291,8 +305,6 @@ public class AI
                 }
             
         }
-        long end = System.currentTimeMillis();
-        System.out.println(end - time);
         return ret;
     }
     
