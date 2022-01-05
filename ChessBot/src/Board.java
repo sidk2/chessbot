@@ -21,7 +21,7 @@ public class Board {
 
     public final double activityRelativeWeight = 0.1;
 
-    public final double blockedPawnsRelativeWeight = -2;
+    public final double blockedPawnsRelativeWeight = -1;
 
     public final double knightPeripheryWeight = -1;
 
@@ -166,10 +166,10 @@ public class Board {
                     + castlingValue * castled
                     
                 : val - 
-                    (activityRelativeWeight * piece.getActivity(piece.getLoc()))
+                    (activityRelativeWeight * piece.getActivity(piece.getLoc())
                     + blockedPawnsRelativeWeight * blockedPawns
                     + knightOnRim * knightPeripheryWeight
-                    + castlingValue * castled;
+                    + castlingValue * castled);
         }
 
         // System.out.println("Poss Moves: " + getPossibleMoves(true).size() + '\n' +
