@@ -25,7 +25,7 @@ public class King implements Piece {
     /**
      * the material value of the piece
      */
-    public final int VALUE = 999999999;
+    public final int VALUE = 1000;
 
     public final int[][] activityTable = { { 3, 5, 5, 5, 5, 5, 5, 3 }, { 5, 8, 8, 8, 8, 8, 8, 5 },
             { 5, 8, 8, 8, 8, 8, 8, 5 }, { 5, 8, 8, 8, 8, 8, 8, 5 }, { 5, 8, 8, 8, 8, 8, 8, 5 },
